@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live MCQ Test - Job Master BD</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#f4f7fb;color:#172033}
+header{background:#1769aa;color:white;padding:22px 16px;text-align:center}
+main{max-width:760px;margin:20px auto;padding:0 14px}
+.card{background:white;border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 3px 14px #0001}
+h1{margin:0 0 6px;font-size:25px}.muted{color:#667085}
+.option{display:block;border:1px solid #d8dee8;border-radius:10px;padding:12px;margin:9px 0;cursor:pointer}
+.option:hover{background:#f0f7ff}
+button{border:0;border-radius:10px;padding:12px 18px;background:#1769aa;color:white;font-size:16px;cursor:pointer}
+button:disabled{opacity:.5}
+#result{font-size:20px;font-weight:bold}
+</style>
+</head>
+<body>
+<header><h1>Live MCQ Test - Job Master BD</h1><div>চাকরি প্রস্তুতির অনলাইন MCQ পরীক্ষা</div></header>
+<main>
+<div class="card">
+  <b>Subject:</b> সাধারণ জ্ঞান &nbsp; | &nbsp; <b>সময়:</b> 05:00 মিনিট
+  <div class="muted" id="timer">05:00</div>
+</div>
+<div id="quiz"></div>
+<div class="card">
+  <button id="submit">Submit Test</button>
+  <p id="result"></p>
+</div>
+</main>
+<script>
+const questions=[
+["বাংলাদেশের রাজধানী কোনটি?",["ঢাকা","চট্টগ্রাম","রাজশাহী","খুলনা"],0],
+["বাংলাদেশের জাতীয় ফুল কোনটি?",["গোলাপ","শাপলা","জবা","বেলি"],1],
+["জাতীয় সংসদ ভবনের স্থপতি কে?",["লুই আই কান","এফ আর খান","মুজহারুল ইসলাম","ল্য কোরবুসিয়ে"],0],
+["বাংলাদেশ স্বাধীন হয় কত সালে?",["১৯৪৭","১৯৫২","১৯৭১","১৯৭৫"],2],
+["বাংলাদেশের মুদ্রার নাম কী?",["রুপি","টাকা","দিনার","রিয়াল"],1]
+];
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ let d=document.createElement("div"); d.className="card";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q[1].map((o,j)=>
+ `<label class="option"><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${o}</label>`).join("");
+ quiz.appendChild(d);
+});
+let sec=300, done=false;
+const timer=setInterval(()=>{
+ if(done)return;
+ sec--; let m=String(Math.floor(sec/60)).padStart(2,"0"),s=String(sec%60).padStart(2,"0");
+ document.getElementById("timer").textContent=`${m}:${s}`;
+ if(sec<=0){clearInterval(timer); grade();}
+},1000);
+function grade(){
+ if(done)return; done=true; let score=0;
+ questions.forEach((q,i)=>{
+  const a=document.querySelector(`input[name=q${i}]:checked`);
+  if(a && +a.value===q[2])score++;
+ });
+ document.getElementById("result").textContent=`আপনার ফলাফল: ${score}/${questions.length}`;
+ document.getElementById("submit").disabled=true;
+ window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
+}
+document.getElementById("submit").onclick=grade;
+</script>
+</body>
+</html>
