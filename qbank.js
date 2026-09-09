@@ -1,27 +1,229 @@
-window.QBANK={}; window.ORIGINAL_BANK={};
-function make(list,per){let s=[];for(let i=0;i<5;i++){let set=[];for(let j=0;j<per;j++){let b=list[(i*97+j*31)%list.length];set.push({q:`[${i+1}-${j+1}] ${b.q}`,o:[...b.o],a:b.a,e:b.e,src:b.src,basic:b.basic});}s.push(set);}return s;}
-function makeOne(list,per){let set=[];for(let j=0;j<per;j++){let b=list[(j*31)%list.length];set.push({q:`[${j+1}] ${b.q}`,o:[...b.o],a:b.a,e:b.e,src:b.src,basic:b.basic});}return set;}
+const questionBank = [
 
-// ===== TOPIC WISE 5 SET - সন্ধি 5 Set, সমাস 5 Set =====
-QBANK["বাংলা"]={
-"সন্ধি - 5 Set":make([{q:"'ষড়যন্ত্র' সন্ধি বিচ্ছেদ?",o:["ষট্+যন্ত্র","ষড়+যন্ত্র","ষট+যন্ত্র","ষড়য+ন্ত্র"],a:0,e:"ব্যঞ্জন সন্ধি",src:"BCS 35th, Primary 2022",basic:"ষট্+যন্ত্র=ষড়যন্ত্র - ব্যঞ্জন সন্ধির নিয়ম"}],20),
-"সমাস - 5 Set":make([{q:"'চৌরাস্তা' কোন সমাস?",o:["দ্বিগু","দ্বন্দ্ব","কর্মধারয়","বহুব্রীহি"],a:0,e:"চৌ রাস্তার সমাহার=দ্বিগু",src:"BCS 37th",basic:"সংখ্যাবাচক + সমাহার = দ্বিগু সমাস"}],20),
-"কারক ও বিভক্তি - 5 Set":make([{q:"'গরুতে দুধ দেয়' কোন কারক?",o:["অপাদান","কর্তা","অধিকরণ","কর্ম"],a:0,e:"যা থেকে বিচ্যুত হয় তা অপাদান",src:"BCS 28th",basic:"অপাদান = উৎস, ভয়, থেকে"}],20),
-"বানান শুদ্ধি - 5 Set":make([{q:"কোনটি শুদ্ধ?",o:["মুমূর্ষু","মুমুর্ষু","মুমূর্ষূ","মুমুর্ষূ"],a:0,e:"মুমূর্ষু শুদ্ধ",src:"Primary 2023",basic:"উ-কার, ঊ-কার নিয়ম"}],20)
-};
-QBANK["English"]={"Voice - 5 Set":make([{q:"Passive: He does the work",o:["Work is done by him","Work is done","He is done","Work done"],a:0,e:"is+V3",src:"Primary",basic:"Present Indefinite - is/am/are + V3"}],20)};
-QBANK["গাণিতিক যুক্তি"]={"পাটিগণিত - 5 Set":make([{q:"১৫% লাভে ২৩০ হলে ক্রয়?",o:["২০০","২১৫","২৫০","১৮০"],a:0,e:"২৩০*১০০/১১৫=২০০",src:"Primary",basic:"ক্রয় = বিক্রয়*১০০/(১০০+লাভ%)"}],20)};
-QBANK["বিজ্ঞান"]=QBANK["বাংলা"]; QBANK["বাংলাদেশ"]=QBANK["বাংলা"]; QBANK["আন্তর্জাতিক"]=QBANK["English"]; QBANK["তথ্য প্রযুক্তি"]=QBANK["বাংলা"]; QBANK["ভূগোল"]=QBANK["বাংলা"]; QBANK["সুশাসন"]=QBANK["বাংলা"]; QBANK["মানসিক দক্ষতা"]=QBANK["গাণিতিক যুক্তি"];
+{
+id:"bcs-001",
+category:"bcs",
+question:"বাংলাদেশের জাতীয় ফুল কোনটি?",
+options:["গোলাপ","শাপলা","জবা","বেলি"],
+answer:1,
+explanation:"শাপলা বাংলাদেশের জাতীয় ফুল।"
+},
 
-// ===== ORIGINAL BANK - প্রতি সেটে আসল সংখ্যা =====
-// BCS 200 Q
-ORIGINAL_BANK["BCS 10-50th_50তম বিসিএস"]=makeOne([{q:"BCS 50th Original - বাংলা ভাষার আদি নিদর্শন?",o:["চর্যাপদ","শ্রীকৃষ্ণকীর্তন","বৈষ্ণব পদাবলী","মঙ্গলকাব্য"],a:0,e:"চর্যাপদ ৬৫০-১২০০, হরপ্রসাদ ১৯০৭",src:"BCS 50th Original",basic:"চর্যাপদ = বাংলা সাহিত্যের আদি নিদর্শন"}],200);
-ORIGINAL_BANK["BCS 10-50th_46তম বিসিএস"]=makeOne([{q:"BCS 46th - 'ষড়যন্ত্র' সন্ধি?",o:["ষট্+যন্ত্র","ষড়+যন্ত্র","ষট+যন্ত্র","ষড়য+ন্ত্র"],a:0,e:"ব্যঞ্জন সন্ধি",src:"BCS 46th Original",basic:"সন্ধি = মিলন"}],200);
-// Primary 80 Q
-ORIGINAL_BANK["Primary 100+_2024 সালের"]=makeOne([{q:"Primary 2024 - শুদ্ধ বানান?",o:["মুমূর্ষু","মুমুর্ষু","মুমূর্ষূ","মুমুর্ষূ"],a:0,e:"মুমূর্ষু",src:"Primary 2024 Original",basic:"ণত্ব-ষত্ব বিধান"}],80);
-// NTRCA 100 Q
-ORIGINAL_BANK["NTRCA 1-19th_18তম স্কুল"]=makeOne([{q:"NTRCA 18th School - He is good __ English.",o:["at","in","on","for"],a:0,e:"Good at",src:"NTRCA 18th 2024 Original",basic:"Preposition - Good at = দক্ষ"}],100);
-// Bank 100 Q, 11-20 80 Q, Non-Cadre 100 Q - একইভাবে auto generate হবে
-for(let i=45;i>=10;i--) ORIGINAL_BANK[`BCS 10-50th_${i}তম বিসিএস`]=ORIGINAL_BANK["BCS 10-50th_50তম বিসিএস"];
-for(let y=2025;y>=2010;y--) ORIGINAL_BANK[`Primary 100+_${y} সালের`]=ORIGINAL_BANK["Primary 100+_2024 সালের"];
-for(let n=19;n>=1;n--){ORIGINAL_BANK[`NTRCA 1-19th_${n}তম স্কুল`]=ORIGINAL_BANK["NTRCA 1-19th_18তম স্কুল"];ORIGINAL_BANK[`NTRCA 1-19th_${n}তম কলেজ`]=ORIGINAL_BANK["NTRCA 1-19th_18তম স্কুল"];}
+{
+id:"bcs-002",
+category:"bcs",
+question:"বাংলাদেশের জাতীয় ফল কোনটি?",
+options:["আম","কাঁঠাল","লিচু","কলা"],
+answer:1,
+explanation:"কাঁঠাল বাংলাদেশের জাতীয় ফল।"
+},
+
+{
+id:"bcs-003",
+category:"bcs",
+question:"বাংলাদেশের জাতীয় পাখি কোনটি?",
+options:["দোয়েল","কাক","ময়ূর","শালিক"],
+answer:0,
+explanation:"দোয়েল বাংলাদেশের জাতীয় পাখি।"
+},
+
+{
+id:"ntrca-001",
+category:"ntrca",
+question:"NTRCA-এর পূর্ণরূপ কী?",
+options:[
+"National Teachers Registration and Certification Authority",
+"National Teacher Recruitment Council Authority",
+"National Training Registration Council Authority",
+"National Teaching Registration Committee Authority"
+],
+answer:0,
+explanation:"NTRCA-এর পূর্ণরূপ National Teachers Registration and Certification Authority."
+},
+
+{
+id:"bank-001",
+category:"bank",
+question:"বাংলাদেশের কেন্দ্রীয় ব্যাংকের নাম কী?",
+options:[
+"সোনালী ব্যাংক",
+"বাংলাদেশ ব্যাংক",
+"জনতা ব্যাংক",
+"অগ্রণী ব্যাংক"
+],
+answer:1,
+explanation:"বাংলাদেশের কেন্দ্রীয় ব্যাংক হলো বাংলাদেশ ব্যাংক।"
+},
+
+{
+id:"primary-001",
+category:"primary",
+question:"প্রাথমিক শিক্ষার মূল উদ্দেশ্য কী?",
+options:[
+"শিক্ষার্থীর মৌলিক জ্ঞান ও দক্ষতা অর্জন",
+"শুধু পরীক্ষায় ভালো ফল",
+"শুধু খেলাধুলা",
+"শুধু মুখস্থ শিক্ষা"
+],
+answer:0,
+explanation:"প্রাথমিক শিক্ষার অন্যতম প্রধান উদ্দেশ্য হলো শিশুর মৌলিক জ্ঞান, দক্ষতা ও মূল্যবোধের বিকাশ।"
+},
+
+{
+id:"bangla-001",
+category:"bangla",
+question:"বাংলা বর্ণমালায় মোট বর্ণ কয়টি?",
+options:["৪৮টি","৫০টি","৫২টি","৫৪টি"],
+answer:1,
+explanation:"প্রচলিত বাংলা বর্ণমালায় মোট ৫০টি বর্ণ রয়েছে।"
+},
+
+{
+id:"bangla-002",
+category:"bangla",
+question:"'আকাশ' শব্দের সমার্থক শব্দ কোনটি?",
+options:["গগন","পাতাল","মাটি","সাগর"],
+answer:0,
+explanation:"আকাশের সমার্থক শব্দ গগন।"
+},
+
+{
+id:"english-001",
+category:"english",
+question:"What is the plural form of 'Child'?",
+options:[
+"Childs",
+"Childes",
+"Children",
+"Childrens"
+],
+answer:2,
+explanation:"The plural form of Child is Children."
+},
+
+{
+id:"english-002",
+category:"english",
+question:"Choose the correct sentence.",
+options:[
+"He go to school.",
+"He goes to school.",
+"He going to school.",
+"He gone to school."
+],
+answer:1,
+explanation:"With He/She/It in the Present Indefinite affirmative, the verb normally takes s/es."
+},
+
+{
+id:"math-001",
+category:"math",
+question:"১২ × ৮ = কত?",
+options:["৮৬","৯৬","১০৬","১১৬"],
+answer:1,
+explanation:"১২ × ৮ = ৯৬।"
+},
+
+{
+id:"math-002",
+category:"math",
+question:"১০০-এর ২৫% কত?",
+options:["২০","২৫","৩০","৩৫"],
+answer:1,
+explanation:"১০০ × ২৫/১০০ = ২৫।"
+},
+
+{
+id:"gk-001",
+category:"gk",
+question:"বাংলাদেশের রাজধানী কোনটি?",
+options:["চট্টগ্রাম","ঢাকা","খুলনা","রাজশাহী"],
+answer:1,
+explanation:"বাংলাদেশের রাজধানী ঢাকা।"
+},
+
+{
+id:"gk-002",
+category:"gk",
+question:"বাংলাদেশের স্বাধীনতা দিবস কবে?",
+options:[
+"২১ ফেব্রুয়ারি",
+"২৬ মার্চ",
+"১৬ ডিসেম্বর",
+"১৪ এপ্রিল"
+],
+answer:1,
+explanation:"২৬ মার্চ বাংলাদেশের স্বাধীনতা দিবস।"
+},
+
+{
+id:"ict-001",
+category:"ict",
+question:"CPU-এর পূর্ণরূপ কী?",
+options:[
+"Central Processing Unit",
+"Computer Processing Unit",
+"Central Program Unit",
+"Computer Program Unit"
+],
+answer:0,
+explanation:"CPU-এর পূর্ণরূপ Central Processing Unit."
+},
+
+{
+id:"ict-002",
+category:"ict",
+question:"HTML-এর পূর্ণরূপ কী?",
+options:[
+"Hyper Text Markup Language",
+"High Text Machine Language",
+"Hyper Tool Markup Language",
+"Home Text Markup Language"
+],
+answer:0,
+explanation:"HTML-এর পূর্ণরূপ Hyper Text Markup Language."
+},
+
+{
+id:"current-001",
+category:"current",
+question:"Current Affairs-এর নতুন প্রশ্নগুলো এই বিভাগে যুক্ত করা হবে।",
+options:[
+"সঠিক",
+"ভুল",
+"কোনোটিই নয়",
+"সবগুলো"
+],
+answer:0,
+explanation:"এই বিভাগটি পরবর্তীতে নতুন সাম্প্রতিক প্রশ্ন দিয়ে নিয়মিত আপডেট করা যাবে।"
+},
+
+{
+id:"recent-001",
+category:"recent",
+question:"Recent Job Solution বিভাগে কী থাকবে?",
+options:[
+"চাকরির পরীক্ষার প্রশ্ন ও সমাধান",
+"শুধু গল্প",
+"শুধু কবিতা",
+"শুধু ছবি"
+],
+answer:0,
+explanation:"Recent Job Solution বিভাগে চাকরির পরীক্ষার প্রশ্ন, উত্তর ও ব্যাখ্যা রাখা হবে।"
+},
+
+{
+id:"recent-002",
+category:"recent",
+question:"MCQ পরীক্ষায় ভুল করা প্রশ্ন কোথায় সংরক্ষণ করা হবে?",
+options:[
+"Wrong Questions",
+"Home",
+"Current Affairs",
+"Settings"
+],
+answer:0,
+explanation:"ভুল করা প্রশ্ন Wrong Questions বিভাগে সংরক্ষণ করা হবে।"
+}
+
+];
