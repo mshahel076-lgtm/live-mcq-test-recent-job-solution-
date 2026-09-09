@@ -70,8 +70,18 @@ document.getElementById('resCard').style.display='block';
 document.getElementById('resT').innerText=`🎉 ${curSub} Set ${curNum} শেষ!`;
 document.getElementById('resD').innerHTML=`<h1 style="margin:0">${sc}/20</h1>${sc>=14?'🌟 Excellent':sc>=10?'✅ Pass':'❌ Fail'}<br>মোট শেষ: ${Object.keys(done).length}/400`;
 // এখানেই Ad আসবে - 100% কাজ করবে
-document.getElementById('adArea').innerHTML=`
+documlet ad = document.getElementById('adArea');
+ad.innerHTML = `
 <div class="adBox">
+<b>🎯 চাকরির সব আপডেট পেতে</b><br>
+<button class="btn" style="width:auto;padding:10px 25px;background:#0088cc;margin:10px 0" onclick="window.open('https://t.me/jobmasterbd','_blank')">📢 Join Telegram</button>
+<div style="background:#fff;padding:10px;border-radius:8px;margin-top:10px;border:1px solid #ddd">
+<small style="color:#888">Advertisement</small><br>
+<b style="color:#1769aa">🔥 ঘরে বসে মাসে ২০,০০০ টাকা আয় করুন!</b><br>
+<p style="font-size:13px;margin:5px 0">ফ্রি কোর্সে জয়েন করুন, আজই শুরু করুন</p>
+<button class="btn" style="background:#ff5722;width:auto;padding:8px 20px" onclick="window.open('https://t.me/jobmasterbd','_blank')">এখনই দেখুন →</button>
+</div>
+</div>`;
 <b>🎯 পরের চাকরির সার্কুলার মিস করতে না চাইলে</b><br>
 <p style="font-size:13px;color:#666;margin:6px 0">প্রতিদিন নতুন চাকরির আপডেট পেতে জয়েন করো</p>
 <button class="btn" style="width:auto;padding:10px 28px;background:#0088cc" onclick="window.open('https://t.me/jobmasterbd','_blank')">📢 Join Telegram Channel</button>
