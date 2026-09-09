@@ -1,118 +1,88 @@
 <!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Job Master BD - Final App</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0a5c5c">
+<title>Job Master BD - All Job 600+ Set Final</title>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0a5c5c">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 <style>
-*{box-sizing:border-box;font-family:Hind Siliguri,sans-serif}
-body{margin:0;background:#f2f4f7}
-.header{background:#0a5c5c;color:#fff;padding:16px 14px 50px 14px}
-.header h2{margin:0;text-align:right;font-size:20px;line-height:1.4}
+*{box-sizing:border-box;font-family:Hind Siliguri,sans-serif}body{margin:0;background:#f2f4f7}
+.header{background:#0a5c5c;color:#fff;padding:16px 14px 50px 14px}.header h2{margin:0;text-align:right;font-size:20px}
 .banner{background:#ffde59;border-radius:20px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin:-35px 12px 12px 12px;box-shadow:0 5px 12px #0002}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 10px}
 .card{background:#fff;border-radius:18px;padding:10px;text-align:center;box-shadow:0 2px 8px #0001;min-height:175px;display:flex;flex-direction:column;justify-content:space-between}
-.card.mint{background:#e6f7f4}.card.lblue{background:#e8f0ff}.card.lyellow{background:#fff9c4}.card.pink{background:#ffe8f0}.card.beige{background:#f5f0e6}.card.lav{background:#ede8ff}
-.icon{font-size:42px;margin:6px 0}
-.btn{background:#0a5c5c;color:#fff;border:0;padding:7px 14px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer}
+.icon{font-size:42px;margin:6px 0}.btn{background:#0a5c5c;color:#fff;border:0;padding:7px 14px;border-radius:20px;font-weight:700;font-size:12px;cursor:pointer}
 .list{background:#eef1f6;border-radius:14px;padding:12px;margin:8px 10px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 5px #0001;cursor:pointer}
-.greenBox{background:linear-gradient(135deg,#0a5c5c,#2ecc71);color:#fff;border-radius:18px;padding:18px 10px;text-align:center;min-height:110px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;box-shadow:0 3px 8px #0002}
+.greenBox{background:linear-gradient(135deg,#0a5c5c,#2ecc71);color:#fff;border-radius:18px;padding:14px 8px;text-align:center;min-height:95px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
 .opt{background:#fff;padding:10px 12px;border-radius:10px;margin:6px 0;border:1.5px solid #ddd;cursor:pointer}
 .opt.correct{background:#c8e6c9!important;border-color:#2e7d32!important}.opt.wrong{background:#ffcdd2!important;border-color:#c62828!important}
 .adBox{background:#fffbe6;border:2px dashed #ff9800;padding:10px;border-radius:12px;text-align:center;margin:10px}
-</style></head><body>
-<div id="app"></div>
-<script src="qbank.js?v=final_all"></script>
+</style></head><body><div id="app"></div>
+<script src="qbank.js?v=all_job_600"></script>
 <script>
-const AD=`<div class="adBox"><small>Sponsored • Ad</small><br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXX" data-ad-slot="YYYYYYYYYY" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});<\/script><br><button style="background:#ff5722;color:#fff;border:0;padding:6px 12px;border-radius:20px" onclick="window.open('https://t.me/jobmasterbd','_blank')">Telegram Join</button></div>`;
-let curSub='', curTopic='', curYear='', setIdx=0,qIdx=0,score=0,timer,time=30,answered=false;
-let used=JSON.parse(localStorage.getItem('final_all_used')||'{}');
+const AD=`<div class="adBox"><small>Sponsored • Google Ad</small><br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXX" data-ad-slot="YYYYYYYYYY" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});<\/script></div>`;
+let curMain='',curTopic='',setIdx=0,qIdx=0,score=0,timer,time=30,answered=false;
+let used=JSON.parse(localStorage.getItem('all_job_used')||'{}');
 
-// HOME - আপনার ১ ও ২ নং ছবির মতো
 function home(){
 document.getElementById('app').innerHTML=`
 <div class="header"><h2>স্বাগতম,<br>আপনার লক্ষ্যে এগিয়ে যান।</h2></div>
 <div class="banner"><div><b>পরীক্ষার<br>প্রস্তুতি হোক আরো<br>সহজে।</b></div><div style="font-size:48px">👩‍🎓👨‍🏫</div></div>
-<div style="padding:0 12px"><b style="color:#0a5c5c">BCS কঠিন নয়; লক্ষ্য যদি সঠিক হয়।</b></div>
+<div style="padding:0 12px"><b style="color:#0a5c5c">600+ Set Job Solution - Topic Wise 5 Set</b></div>
 <div class="grid">
-<div class="card mint"><div><small>৫০তম - ১০তম বিসিএস প্রশ্ন সমাধান ও ব্যাখ্যা</small><div class="icon">💡</div></div><button class="btn" onclick="showBCSList()">শুরু করুন</button></div>
-<div class="card lblue"><div><small>বিসিএস বিষয়াবলী</small><div class="icon">📚</div></div><button class="btn" onclick="showSubjects('BCS')">শুরু করুন</button></div>
-<div class="card lblue"><div><small>সকল বিসিএস প্রশ্ন ও কুইজ</small><div class="icon">📝</div></div><button class="btn" onclick="showSubjects('BCS')">কুইজ খেলুন</button></div>
-<div class="card lyellow"><div><small>বিসিএস প্রিলিমিনারি মডেল টেস্ট</small><div class="icon">📄</div></div><button class="btn" onclick="showSubjects('BCS')">শুরু করুন</button></div>
-<div class="card pink"><div><small>সকল প্রাইমারি নিয়োগ প্রশ্ন সমাধান ও ব্যাখ্যা</small><div class="icon">🏫</div></div><button class="btn" onclick="showPrimaryList()">শুরু করুন</button></div>
-<div class="card" style="background:#e8ffe8"><div><small>কারেন্ট অ্যাফেয়ার্স</small><div class="icon">📰</div></div><button class="btn" onclick="showSubjects('কারেন্ট')">শুরু করুন</button></div>
-<div class="card beige"><div><small>অফলাইন ডিকশনারি</small><div class="icon">Aa</div></div><button class="btn" onclick="alert('Coming Soon')">শুরু করুন</button></div>
-<div class="card lav"><div><small>বাংলাদেশ ব্যাংক নিয়োগ প্রশ্ন সমাধান ও ব্যাখ্যা</small><div class="icon">🏦</div></div><button class="btn" onclick="showSubjects('ব্যাংক')">শুরু করুন</button></div>
-<div class="card lblue"><div><small>শিক্ষক নিবন্ধন নিয়োগ প্রশ্ন সমাধান ও ব্যাখ্যা</small><div class="icon">👩‍🏫</div></div><button class="btn" onclick="showNTRCAList()">শুরু করুন</button></div>
-<div class="card mint"><div><small>১১-২০ গ্রেড জব সলিউশন</small><div class="icon">💼</div></div><button class="btn" onclick="showSubjects('11-20 Grade')">শুরু করুন</button></div>
+<div class="card" style="background:#e6f7f4"><div><small>৫০তম - ১০তম BCS - 41 Set</small><div class="icon">💡</div><small>100% Common</small></div><button class="btn" onclick="showMain('BCS 10-50th')">শুরু করুন - 41 Set</button></div>
+<div class="card" style="background:#e8f0ff"><div><small>প্রাইমারি সহকারী ও প্রধান শিক্ষক - 100+ Set</small><div class="icon">🏫</div></div><button class="btn" onclick="showPrimary()">শুরু করুন - 100+ Set</button></div>
+<div class="card" style="background:#e8ffe8"><div><small>NTRCA 1-19th - 33+ Set</small><div class="icon">👩‍🏫</div></div><button class="btn" onclick="showNTRCA()">শুরু করুন - 33+ Set</button></div>
+<div class="card" style="background:#fff9c4"><div><small>Non-Cadre - 100+ Set</small><div class="icon">📋</div></div><button class="btn" onclick="showMain('Non-Cadre 100+')">শুরু করুন - 100+ Set</button></div>
+<div class="card" style="background:#ffe8f0"><div><small>11-20 Grade - 200+ Set</small><div class="icon">💼</div></div><button class="btn" onclick="showMain('11-20 Grade 200+')">শুরু করুন - 200+ Set</button></div>
+<div class="card" style="background:#ede8ff"><div><small>Bank Job - 200+ Set</small><div class="icon">🏦</div></div><button class="btn" onclick="showMain('Bank 200+')">শুরু করুন - 200+ Set</button></div>
+</div>
+<div style="padding:10px">${AD}</div>
+<div style="padding:0 12px"><b>Topic Wise 5 Set - সন্ধি 5 Set, সমাস 5 Set...</b></div>
+<div class="grid">
+<div class="card"><div><small>বাংলা - সন্ধি 5 Set, সমাস 5 Set</small><div class="icon">📚</div></div><button class="btn" onclick="showTopics('বাংলা ভাষা')">Topic Wise 5 Set</button></div>
+<div class="card"><div><small>English - Voice 5 Set, Narration 5 Set</small><div class="icon">📝</div></div><button class="btn" onclick="showTopics('English')">Topic Wise 5 Set</button></div>
 </div>
 <div style="padding:10px">${AD}</div>`;
 }
 
-// BCS LIST - আপনার ৩ নং ছবির মতো
-function showBCSList(){
-let h=`<div class="header"><div style="display:flex;gap:10px;align-items:center"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="flex:1;text-align:right;margin:0">৫০তম - ১০তম বিসিএস প্রশ্ন সমাধান ও ব্যাখ্যা</h3></div></div>
-<div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding-top:12px"><div style="text-align:center;font-size:50px">🧑‍💼</div>`;
-for(let i=50;i>=10;i--){
-h+=`<div class="list" onclick="openYear('BCS','${i}তম বিসিএস')"><div style="font-size:26px">💡</div><b>${i}তম বিসিএস প্রশ্ন সমাধান ও ব্যাখ্যা</b></div>`;
+function showPrimary(){
+let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">Primary Assistant & Headmaster - 100+ Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding-top:10px">`;
+for(let y=2026;y>=2010;y--){for(let k=0;k<3;k++){h+=`<div class="list" onclick="openExam('Primary 100+','${y} - Set ${k+1}')"><div style="font-size:24px">🏫</div><div><b>${y} সালের প্রশ্ন - Set ${k+1} - সহকারী শিক্ষক</b><br><small>Headmaster + Assistant - 100% ব্যাখ্যা</small></div></div>`;}}
+h+=AD+`</div>`;document.getElementById('app').innerHTML=h;
 }
-h+=AD+`</div>`;
-document.getElementById('app').innerHTML=h;
+function showNTRCA(){
+let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">NTRCA 1-19th - 33+ Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px"><div class="grid">`;
+for(let n=19;n>=1;n--){let yr=2024-(19-n);h+=`<div class="greenBox" onclick="openExam('NTRCA 1-19th','${n}তম স্কুল')">${n}তম NTRCA (স্কুল) - ${yr} - 5 Set</div><div class="greenBox" onclick="openExam('NTRCA 1-19th','${n}তম কলেজ')">${n}তম NTRCA (কলেজ) - ${yr} - 5 Set</div>`;}
+h+=`</div>${AD}</div>`;document.getElementById('app').innerHTML=h;
 }
-
-// PRIMARY LIST - আপনার ৬ ও ৭ নং ছবির মতো
-function showPrimaryList(){
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">প্রাইমারি নিয়োগ প্রশ্ন</h3></div></div>
-<div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding-top:10px">`;
-for(let y=2026;y>=2010;y--){
-h+=`<div class="list" onclick="openYear('Primary','${y} সালের')"><div style="font-size:26px">🏫</div><b>${y} সালের প্রশ্ন সমাধান ও ব্যাখ্যা</b></div>`;
+function showMain(main){curMain=main;let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${main}</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
+let count=main.includes('BCS')?41:main.includes('100+')?100:200;
+for(let i=1;i<=count;i++){h+=`<div class="list" onclick="openExam('${main}','Set ${i}')"><div style="font-size:22px">💡</div><div><b>${main} - Set ${i}</b><br><small>Job Solution + ব্যাখ্যা</small></div></div>`;if(i%10==0)h+=AD;}
+h+=`</div>`;document.getElementById('app').innerHTML=h;
 }
-h+=AD+`</div>`;
-document.getElementById('app').innerHTML=h;
-}
-
-// NTRCA LIST - আপনার ৪ ও ৫ নং ছবির মতো
-function showNTRCAList(){
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">শিক্ষক নিবন্ধন</h3></div></div>
-<div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px"><div class="grid">`;
-for(let n=18;n>=10;n--){
-let year=2024-(18-n)*1;
-h+=`<div class="greenBox" onclick="openYear('NTRCA','${n}তম স্কুল')">${n}তম শিক্ষক নিবন্ধন (স্কুল পর্যায়) - ${year}</div>`;
-h+=`<div class="greenBox" onclick="openYear('NTRCA','${n}তম কলেজ')">${n}তম শিক্ষক নিবন্ধন (কলেজ পর্যায়) - ${year}</div>`;
-}
-h+=`</div>${AD}</div>`;
-document.getElementById('app').innerHTML=h;
-}
-
-function openYear(sub,year){curSub=sub;curYear=year;showSubjects(sub);}
-function showSubjects(sub){
-curSub=sub;
-let topics=QBANK[sub]||QBANK["BCS"];
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${curYear?curYear+' - ':''}${sub} - Topic Bithi</h3></div></div>
-<div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
+function showTopics(main){
+let topics=QBANK[main]||QBANK["বাংলা ভাষা"];
+let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${main} - Topic Wise 5 Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
 Object.keys(topics).forEach(t=>{
-let done=(used[sub]?.[t]||[]).length;
-h+=`<div class="list" onclick="showSets('${sub}','${t.replace(/'/g,"\\'")}')"><div style="font-size:22px">📖</div><div><b>${t}</b><br><small>${done}/5 Set ${done==5?'✅':''}</small></div></div>`;
+let done=(used[main]?.[t]||[]).length;
+h+=`<div class="list" onclick="showSets('${main}','${t.replace(/'/g,"\\'")}')"><div style="font-size:22px">📖</div><div><b>${t} - 5 Set</b><br><small>${done}/5 শেষ ${done==5?'✅':''}</small></div></div>`;
 });
-h+=AD+`</div>`;
-document.getElementById('app').innerHTML=h;
+h+=AD+`</div>`;document.getElementById('app').innerHTML=h;
 }
-function showSets(sub,topic){
-curSub=sub;curTopic=topic;
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="showSubjects('${sub}')" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${topic} - 5 Set</h3></div></div>
-<div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px"><div class="grid">`;
-for(let i=0;i<5;i++){let done=(used[sub]?.[topic]||[]).includes(i);h+=`<div class="card ${done?'mint':''}" onclick="startExam(${i})"><b>Set ${i+1} ${done?'✅':''}</b><div class="icon" style="font-size:28px">📝</div><small>20 প্রশ্ন<br>সন্ধি/সমাস/কারক Topic Wise</small></div>`;}
-h+=`</div>${AD}</div>`;
-document.getElementById('app').innerHTML=h;
+function showSets(main,topic){
+curMain=main;curTopic=topic;
+let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="showTopics('${main}')" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${topic} - 5 Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px"><div class="grid">`;
+for(let i=0;i<5;i++){let done=(used[main]?.[topic]||[]).includes(i);h+=`<div class="card ${done?'mint':''}" onclick="startExam(${i})" style="background:${done?'#e6f7f4':'#fff'}"><b>Set ${i+1} ${done?'✅':''}</b><div class="icon" style="font-size:28px">📝</div><small>20 প্রশ্ন<br>100% Common</small></div>`;}
+h+=`</div>${AD}</div>`;document.getElementById('app').innerHTML=h;
 }
+function openExam(main,topic){curMain=main;curTopic=topic;startExam(0);}
 function startExam(s){setIdx=s;qIdx=0;score=0;showQ();}
 function showQ(){
-let qset=QBANK[curSub]?.[curTopic]?.[setIdx]||Object.values(QBANK["BCS"])[0][0];
+let qset=QBANK[curMain]?.[curTopic]?.[setIdx]||Object.values(QBANK["বাংলা ভাষা"])[0][0];
 let q=qset[qIdx];time=30;answered=false;
 document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:10px;display:flex;justify-content:space-between"><b>${curTopic} S${setIdx+1}</b><b id="tmr">⏱ ${time}s</b></div><div style="padding:12px;background:#fff;min-height:100vh"><div style="font-size:12px">Q ${qIdx+1}/20 | Score ${score}</div><div style="font-size:16px;font-weight:700;margin:8px 0">${q.q}</div><div id="opts">${q.o.map((o,i)=>`<div class="opt" onclick="check(${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div><div id="ex"></div><button class="btn" id="nxt" style="display:none;width:100%;text-align:center;margin-top:10px" onclick="nextQ()">পরের প্রশ্ন →</button>${AD}</div>`;
 clearInterval(timer);timer=setInterval(()=>{if(answered) return;time--;let t=document.getElementById('tmr');if(t)t.innerText='⏱ '+time+'s';if(time<=0)check(-1);},1000);
 }
-function check(ans){if(answered) return;answered=true;clearInterval(timer);let qset=QBANK[curSub]?.[curTopic]?.[setIdx]||Object.values(QBANK["BCS"])[0][0];let q=qset[qIdx];document.querySelectorAll('.opt').forEach((el,i)=>{el.style.pointerEvents='none';if(i==q.a)el.classList.add('correct');if(ans!=-1&&i==ans&&ans!=q.a)el.classList.add('wrong');});let ok=ans==q.a;if(ok)score++;let msg=ans==-1?`⏰ সময় শেষ! সঠিক: ${q.o[q.a]}`:(ok?`✅ সঠিক উত্তর!`:`❌ ভুল! সঠিক: ${q.o[q.a]}`);document.getElementById('ex').innerHTML=`<div style="margin-top:8px;padding:10px;border-radius:10px;background:${ok?'#e8f5e9':'#ffebee'}"><b>${msg}</b><div style="background:#fff;padding:6px;border-radius:6px;margin-top:5px"><small>💡 ${q.e}<br>📖 ${q.src}</small></div></div>`;document.getElementById('nxt').style.display='block';}
-function nextQ(){qIdx++;let len=(QBANK[curSub]?.[curTopic]?.[setIdx]||[]).length||20;if(qIdx<len)showQ();else finish();}
-function finish(){if(!used[curSub])used[curSub]={};if(!used[curSub][curTopic])used[curSub][curTopic]=[];if(!used[curSub][curTopic].includes(setIdx)){used[curSub][curTopic].push(setIdx);localStorage.setItem('final_all_used',JSON.stringify(used));}document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:20px;text-align:center"><h2>${curTopic} Set ${setIdx+1} শেষ!</h2><h1 style="font-size:42px">${score}/20</h1><h3>${score>=14?'✅ Pass':'❌ Fail'}</h3></div><div style="padding:14px;background:#fff">${AD}<button class="btn" style="width:100%;text-align:center" onclick="showSets('${curSub}','${curTopic.replace(/'/g,"\\'")}')">⏭️ পরের Set</button><button class="btn" style="width:100%;background:#666;text-align:center;margin-top:8px" onclick="home()">🏠 হোম</button></div>`;}
+function check(ans){if(answered) return;answered=true;clearInterval(timer);let qset=QBANK[curMain]?.[curTopic]?.[setIdx]||Object.values(QBANK["বাংলা ভাষা"])[0][0];let q=qset[qIdx];document.querySelectorAll('.opt').forEach((el,i)=>{el.style.pointerEvents='none';if(i==q.a)el.classList.add('correct');if(ans!=-1&&i==ans&&ans!=q.a)el.classList.add('wrong');});let ok=ans==q.a;if(ok)score++;let msg=ans==-1?`⏰ সময় শেষ! সঠিক: ${q.o[q.a]}`:(ok?`✅ সঠিক উত্তর!`:`❌ ভুল! সঠিক: ${q.o[q.a]}`);document.getElementById('ex').innerHTML=`<div style="margin-top:8px;padding:10px;border-radius:10px;background:${ok?'#e8f5e9':'#ffebee'}"><b>${msg}</b><div style="background:#fff;padding:6px;border-radius:6px;margin-top:5px"><small>💡 ব্যাখ্যা: ${q.e}<br>📖 ${q.src}</small></div></div>`;document.getElementById('nxt').style.display='block';}
+function nextQ(){qIdx++;let len=(QBANK[curMain]?.[curTopic]?.[setIdx]||[]).length||20;if(qIdx<len)showQ();else finish();}
+function finish(){if(!used[curMain])used[curMain]={};if(!used[curMain][curTopic])used[curMain][curTopic]=[];if(!used[curMain][curTopic].includes(setIdx)){used[curMain][curTopic].push(setIdx);localStorage.setItem('all_job_used',JSON.stringify(used));}document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:20px;text-align:center"><h2>${curTopic} Set ${setIdx+1} শেষ!</h2><h1 style="font-size:42px">${score}/20</h1><h3>${score>=14?'✅ Pass':'❌ Fail'}</h3></div><div style="padding:14px;background:#fff">${AD}<button class="btn" style="width:100%;text-align:center" onclick="showSets('${curMain}','${curTopic.replace(/'/g,"\\'")}')">⏭️ পরের Set</button><button class="btn" style="width:100%;background:#666;text-align:center;margin-top:8px" onclick="home()">🏠 হোম</button></div>`;}
 home();
 </script></body></html>
