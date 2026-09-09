@@ -3,42 +3,92 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Job Master BD - 400 Set</title>
+<!-- Google AdSense - এখানে তোমার Publisher ID বসবে -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1234567890" crossorigin="anonymous"></script>
 <style>
-body{font-family:system-ui;margin:0;background:#f5f7fb;color:#222}
-.wrap{max-width:650px;margin:auto;padding:10px}
-.card{background:#fff;border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 2px 6px #0001}
-.sub{padding:8px 14px;border-radius:20px;border:1px solid #1769aa;margin:3px;display:inline-block;cursor:pointer;background:#fff;color:#1769aa;font-weight:bold}
+body{font-family:system-ui,-apple-system;margin:0;background:#f0f4f9;color:#222}
+.wrap{max-width:700px;margin:auto;padding:12px}
+.card{background:#fff;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 4px 12px #0001}
+.sub{padding:9px 16px;border-radius:22px;border:1.5px solid #1769aa;margin:4px;display:inline-block;cursor:pointer;background:#fff;color:#1769aa;font-weight:700}
 .sub.active{background:#1769aa;color:#fff}
-.set{padding:7px 9px;border-radius:15px;border:1px solid #ccc;margin:2px;display:inline-block;cursor:pointer;font-size:12px;background:#fff}
-.correct{background:#d4edda!important;border-color:#28a745!important}
-.wrong{background:#f8d7da!important;border-color:#dc3545!important}
-.btn{background:#1769aa;color:#fff;border:0;padding:10px;border-radius:10px;width:100%;font-size:17px;margin-top:8px;cursor:pointer}
-.opt{padding:10px;border:1px solid #ddd;border-radius:8px;margin:6px 0;cursor:pointer}
-.exp{display:none;margin-top:8px;padding:10px;border-radius:8px;font-size:13px}
+.set{padding:7px 11px;border-radius:16px;border:1px solid #ccc;margin:3px;display:inline-block;cursor:pointer;font-size:13px;background:#fff}
+.set.done{background:#d4edda!important;border-color:#28a745!important}
+.correct{background:#d4edda!important;border-color:#28a745!important;color:#155724}
+.wrong{background:#f8d7da!important;border-color:#dc3545!important;color:#721c24}
+.btn{background:#1769aa;color:#fff;border:0;padding:12px;border-radius:12px;width:100%;font-size:17px;margin-top:10px;cursor:pointer;font-weight:700}
+.opt{padding:12px;border:1.5px solid #ddd;border-radius:10px;margin:7px 0;cursor:pointer;transition:0.2s}
+.opt:hover{background:#f5f5f5}
+.exp{display:none;margin-top:10px;padding:12px;border-radius:10px;font-size:14px;line-height:1.5}
 .exp.show{display:block}
-.ok{background:#e8f5e9}.bad{background:#ffebee}
-.adBox{border:1px solid #e0e0e0;background:#fff;padding:12px;border-radius:10px;text-align:center;margin-top:12px}
+.ok{background:#e8f5e9;border:1px solid #a3d9a5}
+.bad{background:#ffebee;border:1px solid #ef9a9a}
+.adBox{border:1px dashed #ffb300;background:#fffbe6;padding:14px;border-radius:12px;text-align:center;margin-top:15px}
+.progress{height:6px;background:#e0e0e0;border-radius:10px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;background:#1769aa;width:0%;transition:0.3s}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="card"><h2 style="margin:0">Job Master BD - 400 Set</h2><small>Bangla 100 | English 100 | Math 100 | GK 100</small></div>
-<div class="card" id="home"></div>
+<div class="card" style="text-align:center"><h2 style="margin:0">Job Master BD - 400 Set</h2><small style="color:#666">Bangla 100 | English 100 | Math 100 | GK 100 = 400 Set | 8000 MCQ</small><div class="progress"><div id="pbar"></div></div></div>
+<div class="card" id="home">Loading...</div>
 <div class="card" id="quiz" style="display:none"></div>
-<div class="card" id="resCard" style="display:none;text-align:center"><h2 id="resT"></h2><p id="resD"></p><button class="btn" onclick="nextSet()">পরের সেট ➡️</button><button class="btn" style="background:#666" onclick="location.reload()">হোম</button></div>
+<div class="card" id="resCard" style="display:none;text-align:center"><h2 id="resT"></h2><p id="resD"></p><div id="adArea"></div><button class="btn" onclick="nextSet()">পরের সেট ➡️</button><button class="btn" style="background:#666" onclick="goHome()">🏠 হোম</button></div>
 </div>
+
+<script>
+// Demo QBANK - তোমার qbank.js থাকলে এটা Auto Replace হয়ে যাবে
+window.QBANK = window.QBANK || {
+"Bangla": Array.from({length:100}, (_,i)=> Array.from({length:20}, (_,j)=>({q:`Bangla Set ${i+1} - প্রশ্ন ${j+1}: বাংলা সাহিত্যের আদি নিদর্শন কোনটি?`,o:["চর্যাপদ","শ্রীকৃষ্ণকীর্তন","বৈষ্ণব পদাবলি","মঙ্গলকাব্য"],a:0,e:"চর্যাপদ বাংলা সাহিত্যের আদি নিদর্শন।"}))),
+"English": Array.from({length:100}, (_,i)=> Array.from({length:20}, (_,j)=>({q:`English Set ${i+1} - Q${j+1}: What is the synonym of 'Honest'?`,o:["Truthful","Liar","Dishonest","False"],a:0,e:"Honest = Truthful - সৎ"}))),
+"Math": Array.from({length:100}, (_,i)=> Array.from({length:20}, (_,j)=>({q:`Math Set ${i+1} - Q${j+1}: 5+7=?`,o:["10","12","13","14"],a:1,e:"5+7=12"}))),
+"GK": Array.from({length:100}, (_,i)=> Array.from({length:20}, (_,j)=>({q:`GK Set ${i+1} - Q${j+1}: বাংলাদেশের রাজধানী কোথায়?`,o:["ঢাকা","চট্টগ্রাম","খুলনা","রাজশাহী"],a:0,e:"বাংলাদেশের রাজধানী ঢাকা।"})))
+};
+</script>
 <script src="qbank.js"></script>
 <script>
-let curSub='Bangla',curNum=1,qi=0,sc=0,timer,done=JSON.parse(localStorage.getItem('done400')||'{}');
-function render(){let h=`<b>বিষয় বাছাই:</b><br><span class="sub ${curSub=='Bangla'?'active':''}" onclick="switchSub('Bangla')">📚 Bangla 100 Set</span><span class="sub ${curSub=='English'?'active':''}" onclick="switchSub('English')">🇬🇧 English 100 Set</span><span class="sub ${curSub=='Math'?'active':''}" onclick="switchSub('Math')">🔢 Math 100 Set</span><span class="sub ${curSub=='GK'?'active':''}" onclick="switchSub('GK')">🌍 GK 100 Set</span><hr><b>${curSub} - সেট বাছাই (100 টা):</b><br>`;for(let i=1;i<=100;i++){let k=curSub+'_'+i;h+=`<span class="set" style="${done[k]?'background:#d4edda':''}" onclick="startSet(${i})">${done[k]?'✅':''}${i}</span>`}document.getElementById('home').innerHTML=h}
-function switchSub(s){curSub=s;render()}
+let curSub='Bangla',curNum=1,qi=0,sc=0,timer,done=JSON.parse(localStorage.getItem('done400')||'{}'),lock=false;
+function updatePbar(){let d=Object.keys(done).length; document.getElementById('pbar').style.width=(d/400*100)+'%'}
+function render(){updatePbar(); let h=`<b>📚 বিষয় বাছাই করুন:</b><br>
+<span class="sub ${curSub=='Bangla'?'active':''}" onclick="switchSub('Bangla')">📚 Bangla (100 Set)</span>
+<span class="sub ${curSub=='English'?'active':''}" onclick="switchSub('English')">🇬🇧 English (100 Set)</span>
+<span class="sub ${curSub=='Math'?'active':''}" onclick="switchSub('Math')">🔢 Math (100 Set)</span>
+<span class="sub ${curSub=='GK'?'active':''}" onclick="switchSub('GK')">🌍 GK (100 Set)</span>
+<hr><b>✅ ${curSub} - 100 টা সেট (Done: ${Object.keys(done).filter(k=>k.startsWith(curSub)).length}/100)</b><br><div style="margin-top:8px">`;
+for(let i=1;i<=100;i++){let k=curSub+'_'+i; h+=`<span class="set ${done[k]?'done':''}" onclick="startSet(${i})">${done[k]?'✅':''}${i}</span>`}
+h+=`</div>`; document.getElementById('home').innerHTML=h}
+function switchSub(s){curSub=s; render()}
 function getSet(sub,n){return window.QBANK[sub][n-1]}
-function startSet(n){curNum=n;qi=0;sc=0;document.getElementById('home').style.display='none';document.getElementById('quiz').style.display='block';document.getElementById('resCard').style.display='none';showQ()}
-function showQ(){let q=getSet(curSub,curNum)[qi];let time=20;clearInterval(timer);document.getElementById('quiz').innerHTML=`<b>সেট: ${curSub} Set ${curNum} | প্রশ্ন: ${qi+1}/20 | স্কোর: ${sc} | সময়: <span id="tm" style="color:red">${time}</span></b><hr><h3>${qi+1}. ${q.q} [${curSub} S${curNum} Q${qi+1}]</h3>${q.o.map((op,i)=>`<div class="opt" onclick="ans(${i})">${String.fromCharCode(65+i)}. ${op}</div>`).join('')}<div id="exp" class="exp"></div>`;timer=setInterval(()=>{time--;document.getElementById('tm').innerText=time;if(time<=0){clearInterval(timer);ans(-1)}},1000)}
-function ans(s){if(window.lock) return; window.lock=true; clearInterval(timer); let q=getSet(curSub,curNum)[qi]; let exp=document.getElementById('exp'); let opts=document.querySelectorAll('.opt'); opts.forEach((o,i)=>{if(i==q.a)o.classList.add('correct'); if(i==s&&s!=q.a)o.classList.add('wrong')}); if(s==q.a){sc++;exp.className='exp show ok';exp.innerHTML=`✅ সঠিক! ${q.e}`}else{exp.className='exp show bad';exp.innerHTML=`❌ ভুল! সঠিক: ${q.o[q.a]}<br>${q.e}`} setTimeout(()=>{window.lock=false; qi++; if(qi<20) showQ(); else finish()},1500)}
-function finish(){clearInterval(timer); document.getElementById('quiz').innerHTML=''; let k=curSub+'_'+curNum; done[k]=true; localStorage.setItem('done400',JSON.stringify(done)); document.getElementById('resCard').style.display='block'; document.getElementById('resT').innerHTML=`🎉 ${curSub} Set ${curNum} শেষ!`; document.getElementById('resD').innerHTML=`স্কোর: ${sc}/20<br>${sc>=14?'🌟 Excellent':sc>=10?'✅ Pass':'❌ Fail'}<br>মোট শেষ: ${Object.keys(done).length}/400 সেট<br><br><div class="adBox">🎯 পরের চাকরির আপডেট মিস করতে না চাইলে<br><button class="btn" style="width:auto;padding:8px 20px;margin-top:8px" onclick="window.open('https://t.me/yourchannel','_blank')">Join Telegram Channel</button><br><small style="color:#888">Sponsored</small></div>`; }
-function nextSet(){if(curNum<100) startSet(curNum+1); else {document.getElementById('resCard').style.display='none';document.getElementById('home').style.display='block';render()}}
-render()
+function startSet(n){curNum=n; qi=0; sc=0; document.getElementById('home').style.display='none'; document.getElementById('quiz').style.display='block'; document.getElementById('resCard').style.display='none'; showQ()}
+function goHome(){document.getElementById('resCard').style.display='none'; document.getElementById('quiz').style.display='none'; document.getElementById('home').style.display='block'; render()}
+function showQ(){let q=getSet(curSub,curNum)[qi]; let time=20; clearInterval(timer); lock=false;
+document.getElementById('quiz').innerHTML=`<b>${curSub} Set ${curNum} | ${qi+1}/20 | স্কোর: ${sc} | ⏱️ <span id="tm" style="color:red">${time}</span>s</b><hr><h3 style="margin:8px 0">${qi+1}. ${q.q}</h3>${q.o.map((op,i)=>`<div class="opt" id="opt${i}" onclick="ans(${i})">${String.fromCharCode(65+i)}. ${op}</div>`).join('')}<div id="exp" class="exp"></div>`;
+timer=setInterval(()=>{time--; let tm=document.getElementById('tm'); if(tm) tm.innerText=time; if(time<=0){clearInterval(timer); ans(-1)}},1000)}
+function ans(s){
+if(lock) return; lock=true; clearInterval(timer);
+let q=getSet(curSub,curNum)[qi];
+let exp=document.getElementById('exp');
+for(let i=0;i<4;i++){let el=document.getElementById('opt'+i); if(!el) continue; if(i==q.a) el.classList.add('correct'); if(i==s && s!=q.a) el.classList.add('wrong')}
+if(s==q.a){sc++; exp.className='exp show ok'; exp.innerHTML=`✅ <b>সঠিক উত্তর!</b><br>${q.e}`;}
+else {exp.className='exp show bad'; if(s==-1) exp.innerHTML=`⏰ <b>সময় শেষ!</b> সঠিক উত্তর: <b>${q.o[q.a]}</b><br>${q.e}`; else exp.innerHTML=`❌ <b>ভুল উত্তর!</b> তোমার উত্তর: ${q.o[s]}<br>✅ সঠিক উত্তর: <b>${q.o[q.a]}</b><br><hr>${q.e}`;}
+setTimeout(()=>{qi++; if(qi<20) showQ(); else finish()},2200);
+}
+function finish(){
+clearInterval(timer); document.getElementById('quiz').innerHTML=''; let k=curSub+'_'+curNum; done[k]=true; localStorage.setItem('done400',JSON.stringify(done));
+document.getElementById('resCard').style.display='block';
+document.getElementById('resT').innerHTML=`🎉 ${curSub} Set ${curNum} শেষ!`;
+document.getElementById('resD').innerHTML=`<h1 style="margin:0">${sc}/20</h1>${sc>=14?'🌟 Excellent':sc>=10?'✅ Pass':'❌ Fail - আবার চেষ্টা করুন'}<br>মোট শেষ: ${Object.keys(done).length}/400 সেট`;
+document.getElementById('adArea').innerHTML=`
+<div class="adBox">
+🎯 <b>পরের চাকরির সার্কুলার মিস করতে না চাইলে</b><br>
+<button class="btn" style="width:auto;padding:8px 22px;margin:10px 0" onclick="window.open('https://t.me/yourchannel','_blank')">Join Telegram Channel</button>
+<br><small style="color:#999">Sponsored Ad</small>
+<!-- AdSense Ad - Result এর পর -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1234567890" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
+</div>`;
+}
+function nextSet(){if(curNum<100) startSet(curNum+1); else goHome()}
+render();
 </script>
 </body>
 </html>
