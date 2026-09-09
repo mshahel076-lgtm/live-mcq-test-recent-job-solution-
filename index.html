@@ -1,93 +1,44 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Job Master BD - 400 Set Final</title
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Job Master BD - 400 Set</title>
 <style>
-body{font-family:Arial;background:#f0f2f5;margin:0}header{background:#1769aa;color:#fff;padding:12px;text-align:center;position:sticky;top:0;z-index:10}
-main{max-width:860px;margin:auto;padding:8px}.card{background:#fff;border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 2px 6px #0001}
+body{font-family:system-ui;margin:0;background:#f5f7fb;color:#222}
+.wrap{max-width:650px;margin:auto;padding:10px}
+.card{background:#fff;border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 2px 6px #0001}
 .sub{padding:8px 14px;border-radius:20px;border:1px solid #1769aa;margin:3px;display:inline-block;cursor:pointer;background:#fff;color:#1769aa;font-weight:bold}
-.sub.active{background:#1769aa;color:#fff}.set{padding:5px 9px;border-radius:15px;border:1px solid #ccc;margin:2px;display:inline-block;cursor:pointer;font-size:12px;background:#fff}
-.correct{background:#d4edda!important;border-color:#28a745!important}.wrong{background:#f8d7da!important;border-color:#dc3545!important}
-.btn{background:#1769aa;color:#fff;border:0;padding:12px;border-radius:10px;width:100%;font-size:17px;margin-top:8px}
-.ad{background:#fffbe6;border:2px dashed #ffb300;padding:10px;text-align:center;border-radius:10px;margin:10px 0;font-size:12px}
-.exp{display:none;margin-top:8px;padding:10px;border-radius:8px;font-size:13px}.exp.show{display:block}.ok{background:#d4edda}.no{background:#fff3cd}
+.sub.active{background:#1769aa;color:#fff}
+.set{padding:7px 9px;border-radius:15px;border:1px solid #ccc;margin:2px;display:inline-block;cursor:pointer;font-size:12px;background:#fff}
+.correct{background:#d4edda!important;border-color:#28a745!important}
+.wrong{background:#f8d7da!important;border-color:#dc3545!important}
+.btn{background:#1769aa;color:#fff;border:0;padding:10px;border-radius:10px;width:100%;font-size:17px;margin-top:8px;cursor:pointer}
+.opt{padding:10px;border:1px solid #ddd;border-radius:8px;margin:6px 0;cursor:pointer}
+.exp{display:none;margin-top:8px;padding:10px;border-radius:8px;font-size:13px}
+.exp.show{display:block}
+.ok{background:#e8f5e9}.bad{background:#ffebee}
+.adBox{border:1px solid #e0e0e0;background:#fff;padding:12px;border-radius:10px;text-align:center;margin-top:12px}
 </style>
 </head>
 <body>
-<header><h2 style="margin:0">Job Master BD - 400 Set</h2><small>Bangla 100 | English 100 | Math 100 | GK 100 | Ad + Auto Result</small></header>
-<b>বিষয় বাছাই:</b><br>
-<span class="sub active" id="sub-Bangla" onclick="switchSub('Bangla')">📚 Bangla 100 Set</span>
-<span class="sub" id="sub-English" onclick="switchSub('English')">🇬🇧 English 100 Set</span>
-<span class="sub" id="sub-Math" onclick="switchSub('Math')">🔢 Math 100 Set</span>
-<span class="sub" id="sub-GK" onclick="switchSub('GK')">🌍 GK 100 Set</span>
-<div style="margin-top:8px"><b id="lab">Bangla</b> - সেট বাছাই (100 টা):<br><div id="setList" style="max-height:120px;overflow:auto;margin-top:5px"></div></div>
-<div style="margin-top:8px;font-weight:bold">সেট: <span id="curSet">Bangla Set 1</span> | প্রশ্ন: <span id="qc">1/20</span> | স্কোর: <span id="sc">0</span> | সময়: <span id="tm" style="color:red">20:00</span></div>
+<div class="wrap">
+<div class="card"><h2 style="margin:0">Job Master BD - 400 Set</h2><small>Bangla 100 | English 100 | Math 100 | GK 100</small></div>
+<div class="card" id="home"></div>
+<div class="card" id="quiz" style="display:none"></div>
+<div class="card" id="resCard" style="display:none;text-align:center"><h2 id="resT"></h2><p id="resD"></p><button class="btn" onclick="nextSet()">পরের সেট ➡️</button><button class="btn" style="background:#666" onclick="location.reload()">হোম</button></div>
 </div>
-<div class="ad">Top Ad - আয় এখান থেকে <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="111" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
-<div id="quiz"></div>
-<div class="ad">Mid Ad - প্রতি 5 প্রশ্ন পর</div>
-<div id="resCard" class="card" style="display:none;text-align:center"><h2 id="resT"></h2><p id="resD"></p><button class="btn" onclick="nextSet()">পরের সেট ➡️</button><button class="btn" style="background:#555" onclick="restart()">আবার দিন</button></div>
-<div class="ad">Bottom Ad - <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="333" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
-</main>
+<script src="qbank.js"></script>
 <script>
-// ========== 400 SET AUTO GENERATOR ==========
-const SAMPLE = {
-Bangla: [
-{q:"'সোনার তরী' কে লিখেছেন?",o:["রবীন্দ্রনাথ","নজরুল","জসীম","জীবনানন্দ"],a:0,e:"রবীন্দ্রনাথ ঠাকুর"},
-{q:"বাংলা বর্ণমালায় মোট বর্ণ কয়টি?",o:["৫০টি","৩৯টি","১১টি","৪৯টি"],a:0,e:"৫০টি"},
-{q:"সাধু ও চলিত মিশ্রণকে কি বলে?",o:["গুরুচণ্ডালী","সাধু","চলিত","মিশ্র"],a:0,e:"গুরুচণ্ডালী দোষ"},
-{q:"'বিদ্রোহী' কবিতা কার?",o:["নজরুল","রবীন্দ্রনাথ","সুকান্ত","জসীম"],a:0,e:"কাজী নজরুল ইসলাম"},
-{q:"চর্যাপদ কোন ভাষায়?",o:["বাংলা","সংস্কৃত","পালি","হিন্দি"],a:0,e:"বাংলা ভাষার আদি নিদর্শন"}
-],
-English: [
-{q:"Synonym of Honest?",o:["Truthful","Liar","False","Dishonest"],a:0,e:"Honest = Truthful"},
-{q:"Antonym of Big?",o:["Small","Large","Huge","Great"],a:0,e:"Big vs Small"},
-{q:"Plural of Child?",o:["Children","Childs","Childrens","Childes"],a:0,e:"Children"},
-{q:"He ___ yesterday.",o:["went","go","going","goes"],a:0,e:"Past tense went"},
-{q:"Which is verb?",o:["Run","Beautiful","Table","Quickly"],a:0,e:"Run is verb"}
-],
-Math: [
-{q:"2+2*2=?",o:["6","8","4","10"],a:0,e:"BODMAS: 2+4=6"},
-{q:"10% of 200?",o:["20","10","30","40"],a:0,e:"200*10/100=20"},
-{q:"12x12=?",o:["144","124","142","154"],a:0,e:"12*12=144"},
-{q:"ত্রিভুজের কোণ সমষ্টি?",o:["180°","90°","360°","270°"],a:0,e:"১৮০ ডিগ্রি"},
-{q:"5,10,15 next?",o:["20","25","30","18"],a:0,e:"+5 করে"}
-],
-GK: [
-{q:"বাংলাদেশের রাজধানী?",o:["ঢাকা","চট্টগ্রাম","খুলনা","রাজশাহী"],a:0,e:"ঢাকা"},
-{q:"বিশ্বের বৃহত্তম মহাসাগর?",o:["প্রশান্ত","আটলান্টিক","ভারত","উত্তর"],a:0,e:"প্রশান্ত মহাসাগর"},
-{q:"UN প্রতিষ্ঠা?",o:["1945","1947","1950","1939"],a:0,e:"1945 সালে"},
-{q:"জাতীয় ফুল?",o:["শাপলা","গোলাপ","জবা","বেলী"],a:0,e:"শাপলা"},
-{q:"সবচেয়ে বড় গ্রহ?",o:["বৃহস্পতি","শনি","পৃথিবী","মঙ্গল"],a:0,e:"বৃহস্পতি"}
-]
-};
-
-window.QBANK={Bangla:[],English:[],Math:[],GK:[]};
-for(let sub in SAMPLE){
-  for(let s=0;s<100;s++){
-    let set=[];
-    for(let i=0;i<20;i++){
-      let base=SAMPLE[sub][i%SAMPLE[sub].length];
-      set.push({q:`${base.q} [${sub} S${s+1} Q${i+1}]`,o:[...base.o],a:base.a,e:base.e});
-    }
-    window.QBANK[sub].push(set);
-  }
-}
-// ========== QUIZ LOGIC ==========
-let curSub='Bangla', curNum=1, qi=0, sc=0, lock=false, timer;
-let done=JSON.parse(localStorage.getItem('done400')||'{}');
-function switchSub(s){curSub=s; document.querySelectorAll('.sub').forEach(e=>e.classList.remove('active')); document.getElementById('sub-'+s).classList.add('active'); curNum=1; renderSets(); startSet(1);}
-function renderSets(){let h=''; for(let i=1;i<=100;i++){let k=curSub+'_'+i; let d=done[k]?'✅':''; let a=i==curNum?' active':''; let don=done[k]?' done':''; h+=`<span class="set${a}${don}" onclick="startSet(${i})">${d}${i}</span>`;} document.getElementById('setList').innerHTML=h; document.getElementById('lab').innerText=curSub;}
-function getSet(sub,n){return window.QBANK[sub][n-1];}
-function startSet(n){curNum=n; qi=0; sc=0; document.getElementById('resCard').style.display='none'; document.getElementById('curSet').innerText=`${curSub} Set ${n}`; renderSets(); showQ(); startTimer();}
-function showQ(){lock=false; let list=getSet(curSub,curNum); let q=list[qi]; document.getElementById('qc').innerText=`${qi+1}/20`; document.getElementById('sc').innerText=sc; let h=`<div class="card"><div style="font-weight:bold;font-size:17px">${qi+1}. ${q.q}</div>`; q.o.forEach((op,i)=>{h+=`<label class="option" id="op${i}" onclick="ans(${i})">${String.fromCharCode(65+i)}. ${op}</label>`}); h+=`<div id="exp" class="exp"></div></div>`; document.getElementById('quiz').innerHTML=h;}
-function ans(s){if(lock) return; lock=true; let list=getSet(curSub,curNum); let q=list[qi]; let exp=document.getElementById('exp'); q.o.forEach((_,i)=>{let el=document.getElementById('op'+i); if(i==q.a) el.classList.add('correct'); if(i==s && i!=q.a) el.classList.add('wrong');}); if(s==q.a){sc++; document.getElementById('sc').innerText=sc; exp.innerHTML=`✅ <b>সঠিক উত্তর!</b> ${q.e}`; exp.className='exp show ok';} else{exp.innerHTML=`❌ <b>ভুল!</b> সঠিক: <b>${String.fromCharCode(65+q.a)}. ${q.o[q.a]}</b><br>💡 ${q.e}`; exp.className='exp show no';} setTimeout(()=>{qi++; if(qi<20) showQ(); else finish();},1700);}
-function finish(){clearInterval(timer); document.getElementById('quiz').innerHTML=''; let k=curSub+'_'+curNum; done[k]=true; localStorage.setItem('done400',JSON.stringify(done)); document.getElementById('resCard').style.display='block'; document.getElementById('resT').innerHTML=`🎉 ${curSub} Set ${curNum} শেষ!`; document.getElementById('resD').innerHTML=`স্কোর: ${sc}/20<br>${sc>=14?'🌟 Excellent':sc>=10?'✅ Pass':'❌ Fail'}<br>মোট শেষ: ${Object.keys(done).length}/400 সেট`;
-document.getElementById('resD').innerHTML += `<br><br><div style="border:1px solid #ffb300;padding:8px;border-radius:8px;background:#fffbe6">🎯 পরের চাকরির সার্কুলার মিস করতে না চাইলে<br><button class="btn" style="padding:6px" onclick="window.open('https://google.com','_blank')">Join Telegram</button></div>`;
-}
-function nextSet(){if(curNum<100) startSet(curNum+1); else if(curNum==100){let subs=['Bangla','English','Math','GK']; let idx=subs.indexOf(curSub); if(idx<3) switchSub(subs[idx+1]);}} function restart(){startSet(curNum);} function startTimer(){clearInterval(timer); let t=20*60; timer=setInterval(()=>{t--; let m=Math.floor(t/60), s=t%60; document.getElementById('tm').innerText=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; if(t<=0){clearInterval(timer); finish();}},1000);}
-renderSets(); startSet(1);
+let curSub='Bangla',curNum=1,qi=0,sc=0,timer,done=JSON.parse(localStorage.getItem('done400')||'{}');
+function render(){let h=`<b>বিষয় বাছাই:</b><br><span class="sub ${curSub=='Bangla'?'active':''}" onclick="switchSub('Bangla')">📚 Bangla 100 Set</span><span class="sub ${curSub=='English'?'active':''}" onclick="switchSub('English')">🇬🇧 English 100 Set</span><span class="sub ${curSub=='Math'?'active':''}" onclick="switchSub('Math')">🔢 Math 100 Set</span><span class="sub ${curSub=='GK'?'active':''}" onclick="switchSub('GK')">🌍 GK 100 Set</span><hr><b>${curSub} - সেট বাছাই (100 টা):</b><br>`;for(let i=1;i<=100;i++){let k=curSub+'_'+i;h+=`<span class="set" style="${done[k]?'background:#d4edda':''}" onclick="startSet(${i})">${done[k]?'✅':''}${i}</span>`}document.getElementById('home').innerHTML=h}
+function switchSub(s){curSub=s;render()}
+function getSet(sub,n){return window.QBANK[sub][n-1]}
+function startSet(n){curNum=n;qi=0;sc=0;document.getElementById('home').style.display='none';document.getElementById('quiz').style.display='block';document.getElementById('resCard').style.display='none';showQ()}
+function showQ(){let q=getSet(curSub,curNum)[qi];let time=20;clearInterval(timer);document.getElementById('quiz').innerHTML=`<b>সেট: ${curSub} Set ${curNum} | প্রশ্ন: ${qi+1}/20 | স্কোর: ${sc} | সময়: <span id="tm" style="color:red">${time}</span></b><hr><h3>${qi+1}. ${q.q} [${curSub} S${curNum} Q${qi+1}]</h3>${q.o.map((op,i)=>`<div class="opt" onclick="ans(${i})">${String.fromCharCode(65+i)}. ${op}</div>`).join('')}<div id="exp" class="exp"></div>`;timer=setInterval(()=>{time--;document.getElementById('tm').innerText=time;if(time<=0){clearInterval(timer);ans(-1)}},1000)}
+function ans(s){if(window.lock) return; window.lock=true; clearInterval(timer); let q=getSet(curSub,curNum)[qi]; let exp=document.getElementById('exp'); let opts=document.querySelectorAll('.opt'); opts.forEach((o,i)=>{if(i==q.a)o.classList.add('correct'); if(i==s&&s!=q.a)o.classList.add('wrong')}); if(s==q.a){sc++;exp.className='exp show ok';exp.innerHTML=`✅ সঠিক! ${q.e}`}else{exp.className='exp show bad';exp.innerHTML=`❌ ভুল! সঠিক: ${q.o[q.a]}<br>${q.e}`} setTimeout(()=>{window.lock=false; qi++; if(qi<20) showQ(); else finish()},1500)}
+function finish(){clearInterval(timer); document.getElementById('quiz').innerHTML=''; let k=curSub+'_'+curNum; done[k]=true; localStorage.setItem('done400',JSON.stringify(done)); document.getElementById('resCard').style.display='block'; document.getElementById('resT').innerHTML=`🎉 ${curSub} Set ${curNum} শেষ!`; document.getElementById('resD').innerHTML=`স্কোর: ${sc}/20<br>${sc>=14?'🌟 Excellent':sc>=10?'✅ Pass':'❌ Fail'}<br>মোট শেষ: ${Object.keys(done).length}/400 সেট<br><br><div class="adBox">🎯 পরের চাকরির আপডেট মিস করতে না চাইলে<br><button class="btn" style="width:auto;padding:8px 20px;margin-top:8px" onclick="window.open('https://t.me/yourchannel','_blank')">Join Telegram Channel</button><br><small style="color:#888">Sponsored</small></div>`; }
+function nextSet(){if(curNum<100) startSet(curNum+1); else {document.getElementById('resCard').style.display='none';document.getElementById('home').style.display='block';render()}}
+render()
 </script>
 </body>
 </html>
