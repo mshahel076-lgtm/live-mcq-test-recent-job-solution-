@@ -1,88 +1,120 @@
 <!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Job Master BD - All Job 600+ Set Final</title>
+<title>Job Master BD - Final 600+ Set + Topic Wise</title>
 <link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0a5c5c">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 <style>
 *{box-sizing:border-box;font-family:Hind Siliguri,sans-serif}body{margin:0;background:#f2f4f7}
-.header{background:#0a5c5c;color:#fff;padding:16px 14px 50px 14px}.header h2{margin:0;text-align:right;font-size:20px}
-.banner{background:#ffde59;border-radius:20px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin:-35px 12px 12px 12px;box-shadow:0 5px 12px #0002}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 10px}
+.header{background:#0a5c5c;color:#fff;padding:14px 14px 48px 14px}.header h2{margin:0;text-align:right}
+.banner{background:#ffde59;border-radius:20px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin:-36px 12px 12px 12px;box-shadow:0 5px 12px #0002}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 10px}
 .card{background:#fff;border-radius:18px;padding:10px;text-align:center;box-shadow:0 2px 8px #0001;min-height:175px;display:flex;flex-direction:column;justify-content:space-between}
-.icon{font-size:42px;margin:6px 0}.btn{background:#0a5c5c;color:#fff;border:0;padding:7px 14px;border-radius:20px;font-weight:700;font-size:12px;cursor:pointer}
-.list{background:#eef1f6;border-radius:14px;padding:12px;margin:8px 10px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 5px #0001;cursor:pointer}
-.greenBox{background:linear-gradient(135deg,#0a5c5c,#2ecc71);color:#fff;border-radius:18px;padding:14px 8px;text-align:center;min-height:95px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.list{background:#eef1f6;border-radius:14px;padding:12px;margin:8px 10px;display:flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 2px 5px #0001}
+.subCard{background:#f8f4ff;border-radius:20px;padding:18px 10px;text-align:center;box-shadow:0 3px 10px #0001;min-height:155px}
+.subCard b{font-size:16px}.greenBox{background:linear-gradient(135deg,#0a5c5c,#2ecc71);color:#fff;border-radius:18px;padding:14px 8px;text-align:center;min-height:95px;display:flex;align-items:center;justify-content:center;font-weight:700}
 .opt{background:#fff;padding:10px 12px;border-radius:10px;margin:6px 0;border:1.5px solid #ddd;cursor:pointer}
 .opt.correct{background:#c8e6c9!important;border-color:#2e7d32!important}.opt.wrong{background:#ffcdd2!important;border-color:#c62828!important}
 .adBox{background:#fffbe6;border:2px dashed #ff9800;padding:10px;border-radius:12px;text-align:center;margin:10px}
+.btn{background:#0a5c5c;color:#fff;border:0;padding:8px 14px;border-radius:20px;font-weight:700;cursor:pointer}
 </style></head><body><div id="app"></div>
-<script src="qbank.js?v=all_job_600"></script>
+<script src="qbank.js?v=final_original"></script>
 <script>
-const AD=`<div class="adBox"><small>Sponsored • Google Ad</small><br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXX" data-ad-slot="YYYYYYYYYY" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});<\/script></div>`;
-let curMain='',curTopic='',setIdx=0,qIdx=0,score=0,timer,time=30,answered=false;
-let used=JSON.parse(localStorage.getItem('all_job_used')||'{}');
+const AD=`<div class="adBox"><small>Sponsored • Ad</small><br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXX" data-ad-slot="YYYYYYYYYY" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});<\/script></div>`;
+let curMain='',curTopic='',setIdx=0,qIdx=0,score=0,timer,time=40,answered=false;
+let used=JSON.parse(localStorage.getItem('job_final_used')||'{}');
+function getQCount(main){if(main.includes('BCS')) return 200; if(main.includes('Primary')) return 80; if(main.includes('11-20')) return 80; if(main.includes('NTRCA')) return 100; if(main.includes('Bank')) return 100; if(main.includes('Non-Cadre')) return 100; return 20;}
 
+// HOME - আপনার ১ ও ২ নং ছবির মতো
 function home(){
 document.getElementById('app').innerHTML=`
 <div class="header"><h2>স্বাগতম,<br>আপনার লক্ষ্যে এগিয়ে যান।</h2></div>
 <div class="banner"><div><b>পরীক্ষার<br>প্রস্তুতি হোক আরো<br>সহজে।</b></div><div style="font-size:48px">👩‍🎓👨‍🏫</div></div>
-<div style="padding:0 12px"><b style="color:#0a5c5c">600+ Set Job Solution - Topic Wise 5 Set</b></div>
-<div class="grid">
-<div class="card" style="background:#e6f7f4"><div><small>৫০তম - ১০তম BCS - 41 Set</small><div class="icon">💡</div><small>100% Common</small></div><button class="btn" onclick="showMain('BCS 10-50th')">শুরু করুন - 41 Set</button></div>
-<div class="card" style="background:#e8f0ff"><div><small>প্রাইমারি সহকারী ও প্রধান শিক্ষক - 100+ Set</small><div class="icon">🏫</div></div><button class="btn" onclick="showPrimary()">শুরু করুন - 100+ Set</button></div>
-<div class="card" style="background:#e8ffe8"><div><small>NTRCA 1-19th - 33+ Set</small><div class="icon">👩‍🏫</div></div><button class="btn" onclick="showNTRCA()">শুরু করুন - 33+ Set</button></div>
-<div class="card" style="background:#fff9c4"><div><small>Non-Cadre - 100+ Set</small><div class="icon">📋</div></div><button class="btn" onclick="showMain('Non-Cadre 100+')">শুরু করুন - 100+ Set</button></div>
-<div class="card" style="background:#ffe8f0"><div><small>11-20 Grade - 200+ Set</small><div class="icon">💼</div></div><button class="btn" onclick="showMain('11-20 Grade 200+')">শুরু করুন - 200+ Set</button></div>
-<div class="card" style="background:#ede8ff"><div><small>Bank Job - 200+ Set</small><div class="icon">🏦</div></div><button class="btn" onclick="showMain('Bank 200+')">শুরু করুন - 200+ Set</button></div>
-</div>
-<div style="padding:10px">${AD}</div>
-<div style="padding:0 12px"><b>Topic Wise 5 Set - সন্ধি 5 Set, সমাস 5 Set...</b></div>
-<div class="grid">
-<div class="card"><div><small>বাংলা - সন্ধি 5 Set, সমাস 5 Set</small><div class="icon">📚</div></div><button class="btn" onclick="showTopics('বাংলা ভাষা')">Topic Wise 5 Set</button></div>
-<div class="card"><div><small>English - Voice 5 Set, Narration 5 Set</small><div class="icon">📝</div></div><button class="btn" onclick="showTopics('English')">Topic Wise 5 Set</button></div>
+<div style="padding:6px 12px"><b style="color:#0a5c5c">BCS কঠিন নয়; লক্ষ্য যদি সঠিক হয়।</b></div>
+<div class="grid2">
+<div class="card" style="background:#e6f7f4"><div><small>৫০তম - ১০তম বিসিএস প্রশ্ন সমাধান ও ব্যাখ্যা<br><b>41 Set x 200 Q</b></small><div style="font-size:40px">💡</div></div><button class="btn" onclick="showBCSList()">শুরু করুন</button></div>
+<div class="card" style="background:#e8f0ff"><div><small>বিসিএস বিষয়াবলী<br>Basic Strong + Topic 5 Set</small><div style="font-size:40px">📚</div></div><button class="btn" onclick="showBishoyaboli()">শুরু করুন</button></div>
+<div class="card"><div><small>সকল বিসিএস প্রশ্ন ও কুইজ</small><div style="font-size:40px">📝</div></div><button class="btn" onclick="showBishoyaboli()">কুইজ খেলুন</button></div>
+<div class="card" style="background:#fff9c4"><div><small>বিসিএস প্রিলি মডেল টেস্ট</small><div style="font-size:40px">📄</div></div><button class="btn" onclick="showMain('BCS 10-50th')">শুরু করুন</button></div>
+<div class="card" style="background:#ffe8f0"><div><small>প্রাইমারি সহকারী ও প্রধান শিক্ষক<br><b>100+ Set x 80 Q</b></small><div style="font-size:40px">🏫</div></div><button class="btn" onclick="showPrimary()">শুরু করুন</button></div>
+<div class="card" style="background:#e8ffe8"><div><small>শিক্ষক নিবন্ধন<br><b>1-19th - 33+ Set x 100 Q</b></small><div style="font-size:40px">👩‍🏫</div></div><button class="btn" onclick="showNTRCA()">শুরু করুন</button></div>
+<div class="card" style="background:#f5f0e6"><div><small>Non-Cadre<br><b>100+ Set x 100 Q</b></small><div style="font-size:40px">📋</div></div><button class="btn" onclick="showMain('Non-Cadre 100+')">শুরু করুন</button></div>
+<div class="card" style="background:#ede8ff"><div><small>11-20 Grade<br><b>200+ Set x 80 Q</b></small><div style="font-size:40px">💼</div></div><button class="btn" onclick="showMain('11-20 Grade 200+')">শুরু করুন</button></div>
+<div class="card" style="background:#e8f0ff"><div><small>Bank Job<br><b>200+ Set x 100 Q</b></small><div style="font-size:40px">🏦</div></div><button class="btn" onclick="showMain('Bank 200+')">শুরু করুন</button></div>
 </div>
 <div style="padding:10px">${AD}</div>`;
 }
 
+// BCS 50-10 LIST - আপনার ৩ নং ছবির মতো
+function showBCSList(){
+let h=`<div class="header"><div style="display:flex;gap:10px;align-items:center"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">৫০তম - ১০তম বিসিএস প্রশ্ন সমাধান ও ব্যাখ্যা - 200 Q</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding-top:10px"><div style="text-align:center;font-size:40px">🧑‍💼</div>`;
+for(let i=50;i>=10;i--) h+=`<div class="list" onclick="startOriginal('BCS 10-50th','${i}তম বিসিএস')"><div style="font-size:24px">💡</div><b>${i}তম বিসিএস - Original 200 প্রশ্ন + ব্যাখ্যা</b></div>`;
+h+=AD+`</div>`;document.getElementById('app').innerHTML=h;
+}
+
+// BCS BISHOYABOLI - আপনার শেষ ২ টা ছবির মতো - বাংলা, English, স্কোর 0/0
+function showBishoyaboli(){
+let subs=["বাংলা","বিজ্ঞান","English","বাংলাদেশ","আন্তর্জাতিক","তথ্য প্রযুক্তি","গাণিতিক যুক্তি","মানসিক দক্ষতা","ভূগোল","সুশাসন"];
+let icons=["✏️","🔍","a>Z","🗺️","🚩","ⓘ","📅","❓","🌍","🔧"];
+let h=`<div style="background:#f8f8f8;min-height:100vh"><div style="padding:14px;display:flex;gap:10px;align-items:center"><button onclick="home()" style="background:0;border:0;font-size:22px">←</button><h2 style="margin:0;flex:1;text-align:center">বিসিএস বিষয়াবলী</h2></div><div class="grid2">`;
+subs.forEach((s,i)=>{
+let sc=used[s]?Object.values(used[s]).flat().length:0;
+let tot=Object.keys(QBANK[s]||{}).length*5;
+h+=`<div class="subCard" onclick="showTopics('${s}')"><div style="font-size:40px;opacity:.6">${icons[i]}</div><b>${s}</b><br><small>স্কোর: ${sc}/${tot*20||0}</small></div>`;
+});
+h+=`</div><div style="text-align:center;padding:20px"><button class="btn" style="border-radius:30px;padding:12px 22px;background:#0f5e5e" onclick="localStorage.clear();location.reload()">🗑️ সব স্কোর রিসেট করুন</button></div>${AD}</div>`;
+document.getElementById('app').innerHTML=h;
+}
+
 function showPrimary(){
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">Primary Assistant & Headmaster - 100+ Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding-top:10px">`;
-for(let y=2026;y>=2010;y--){for(let k=0;k<3;k++){h+=`<div class="list" onclick="openExam('Primary 100+','${y} - Set ${k+1}')"><div style="font-size:24px">🏫</div><div><b>${y} সালের প্রশ্ন - Set ${k+1} - সহকারী শিক্ষক</b><br><small>Headmaster + Assistant - 100% ব্যাখ্যা</small></div></div>`;}}
+let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">Primary Assistant & Headmaster - 100+ Set x 80 Q</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding-top:10px">`;
+for(let y=2026;y>=2010;y--) h+=`<div class="list" onclick="startOriginal('Primary 100+','${y} সালের')"><div style="font-size:24px">🏫</div><b>${y} সালের প্রশ্ন সমাধান ও ব্যাখ্যা - Original 80 Q</b></div>`;
 h+=AD+`</div>`;document.getElementById('app').innerHTML=h;
 }
 function showNTRCA(){
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">NTRCA 1-19th - 33+ Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px"><div class="grid">`;
-for(let n=19;n>=1;n--){let yr=2024-(19-n);h+=`<div class="greenBox" onclick="openExam('NTRCA 1-19th','${n}তম স্কুল')">${n}তম NTRCA (স্কুল) - ${yr} - 5 Set</div><div class="greenBox" onclick="openExam('NTRCA 1-19th','${n}তম কলেজ')">${n}তম NTRCA (কলেজ) - ${yr} - 5 Set</div>`;}
+let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">NTRCA 1-19th - 33+ Set x 100 Q</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px"><div class="grid2">`;
+for(let n=19;n>=1;n--){let yr=2024-(19-n);h+=`<div class="greenBox" onclick="startOriginal('NTRCA 1-19th','${n}তম স্কুল')">${n}তম স্কুল - ${yr} - 100 Q</div><div class="greenBox" onclick="startOriginal('NTRCA 1-19th','${n}তম কলেজ')">${n}তম কলেজ - ${yr} - 100 Q</div>`;}
 h+=`</div>${AD}</div>`;document.getElementById('app').innerHTML=h;
 }
-function showMain(main){curMain=main;let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${main}</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
-let count=main.includes('BCS')?41:main.includes('100+')?100:200;
-for(let i=1;i<=count;i++){h+=`<div class="list" onclick="openExam('${main}','Set ${i}')"><div style="font-size:22px">💡</div><div><b>${main} - Set ${i}</b><br><small>Job Solution + ব্যাখ্যা</small></div></div>`;if(i%10==0)h+=AD;}
-h+=`</div>`;document.getElementById('app').innerHTML=h;
+function showMain(main){
+let cnt=main.includes('BCS')?41:main.includes('Primary')?100:main.includes('NTRCA')?38:main.includes('11-20')?200:main.includes('Bank')?200:100;
+let per=getQCount(main);
+let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${main} - ${cnt} Set x ${per} Q - Original</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
+for(let i=1;i<=cnt;i++) h+=`<div class="list" onclick="startOriginal('${main}','Set ${i}')"><div>📄</div><b>${main} - Set ${i} - Original ${per} প্রশ্ন + ব্যাখ্যা</b></div>`;
+h+=AD+`</div>`;document.getElementById('app').innerHTML=h;
 }
 function showTopics(main){
-let topics=QBANK[main]||QBANK["বাংলা ভাষা"];
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="home()" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${main} - Topic Wise 5 Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
+let topics=QBANK[main]||QBANK["বাংলা"];
+let h=`<div style="background:#f8f8f8;min-height:100vh"><div style="padding:14px;display:flex;gap:10px"><button onclick="showBishoyaboli()" style="background:0;border:0;font-size:22px">←</button><h3 style="margin:0">${main} - Topic Wise 5 Set - সন্ধি 5 Set, সমাস 5 Set</h3></div><div style="padding:10px">`;
 Object.keys(topics).forEach(t=>{
 let done=(used[main]?.[t]||[]).length;
-h+=`<div class="list" onclick="showSets('${main}','${t.replace(/'/g,"\\'")}')"><div style="font-size:22px">📖</div><div><b>${t} - 5 Set</b><br><small>${done}/5 শেষ ${done==5?'✅':''}</small></div></div>`;
+h+=`<div class="list" onclick="showSets('${main}','${t.replace(/'/g,"\\'")}')"><div>📖</div><div><b>${t} - 5 Set</b><br><small>Basic Strong + 100% Common | ${done}/5 শেষ ${done==5?'✅':''}</small></div></div>`;
 });
-h+=AD+`</div>`;document.getElementById('app').innerHTML=h;
+h+=AD+`</div></div>`;document.getElementById('app').innerHTML=h;
 }
 function showSets(main,topic){
 curMain=main;curTopic=topic;
-let h=`<div class="header"><div style="display:flex;gap:10px"><button onclick="showTopics('${main}')" style="background:0;border:0;color:#fff;font-size:22px">←</button><h3 style="margin:0">${topic} - 5 Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px"><div class="grid">`;
-for(let i=0;i<5;i++){let done=(used[main]?.[topic]||[]).includes(i);h+=`<div class="card ${done?'mint':''}" onclick="startExam(${i})" style="background:${done?'#e6f7f4':'#fff'}"><b>Set ${i+1} ${done?'✅':''}</b><div class="icon" style="font-size:28px">📝</div><small>20 প্রশ্ন<br>100% Common</small></div>`;}
+let h=`<div style="background:#f8f8f8;min-height:100vh"><div style="padding:14px;display:flex;gap:10px"><button onclick="showTopics('${main}')" style="background:0;border:0;font-size:22px">←</button><h3 style="margin:0">${topic} - 5 Set</h3></div><div class="grid2">`;
+for(let i=0;i<5;i++){let done=(used[main]?.[topic]||[]).includes(i);h+=`<div class="subCard" onclick="startExam('${main}','${topic.replace(/'/g,"\\'")}',${i})" style="background:${done?'#e6f7f4':'#fff'}"><b>Set ${i+1} ${done?'✅':''}</b><div style="font-size:28px">📝</div><small>20 প্রশ্ন<br>ভুল/সঠিক + ব্যাখ্যা</small></div>`;}
 h+=`</div>${AD}</div>`;document.getElementById('app').innerHTML=h;
 }
-function openExam(main,topic){curMain=main;curTopic=topic;startExam(0);}
-function startExam(s){setIdx=s;qIdx=0;score=0;showQ();}
+function startOriginal(main,topic){curMain=main;curTopic=topic;setIdx=0;qIdx=0;score=0;showQOriginal();}
+function startExam(main,topic,s){curMain=main;curTopic=topic;setIdx=s;qIdx=0;score=0;showQ();}
 function showQ(){
-let qset=QBANK[curMain]?.[curTopic]?.[setIdx]||Object.values(QBANK["বাংলা ভাষা"])[0][0];
+let qset=QBANK[curMain]?.[curTopic]?.[setIdx]||Object.values(QBANK["বাংলা"])[0][0];
 let q=qset[qIdx];time=30;answered=false;
-document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:10px;display:flex;justify-content:space-between"><b>${curTopic} S${setIdx+1}</b><b id="tmr">⏱ ${time}s</b></div><div style="padding:12px;background:#fff;min-height:100vh"><div style="font-size:12px">Q ${qIdx+1}/20 | Score ${score}</div><div style="font-size:16px;font-weight:700;margin:8px 0">${q.q}</div><div id="opts">${q.o.map((o,i)=>`<div class="opt" onclick="check(${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div><div id="ex"></div><button class="btn" id="nxt" style="display:none;width:100%;text-align:center;margin-top:10px" onclick="nextQ()">পরের প্রশ্ন →</button>${AD}</div>`;
-clearInterval(timer);timer=setInterval(()=>{if(answered) return;time--;let t=document.getElementById('tmr');if(t)t.innerText='⏱ '+time+'s';if(time<=0)check(-1);},1000);
+let tot=qset.length;
+document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:10px;display:flex;justify-content:space-between"><b>${curTopic} S${setIdx+1}</b><b id="tmr">⏱ ${time}s</b></div><div style="padding:12px;background:#fff;min-height:100vh"><div style="font-size:12px">প্রশ্ন ${qIdx+1}/${tot} | স্কোর ${score}</div><div style="font-size:16px;font-weight:700;margin:8px 0">${q.q}</div><div>${q.o.map((o,i)=>`<div class="opt" onclick="check(${i},false)">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div><div id="ex"></div><button class="btn" id="nxt" style="display:none;width:100%;margin-top:10px;text-align:center" onclick="nextQ(false)">পরের প্রশ্ন →</button>${AD}</div>`;
+clearInterval(timer);timer=setInterval(()=>{if(answered) return;time--;let t=document.getElementById('tmr');if(t)t.innerText='⏱ '+time+'s';if(time<=0)check(-1,false);},1000);
 }
-function check(ans){if(answered) return;answered=true;clearInterval(timer);let qset=QBANK[curMain]?.[curTopic]?.[setIdx]||Object.values(QBANK["বাংলা ভাষা"])[0][0];let q=qset[qIdx];document.querySelectorAll('.opt').forEach((el,i)=>{el.style.pointerEvents='none';if(i==q.a)el.classList.add('correct');if(ans!=-1&&i==ans&&ans!=q.a)el.classList.add('wrong');});let ok=ans==q.a;if(ok)score++;let msg=ans==-1?`⏰ সময় শেষ! সঠিক: ${q.o[q.a]}`:(ok?`✅ সঠিক উত্তর!`:`❌ ভুল! সঠিক: ${q.o[q.a]}`);document.getElementById('ex').innerHTML=`<div style="margin-top:8px;padding:10px;border-radius:10px;background:${ok?'#e8f5e9':'#ffebee'}"><b>${msg}</b><div style="background:#fff;padding:6px;border-radius:6px;margin-top:5px"><small>💡 ব্যাখ্যা: ${q.e}<br>📖 ${q.src}</small></div></div>`;document.getElementById('nxt').style.display='block';}
-function nextQ(){qIdx++;let len=(QBANK[curMain]?.[curTopic]?.[setIdx]||[]).length||20;if(qIdx<len)showQ();else finish();}
-function finish(){if(!used[curMain])used[curMain]={};if(!used[curMain][curTopic])used[curMain][curTopic]=[];if(!used[curMain][curTopic].includes(setIdx)){used[curMain][curTopic].push(setIdx);localStorage.setItem('all_job_used',JSON.stringify(used));}document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:20px;text-align:center"><h2>${curTopic} Set ${setIdx+1} শেষ!</h2><h1 style="font-size:42px">${score}/20</h1><h3>${score>=14?'✅ Pass':'❌ Fail'}</h3></div><div style="padding:14px;background:#fff">${AD}<button class="btn" style="width:100%;text-align:center" onclick="showSets('${curMain}','${curTopic.replace(/'/g,"\\'")}')">⏭️ পরের Set</button><button class="btn" style="width:100%;background:#666;text-align:center;margin-top:8px" onclick="home()">🏠 হোম</button></div>`;}
+function showQOriginal(){
+let key=curMain+"_"+curTopic;
+let qset=ORIGINAL_BANK[key]||ORIGINAL_BANK["BCS 10-50th_50তম বিসিএস"]||Object.values(QBANK["বাংলা"])[0][0];
+let per=qset.length;
+let q=qset[qIdx];time=45;answered=false;
+document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:10px;display:flex;justify-content:space-between"><b>${curTopic} - Original ${per} Q</b><b id="tmr">⏱ ${time}s</b></div><div style="padding:12px;background:#fff;min-height:100vh"><div style="font-size:12px">প্রশ্ন ${qIdx+1}/${per} | স্কোর ${score}</div><div style="font-size:16px;font-weight:700;margin:8px 0">${q.q}</div><div>${q.o.map((o,i)=>`<div class="opt" onclick="check(${i},true)">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div><div id="ex"></div><button class="btn" id="nxt" style="display:none;width:100%;margin-top:10px;text-align:center" onclick="nextQ(true)">পরের প্রশ্ন →</button>${AD}</div>`;
+clearInterval(timer);timer=setInterval(()=>{if(answered) return;time--;let t=document.getElementById('tmr');if(t)t.innerText='⏱ '+time+'s';if(time<=0)check(-1,true);},1000);
+}
+function check(ans,isOrig){if(answered) return;answered=true;clearInterval(timer);let qset=isOrig?(ORIGINAL_BANK[curMain+"_"+curTopic]||Object.values(QBANK["বাংলা"])[0][0]):(QBANK[curMain]?.[curTopic]?.[setIdx]||Object.values(QBANK["বাংলা"])[0][0]);let q=qset[qIdx];document.querySelectorAll('.opt').forEach((el,i)=>{el.style.pointerEvents='none';if(i==q.a)el.classList.add('correct');if(ans!=-1&&i==ans&&ans!=q.a)el.classList.add('wrong');});let ok=ans==q.a;if(ok)score++;let msg=ans==-1?`⏰ সময় শেষ! সঠিক: ${q.o[q.a]}`:(ok?`✅ সঠিক উত্তর!`:`❌ ভুল! সঠিক: ${q.o[q.a]}`);document.getElementById('ex').innerHTML=`<div style="margin-top:8px;padding:10px;border-radius:10px;background:${ok?'#e8f5e9':'#ffebee'}"><b>${msg}</b><div style="background:#fff;padding:6px;border-radius:6px;margin-top:5px"><small>💡 ব্যাখ্যা: ${q.e}<br>📖 ${q.src}<br>🔰 Basic: ${q.basic||'মূল নিয়ম মনে রাখুন, 100% Common'}</small></div></div>`;document.getElementById('nxt').style.display='block';}
+function nextQ(isOrig){qIdx++;let qset=isOrig?(ORIGINAL_BANK[curMain+"_"+curTopic]||[]):(QBANK[curMain]?.[curTopic]?.[setIdx]||[]);if(qIdx<qset.length){isOrig?showQOriginal():showQ();}else finish(isOrig);}
+function finish(isOrig){if(!isOrig){if(!used[curMain])used[curMain]={};if(!used[curMain][curTopic])used[curMain][curTopic]=[];if(!used[curMain][curTopic].includes(setIdx)){used[curMain][curTopic].push(setIdx);localStorage.setItem('job_final_used',JSON.stringify(used));}}let per=isOrig?(ORIGINAL_BANK[curMain+"_"+curTopic]||[]).length:20;document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:20px;text-align:center"><h2>${curTopic} শেষ!</h2><h1 style="font-size:42px">${score}/${per}</h1><h3>${score>=per*0.7?'✅ Pass':'❌ Fail'}</h3></div><div style="padding:14px;background:#fff">${AD}<button class="btn" style="width:100%;text-align:center" onclick="home()">🏠 হোম</button></div>`;}
 home();
 </script></body></html>
