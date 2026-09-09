@@ -1,21 +1,112 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job Master BD</title><style>body{font-family:sans-serif;background:#f0f2f5;margin:0;padding:10px}.card{background:#fff;border-radius:12px;padding:15px;max-width:500px;margin:10px auto;box-shadow:0 2px 10px #0002}.btn{width:100%;padding:12px;border:0;border-radius:8px;background:#1769aa;color:#fff;font-size:16px;margin:5px 0;font-weight:700}.opt{background:#f5f5f5;padding:12px;border-radius:8px;margin:6px 0;border:1px solid #ddd}.opt.c{background:#c8e6c9;border-color:green}.opt.w{background:#ffcdd2;border-color:red}.ad{background:#fffbe6;border:2px dashed #ff9800;padding:12px;border-radius:10px;text-align:center;margin:10px 0}</style></head><body>
-<div class="card"><h2>Job Master BD - 400 Set</h2><small>Bangla 100 | English 100 | Math 100 | GK 100</small></div>
-<div class="card" id="app">Loading qbank...</div>
-<script src="qbank.js"></script>
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Job Master BD - BCS Final App</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a5c5c">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+<style>
+*{box-sizing:border-box;font-family:Hind Siliguri,solaimanlipi,sans-serif}
+body{margin:0;background:#f5f7f9}
+.header{background:#0a5c5c;color:#fff;padding:18px 16px 60px 16px;border-radius:0 0 24px 24px}
+.header h2{margin:0;text-align:right;line-height:1.4;font-size:22px}
+.banner{background:#ffde59;border-radius:22px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin:-40px 14px 14px 14px;box-shadow:0 6px 14px #0002}
+.banner h3{margin:0;font-size:18px;color:#222;line-height:1.3}
+.cardGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 12px}
+.card{background:#fff;border-radius:18px;padding:12px 10px;text-align:center;box-shadow:0 2px 10px #0001;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+.card.green{background:#e6f7f5}.card.blue{background:#e8f0ff}.card.yellow{background:#fff9c4}.card.pink{background:#ffe9f0}.card.beige{background:#f5f0e6}.card.lav{background:#ece8ff}.card.lgreen{background:#e6f5e6}
+.card h4{margin:6px 0;font-size:14px;color:#333;line-height:1.3;min-height:38px}
+.icon{font-size:46px;margin:8px 0}
+.btn{border:0;background:#0a5c5c;color:#fff;padding:8px 14px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer;width:90%}
+.btn.quiz{background:#0a5c5c}
+.listItem{background:#eef1f6;border-radius:14px;padding:14px 12px;margin:10px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 6px #0001;cursor:pointer}
+.listItem.qicon{font-size:28px}
+.opt{background:#f7f8fb;padding:11px 13px;border-radius:10px;margin:6px 0;border:1.5px solid #ddd;cursor:pointer}
+.opt.correct{background:#c8e6c9!important;border-color:#2e7d32!important}.opt.wrong{background:#ffcdd2!important;border-color:#c62828!important}
+.adBox{background:#fffbe6;border:2px dashed #ff9800;padding:10px;border-radius:12px;text-align:center;margin:12px}
+</style></head><body>
+<div id="app"></div>
+<script src="qbank.js?v=final_design"></script>
 <script>
-let cur='',set=0,qi=0,sc=0,tm,time=20;
-let used=JSON.parse(localStorage.getItem('usedSets')||'{}');
-function adHTML(){return `<div class="ad"><div style="font-size:11px;color:#888">Sponsored Ad • Advertisement</div><b style="color:#d32f2f">🔥 ঘরে বসে মোবাইল দিয়ে আয় করুন</b><p style="font-size:13px;margin:6px 0">দৈনিক ৫০০-১০০০ টাকা, ফ্রি প্রশিক্ষণ</p><button class="btn" style="background:#ff5722;width:auto;padding:10px 20px" onclick="window.open('https://t.me/jobmasterbd','_blank')">এখনই দেখুন →</button><br><button class="btn" style="background:#0088cc;width:auto;padding:8px 15px;margin-top:8px" onclick="window.open('https://t.me/jobmasterbd','_blank')">📢 Join Telegram</button></div>`;}
-function home(){
-let h=adHTML()+`<h3>বিষয় সিলেক্ট করো</h3>`;
-['Bangla','English','Math','GK'].forEach(s=>{h+=`<button class="btn" onclick="startSub('${s}')">${s} - ${(used[s]||[]).length}/100</button>`;});
-h+=`<button class="btn" style="background:#666" onclick="localStorage.clear();location.reload()">Reset</button>`+adHTML();
-document.getElementById('app').innerHTML=h;
+const AD=`<div class="adBox"><small style="color:#888">Sponsored • Google Ad</small><br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXX" data-ad-slot="YYYYYYYYYY" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});<\/script><button style="background:#ff5722;color:#fff;border:0;padding:8px 14px;border-radius:20px;margin-top:6px" onclick="window.open('https://t.me/jobmasterbd','_blank')">এখনই দেখুন →</button></div>`;
+
+let curSub='', curTopic='', setIdx=0, qIdx=0, score=0, timer, time=30, answered=false;
+let used=JSON.parse(localStorage.getItem('final_design_used')||'{}');
+
+function homeScreen(){
+document.getElementById('app').innerHTML=`
+<div class="header"><h2>স্বাগতম,<br>আপনার লক্ষ্যে এগিয়ে যান।</h2></div>
+<div class="banner"><h3>পরীক্ষার<br>প্রস্তুতি হোক আরো<br>সহজে।</h3><div style="font-size:60px">👩‍🎓👨‍💼</div></div>
+<div style="padding:0 14px"><h3 style="color:#0a5c5c;margin:8px 0">BCS কঠিন নয়; লক্ষ্য<br>যদি সঠিক হয়।</h3></div>
+<div class="cardGrid">
+<div class="card green"><h4>৫০তম - ১০তম বিসিএস<br>প্রশ্ন সমাধান ও ব্যাখ্যা</h4><div class="icon">💡</div><button class="btn" onclick="openBCSList()">শুরু করুন</button></div>
+<div class="card blue"><h4>বিসিএস বিষয়াবলী</h4><div class="icon">📚</div><button class="btn" onclick="openSubjects()">শুরু করুন</button></div>
+<div class="card blue"><h4>সকল বিসিএস প্রশ্ন ও<br>কুইজ</h4><div class="icon">📝</div><button class="btn quiz" onclick="openQuiz('BCS Quiz')">কুইজ খেলুন</button></div>
+<div class="card yellow"><h4>বিসিএস প্রিলিমিনারি<br>মডেল টেস্ট</h4><div class="icon">📄</div><button class="btn" onclick="openModelTest()">শুরু করুন</button></div>
+${AD}
+<div class="card pink"><h4>সকল প্রাইমারি নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</h4><div class="icon">🏫</div><button class="btn" onclick="openSub('প্রাইমারি')">শুরু করুন</button></div>
+<div class="card lgreen"><h4>কারেন্ট অ্যাফেয়ার্স</h4><div class="icon">📰</div><button class="btn" onclick="openSub('কারেন্ট অ্যাফেয়ার্স')">শুরু করুন</button></div>
+<div class="card beige"><h4>অফলাইন ডিকশনারি</h4><div class="icon">📖</div><button class="btn" onclick="alert('Dictionary শীঘ্রই আসছে')">শুরু করুন</button></div>
+<div class="card lav"><h4>বাংলাদেশ ব্যাংক নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</h4><div class="icon">🏛️</div><button class="btn" onclick="openSub('ব্যাংক')">শুরু করুন</button></div>
+<div class="card blue"><h4>শিক্ষক নিবন্ধন নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</h4><div class="icon">👩‍🏫</div><button class="btn" onclick="openSub('NTRCA')">শুরু করুন</button></div>
+<div class="card green"><h4>১১-২০ গ্রেড জব<br>সলিউশন</h4><div class="icon">💼</div><button class="btn" onclick="openSub('11-20 Grade')">শুরু করুন</button></div>
+</div>
+<div style="padding:12px">${AD}</div>`;
 }
-function startSub(s){cur=s;if(!used[s])used[s]=[];let a=Array.from({length:100},(_,i)=>i).filter(i=>!used[s].includes(i));if(!a.length){alert('সব শেষ!');return;}set=a[Math.floor(Math.random()*a.length)];qi=0;sc=0;showQ();}
-function showQ(){let q=QBANK[cur][set][qi];time=20;document.getElementById('app').innerHTML=`<div style="display:flex;justify-content:space-between"><b>${cur} Set ${set+1}</b><b id="tmr">⏱ ${time}s</b></div><p>প্রশ্ন ${qi+1}/20 | স্কোর ${sc}</p><h3>${q.q}</h3><div>${q.o.map((o,i)=>`<div class="opt" onclick="check(${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div><div id="ex"></div><button class="btn" id="nxt" style="display:none;background:#28a745" onclick="nextQ()">পরের প্রশ্ন →</button>`+adHTML();clearInterval(tm);tm=setInterval(()=>{time--;let el=document.getElementById('tmr');if(el)el.innerText='⏱ '+time+'s';if(time<=0)check(-1)},1000);}
-function check(a){clearInterval(tm);let q=QBANK[cur][set][qi];document.querySelectorAll('.opt').forEach((el,i)=>{if(i==q.a)el.classList.add('c');if(i==a&&a!=q.a)el.classList.add('w');el.style.pointerEvents='none';});if(a==q.a)sc++;document.getElementById('ex').innerHTML=`<div style="background:#e3f2fd;padding:10px;border-radius:8px;margin-top:8px"><b>${a==q.a?'✅ সঠিক!':'❌ ভুল!'}</b> উত্তর: ${q.o[q.a]}<br><small>💡 ${q.e}</small></div>`;document.getElementById('nxt').style.display='block';}
-function nextQ(){qi++;if(qi<20)showQ();else fin();}
-function fin(){if(!used[cur].includes(set)){used[cur].push(set);localStorage.setItem('usedSets',JSON.stringify(used));}let tot=Object.values(used).flat().length;document.getElementById('app').innerHTML=`<h2 style="text-align:center">${cur} শেষ!</h2><h1 style="text-align:center">${sc}/20</h1><h3 style="text-align:center;color:${sc>=12?'green':'red'}">${sc>=12?'✅ Pass':'❌ Fail'}</h3><p style="text-align:center">মোট শেষ: ${tot}/400</p>${adHTML()}<button class="btn" onclick="startSub('${cur}')">পরের সেট →</button><button class="btn" style="background:#666" onclick="home()">🏠 হোম</button>`;}
-if(typeof QBANK=='undefined'){document.getElementById('app').innerHTML='qbank.js লোড হয়নি! qbank.js ফাইলটা আছে কিনা চেক করো';}else home();
+
+function openBCSList(){
+let html=`<div class="header" style="padding:14px"><div style="display:flex;align-items:center;gap:10px"><button onclick="homeScreen()" style="background:transparent;border:0;color:#fff;font-size:24px">←</button><h3 style="margin:0;text-align:right;flex:1">৫০তম - ১০তম বিসিএস প্রশ্ন<br>সমাধান ও ব্যাখ্যা</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding-top:14px"><div style="text-align:center;font-size:60px">🧑‍💼📚</div>`;
+for(let i=50;i>=10;i--){
+html+=`<div class="listItem" onclick="startBCS(${i})"><div class="qicon">💡</div><div><b>${i}তম বিসিএস প্রশ্ন সমাধান ও ব্যাখ্যা</b></div></div>`;
+}
+html+=AD+`</div>`;
+document.getElementById('app').innerHTML=html;
+}
+
+function openSubjects(){
+let html=`<div class="header" style="padding:14px"><div style="display:flex;align-items:center;gap:10px"><button onclick="homeScreen()" style="background:transparent;border:0;color:#fff;font-size:24px">←</button><h3 style="margin:0">বিসিএস বিষয়াবলী - Topic Bithi 5 Set</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
+Object.keys(QBANK).forEach(sub=>{
+let total=Object.keys(QBANK[sub]).length*5;
+let done=Object.values(used[sub]||{}).flat().length;
+html+=`<div class="listItem" onclick="showTopics('${sub}')"><div class="qicon">📚</div><div><b>${sub}</b><br><small>${done}/${total} Set শেষ</small></div></div>`;
+});
+html+=AD+`</div>`;
+document.getElementById('app').innerHTML=html;
+}
+
+function showTopics(sub){
+curSub=sub;
+let html=`<div class="header" style="padding:14px"><div style="display:flex;align-items:center;gap:10px"><button onclick="openSubjects()" style="background:transparent;border:0;color:#fff;font-size:24px">←</button><h3 style="margin:0">${sub} - সন্ধি 5 Set, সমাস 5 Set...</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px">`;
+Object.keys(QBANK[sub]).forEach(topic=>{
+let done=(used[sub]?.[topic]||[]).length;
+html+=`<div class="listItem" onclick="showSets('${sub}','${topic.replace(/'/g, "\\'")}')"><div class="qicon">📖</div><div><b>${topic}</b><br><small>${done}/5 Set</small> ${done==5?'✅':''}</div></div>`;
+});
+html+=AD+`</div>`;
+document.getElementById('app').innerHTML=html;
+}
+
+function showSets(sub, topic){
+curSub=sub; curTopic=topic;
+let html=`<div class="header" style="padding:14px"><div style="display:flex;align-items:center;gap:10px"><button onclick="showTopics('${sub}')" style="background:transparent;border:0;color:#fff;font-size:24px">←</button><h3 style="margin:0">${topic} - 5 টি Model Test</h3></div></div><div style="background:#fff;border-radius:20px 20px 0 0;margin-top:-20px;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">`;
+for(let i=0;i<5;i++){
+let done=(used[sub]?.[topic]||[]).includes(i);
+html+=`<div class="card ${done?'green':''}" style="min-height:120px" onclick="startExam(${i})"><h4>Set ${i+1} ${done?'✅':''}</h4><div class="icon" style="font-size:30px">📝</div><small>20 প্রশ্ন</small></div>`;
+}
+html+=`</div><div style="padding:12px">${AD}</div></div>`;
+document.getElementById('app').innerHTML=html;
+}
+
+function openSub(name){curSub=name;curTopic=Object.keys(QBANK[name]||QBANK["বাংলা ভাষা - ১৫"])[0];showTopics(name in QBANK?name:"বাংলা ভাষা - ১৫");}
+function openModelTest(){openSubjects();}
+function openQuiz(n){alert(n+" - Topic Bithi Quiz শীঘ্রই");}
+function startBCS(n){curSub="বিসিএস প্রশ্ন";curTopic=n+"তম বিসিএস";setIdx=0;startExam(0);}
+function startExam(s){setIdx=s;qIdx=0;score=0;showQ();}
+function showQ(){
+let qset=QBANK[curSub]?.[curTopic]?.[setIdx] || QBANK["বাংলা ভাষা - ১৫"]["সন্ধি"][0];
+let q=qset[qIdx]; time=30; answered=false;
+document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:12px;display:flex;justify-content:space-between"><b>${curTopic} Set ${setIdx+1}</b><b id="tmr">⏱ ${time}s</b></div><div style="padding:12px;background:#fff;min-height:100vh"><div style="font-size:12px">প্রশ্ন ${qIdx+1}/20 | স্কোর ${score}</div><div style="font-size:17px;font-weight:700;margin:10px 0">${q.q}</div><div id="opts">${q.o.map((o,i)=>`<div class="opt" onclick="check(${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div><div id="ex"></div><button class="btn" id="nxt" style="display:none;background:#0a5c5c;width:100%;text-align:center;margin-top:10px" onclick="nextQ()">পরের প্রশ্ন →</button>${AD}</div>`;
+clearInterval(timer);timer=setInterval(()=>{if(answered) return;time--;let t=document.getElementById('tmr');if(t)t.innerText='⏱ '+time+'s';if(time<=0)check(-1);},1000);
+}
+function check(ans){if(answered) return;answered=true;clearInterval(timer);let qset=QBANK[curSub]?.[curTopic]?.[setIdx] || QBANK["বাংলা ভাষা - ১৫"]["সন্ধি"][0];let q=qset[qIdx];document.querySelectorAll('.opt').forEach((el,i)=>{el.style.pointerEvents='none';if(i==q.a)el.classList.add('correct');if(ans!=-1&&i==ans&&ans!=q.a)el.classList.add('wrong');});let ok=ans==q.a;if(ok)score++;let msg=ans==-1?`⏰ সময় শেষ! সঠিক: ${q.o[q.a]}`:(ok?`✅ সঠিক উত্তর!`:`❌ ভুল উত্তর! সঠিক: ${q.o[q.a]}`);document.getElementById('ex').innerHTML=`<div style="margin-top:10px;padding:10px;border-radius:10px;background:${ok?'#e8f5e9':'#ffebee'}"><b>${msg}</b><div style="background:#fff;padding:6px;border-radius:6px;margin-top:6px"><small>💡 ${q.e}<br>📖 ${q.src}</small></div></div>`;document.getElementById('nxt').style.display='block';}
+function nextQ(){qIdx++;let len=(QBANK[curSub]?.[curTopic]?.[setIdx]||[]).length||20;if(qIdx<len)showQ();else finish();}
+function finish(){if(!used[curSub])used[curSub]={};if(!used[curSub][curTopic])used[curSub][curTopic]=[];if(!used[curSub][curTopic].includes(setIdx)){used[curSub][curTopic].push(setIdx);localStorage.setItem('final_design_used',JSON.stringify(used));}document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:20px;text-align:center"><h2>${curTopic} Set ${setIdx+1} শেষ!</h2><h1 style="font-size:44px">${score}/20</h1><h3>${score>=14?'✅ Pass':'❌ Fail'}</h3></div><div style="padding:14px;background:#fff">${AD}<button class="btn" style="width:100%;text-align:center" onclick="showSets('${curSub}','${curTopic.replace(/'/g,"\\'")}')">⏭️ পরের Set</button><button class="btn" style="width:100%;text-align:center;background:#666;margin-top:8px" onclick="homeScreen()">🏠 হোম</button></div>`;}
+homeScreen();
 </script></body></html>
