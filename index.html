@@ -1,82 +1,16 @@
 <!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Job Master BD - 400 Set</title>
-<style>
-body{font-family:system-ui;margin:0;background:#f0f4f9;color:#222}
-.wrap{max-width:700px;margin:auto;padding:12px}
-.card{background:#fff;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 4px 12px #0001}
-.sub{padding:9px 16px;border-radius:22px;border:1.5px solid #1769aa;margin:4px;display:inline-block;cursor:pointer;background:#fff;color:#1769aa;font-weight:700}
-.sub.active{background:#1769aa;color:#fff}
-.set{padding:7px 11px;border-radius:16px;border:1px solid #ccc;margin:3px;display:inline-block;cursor:pointer;font-size:13px;background:#fff}
-.set.done{background:#d4edda!important}
-.correct{background:#d4edda!important;border-color:#28a745!important}
-.wrong{background:#f8d7da!important;border-color:#dc3545!important}
-.btn{background:#1769aa;color:#fff;border:0;padding:12px;border-radius:12px;width:100%;font-size:17px;margin-top:10px;cursor:pointer;font-weight:700}
-.opt{padding:12px;border:1.5px solid #ddd;border-radius:10px;margin:7px 0;cursor:pointer}
-.exp{display:none;margin-top:10px;padding:12px;border-radius:10px;font-size:14px;line-height:1.5}
-.exp.show{display:block}
-.ok{background:#e8f5e9;border:1px solid #a3d9a5}
-.bad{background:#ffebee;border:1px solid #ef9a9a}
-.adBox{border:2px dashed #ff9800;background:#fff8e1;padding:16px;border-radius:12px;text-align:center;margin-top:15px}
-</style>
-</head>
-<body>
-<div class="wrap">
-<div class="card" style="text-align:center"><h2 style="margin:0">Job Master BD - 400 Set</h2><small>Bangla 100 | English 100 | Math 100 | GK 100</small></div>
-<div class="card" id="home">Loading...</div>
-<div class="card" id="quiz" style="display:none"></div>
-<div class="card" id="resCard" style="display:none;text-align:center"><h2 id="resT"></h2><p id="resD"></p><div id="adArea"></div><button class="btn" onclick="nextSet()">পরের সেট ➡️</button><button class="btn" style="background:#666" onclick="goHome()">🏠 হোম</button></div>
-</div>
-
-<script src="qbank.js?v=3"></script>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job Master BD</title><style>body{font-family:sans-serif;background:#f0f2f5;padding:10px}.card{background:#fff;padding:15px;border-radius:12px;max-width:500px;margin:10px auto}.btn{width:100%;padding:12px;background:#1769aa;color:#fff;border:0;border-radius:8px;margin:5px 0}</style></head><body>
+<div class="card"><h2>Job Master BD - 400 Set</h2><small>Bangla 100 | English 100 | Math 100 | GK 100</small></div>
+<div class="card" id="app">Loading...</div>
+<script src="qbank.js"></script>
 <script>
-let curSub='Bangla',curNum=1,qi=0,sc=0,timer,done=JSON.parse(localStorage.getItem('done400')||'{}'),lock=false;
-
-function render(){
-if(typeof QBANK==='undefined'){
-document.getElementById('home').innerHTML=`<h3 style="color:red">⚠️ qbank.js পাওয়া যায়নি!</h3><p>তোমার GitHub Repo তে <b>qbank.js</b> ফাইলটা আপলোড করো। ফাইলটা না থাকলে প্রশ্ন আসবে না।</p><p>Repo: mshahel076-lgtm/live-mcq-test-recent-job-solution-</p>`;
-return;
+function home(){
+let used=JSON.parse(localStorage.getItem('usedSets')||'{}');
+let h='<h3>বিষয় সিলেক্ট করো</h3>';
+['Bangla','English','Math','GK'].forEach(s=>{
+h+=`<button class="btn" onclick="location.reload()">${s} - ${(used[s]||[]).length}/100</button>`;
+});
+document.getElementById('app').innerHTML=h;
 }
-let h=`<b>📚 বিষয়:</b><br>
-<span class="sub ${curSub=='Bangla'?'active':''}" onclick="switchSub('Bangla')">📚 Bangla</span>
-<span class="sub ${curSub=='English'?'active':''}" onclick="switchSub('English')">🇬🇧 English</span>
-<span class="sub ${curSub=='Math'?'active':''}" onclick="switchSub('Math')">🔢 Math</span>
-<span class="sub ${curSub=='GK'?'active':''}" onclick="switchSub('GK')">🌍 GK</span>
-<hr><b>${curSub} - 100 Set</b><br><div style="margin-top:8px">`;
-for(let i=1;i<=100;i++){let k=curSub+'_'+i; h+=`<span class="set ${done[k]?'done':''}" onclick="startSet(${i})">${done[k]?'✅':''}${i}</span>`}
-h+=`</div>`; document.getElementById('home').innerHTML=h
-}
-function switchSub(s){curSub=s; render()}
-function getSet(sub,n){return QBANK[sub][n-1]}
-function startSet(n){curNum=n; qi=0; sc=0; document.getElementById('home').style.display='none'; document.getElementById('quiz').style.display='block'; document.getElementById('resCard').style.display='none'; showQ()}
-function goHome(){document.getElementById('resCard').style.display='none'; document.getElementById('quiz').style.display='none'; document.getElementById('home').style.display='block'; render()}
-function showQ(){let q=getSet(curSub,curNum)[qi]; if(!q){document.getElementById('quiz').innerHTML='এই সেটে প্রশ্ন নেই'; return} let time=20; clearInterval(timer); lock=false;
-document.getElementById('quiz').innerHTML=`<b>${curSub} Set ${curNum} | ${qi+1}/20 | স্কোর: ${sc} | ⏱️ <span id="tm" style="color:red">${time}</span>s</b><hr><h3>${qi+1}. ${q.q}</h3>${q.o.map((op,i)=>`<div class="opt" id="opt${i}" onclick="ans(${i})">${String.fromCharCode(65+i)}. ${op}</div>`).join('')}<div id="exp" class="exp"></div>`;
-timer=setInterval(()=>{time--; let el=document.getElementById('tm'); if(el) el.innerText=time; if(time<=0){clearInterval(timer); ans(-1)}},1000)}
-function ans(s){
-if(lock) return; lock=true; clearInterval(timer);
-let q=getSet(curSub,curNum)[qi]; let exp=document.getElementById('exp');
-for(let i=0;i<4;i++){let el=document.getElementById('opt'+i); if(el){ if(i==q.a) el.classList.add('correct'); if(i==s && s!=q.a) el.classList.add('wrong'); }}
-if(s==q.a){sc++; exp.className='exp show ok'; exp.innerHTML=`✅ <b>সঠিক!</b><br>${q.e}`}
-else {exp.className='exp show bad'; if(s==-1) exp.innerHTML=`⏰ সময় শেষ! সঠিক: <b>${q.o[q.a]}</b><br>${q.e}`; else exp.innerHTML=`❌ ভুল! তোমার উত্তর: ${s>=0?q.o[s]:'দেননি'}<br>✅ সঠিক: <b>${q.o[q.a]}</b><br><hr>${q.e}`;}
-setTimeout(()=>{qi++; if(qi<20) showQ(); else finish()},2000);
-}
-function finish(){
-clearInterval(timer); document.getElementById('quiz').innerHTML='';
-let k=curSub+'_'+curNum; done[k]=true; localStorage.setItem('done400',JSON.stringify(done));
-document.getElementById('resCard').style.display='block';
-document.getElementById('resT').innerText=`🎉 ${curSub} Set ${curNum} শেষ!`;
-document.getElementById('resD').innerHTML=`<h1 style="margin:0">${sc}/20</h1>${sc>=14?'🌟 Excellent':sc>=10?'✅ Pass':'❌ Fail'}<br>মোট শেষ: ${Object.keys(done).length}/400`;
-// এখানেই Ad আসবে - 100% কাজ করবে
-documlet ad = document.getElementById('adArea');
-ad.innerHTML = `
-<div class="adBox">
-<b>🎯 চাকরির সব আপডেট পেতে</b><br>
-<button class="btn" style="width:auto;padding:10px 25px;background:#0088cc;margin:10px 0" onclick="window.open('https://t.me/jobmasterbd','_blank')">📢 Join Telegram</button>
-<div style="background:#fff;padding:10px;border-radius:8px;margin-top:10px;border:1px solid #ddd">
-<small style="color:#888">Advertisement</small><br>
-<b style="color:#1769aa">🔥 ঘরে বসে মাসে ২০,০০০ টাকা আয় করুন!</b><br>
-<p style="font-size:13px;margin:5px 0">ফ্রি কোর্সে জয়েন করুন, আজই শুরু করুন</p>
-
+if(typeof QBANK==='undefined'){document.getElementById('app').innerHTML='qbank.js পাওয়া যায়নি! আবার qbank.js বানাও';}else{home();}
+</script></body></html>
