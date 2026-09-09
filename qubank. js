@@ -1,0 +1,26 @@
+window.QBANK = (() => {
+  const gen = (sub) => {
+    let all = [];
+    for(let i=0;i<100;i++){
+      let set = [];
+      for(let j=0;j<20;j++){
+        let id = i*20+j;
+        if(sub==='Bangla'){
+          let qs=[["বাংলা সাহিত্যের আদি নিদর্শন?","চর্যাপদ","শ্রীকৃষ্ণকীর্তন","বৈষ্ণব পদাবলি","মঙ্গলকাব্য",0,"চর্যাপদ আদি নিদর্শন"],["সোনার তরী কার লেখা?","রবীন্দ্রনাথ","নজরুল","জসীমউদ্দীন","মাইকেল",0,"রবীন্দ্রনাথের লেখা"],["মাত্রাহীন বর্ণ কয়টি?","৮","১০","৯","১১",1,"মাত্রাহীন ১০টি"],["শুদ্ধ বানান কোনটি?","মুমুর্ষু","মুমূর্ষু","মুমুর্ষূ","মূমুর্ষু",1,"মুমূর্ষু শুদ্ধ"]];
+          let q=qs[id%qs.length]; set.push({q:`${q[0]} [B S${i+1} Q${j+1}]`,o:q.slice(1,5),a:q[5],e:q[6]});
+        } else if(sub==='English'){
+          let qs=[["Synonym of Honest?","Truthful","Liar","Dishonest","False",0,"Truthful is synonym"],["Antonym of Big?","Small","Large","Huge","Great",0,"Small is antonym"],["He __ to school.","goes","go","going","went",0,"He goes"], ["Plural of Child?","Childs","Children","Childes","Childen",1,"Children"]];
+          let q=qs[id%qs.length]; set.push({q:`${q[0]} [E S${i+1} Q${j+1}]`,o:q.slice(1,5),a:q[5],e:q[6]});
+        } else if(sub==='Math'){
+          let a=id%20+2,b=(id%10)+2; set.push({q:`${a}+${b}=? [M S${i+1} Q${j+1}]`,o:[`${a+b-1}`,`${a+b}`,`${a+b+1}`,`${a+b+2}`],a:1,e:`${a}+${b}=${a+b}`});
+        } else {
+          let qs=[["বাংলাদেশের রাজধানী?","ঢাকা","চট্টগ্রাম","খুলনা","রাজশাহী",0,"ঢাকা রাজধানী"],["মুক্তিযুদ্ধ কত সালে?","1971","1972","1970","1969",0,"1971 সালে"],["পদ্মা সেতুর দৈর্ঘ্য?","6.15 km","5.15 km","7.15 km","6.51 km",0,"6.15 km"],["জাতীয় ফুল?","শাপলা","গোলাপ","জবা","বেলী",0,"শাপলা"]];
+          let q=qs[id%qs.length]; set.push({q:`${q[0]} [GK S${i+1} Q${j+1}]`,o:q.slice(1,5),a:q[5],e:q[6]});
+        }
+      }
+      all.push(set);
+    }
+    return all;
+  }
+  return {Bangla:gen('Bangla'), English:gen('English'), Math:gen('Math'), GK:gen('GK')};
+})();
