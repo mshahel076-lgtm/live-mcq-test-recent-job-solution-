@@ -117,3 +117,4 @@ function nextQ(isOrig){qIdx++;let key=curMain+"_"+curTopic;let qset=isOrig?(ORIG
 function finish(isOrig){if(!isOrig){if(!used[curMain])used[curMain]={};if(!used[curMain][curTopic])used[curMain][curTopic]=[];if(!used[curMain][curTopic].includes(setIdx)){used[curMain][curTopic].push(setIdx);localStorage.setItem('final_no_repeat_v2',JSON.stringify(used));}}let per=isOrig?(ORIGINAL_BANK[curMain+"_"+curTopic]||[]).length:20;document.getElementById('app').innerHTML=`<div style="background:#0a5c5c;color:#fff;padding:20px;text-align:center"><h2>${curTopic} শেষ!</h2><h1 style="font-size:42px">${score}/${per}</h1><h3>${score>=per*0.7?'✅ Pass':'❌ Fail'}</h3></div><div style="padding:14px;background:#fff">${AD}<button class="btn" style="width:100%" onclick="home()">🏠 হোম</button></div>`;}
 home();
 </script></body></html>
+l
