@@ -1,15 +1,116 @@
 <!DOCTYPE html>
-<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BHOOT.COM</title>
-<style>body{margin:0;background:#000;overflow:hidden;color:#fff;font-family:sans-serif} #game{width:100vw;height:100vh;background:#050505;position:relative} #player{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;box-shadow:0 0 20px #fff;left:50%;top:50%;z-index:5}.key{position:absolute;font-size:32px;animation:f 1s infinite alternate}.eye{position:absolute;width:10px;height:10px;background:red;border-radius:50%;box-shadow:0 0 20px red} #torch{width:250px;height:250px;background:radial-gradient(circle,rgba(255,255,200,0.18) 0%,transparent 70%);position:absolute;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:4} #ui{position:fixed;top:0;width:100%;padding:12px;display:flex;justify-content:space-between;z-index:10;background:linear-gradient(#000,transparent)} @keyframes f{from{transform:translateY(0)}to{transform:translateY(-8px)}} #scare{position:fixed;inset:0;background:#000;display:none;justify-content:center;align-items:center;z-index:999;color:red;font-size:40px;text-align:center}</style></head><body>
-<div id="ui"><div>🔑 <span id="s">0</span>/5</div><div>🔦 <span id="b">100</span>%</div></div>
-<div id="game"><div id="torch"></div><div id="player"></div></div>
-<div id="scare">ও ধরে ফেলেছে!<br><small style="color:#fff">আবার চেষ্টা করো</small></div>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>GIANT - Real Horror</title>
+<style>
+ body{margin:0;background:#000;overflow:hidden}
+ canvas{display:block}
+ #ui{position:fixed;top:0;left:0;right:0;padding:15px;display:flex;justify-content:space-between;color:#ff0000;font-family:monospace;font-weight:bold;letter-spacing:2px;z-index:10;background:linear-gradient(to bottom, rgba(0,0,0,0.9), transparent)}
+ #start{position:fixed;inset:0;z-index:100;background:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=800') center/cover;display:flex;align-items:center;justify-content:center}
+ #startBox{background:rgba(0,0,0,0.85);padding:30px;border:1px solid #ff0000;text-align:center;max-width:320px}
+ button{background:#ff0000;color:#fff;border:none;padding:14px 30px;font-weight:bold;letter-spacing:1px}
+ #scare{position:fixed;inset:0;background:#000;display:none;z-index:999;justify-content:center;align-items:center;flex-direction:column}
+</style>
+</head>
+<body>
+<div id="start"><div id="startBox">
+<h2 style="color:#ff0000;margin:0">THE GIANT IN FOREST</h2>
+<p style="color:#ccc;font-size:13px;line-height:1.6">এই জঙ্গলে ২০ ফুটের একটা আসল মানুষ থাকে।<br>গত বছর ৫ জন নিখোঁজ। তুমি তাদের আত্মা খুঁজতে এসেছো।<br><br>⚠️ হেডফোন পরো, নেকড়ের ডাক শুনতে পাবে</p>
+<button onclick="start()">ENTER FOREST</button>
+<p style="color:#666;font-size:10px;margin-top:15px">REAL FOOTAGE BASED - ORIGINAL GAME</p>
+</div></div>
+<div id="ui"><span>SOULS <b id="s">0</b>/5</span><span>STAMINA <b id="h">100</b>%</span></div>
+<canvas id="c"></canvas>
+<div id="scare"><h1 id="st" style="color:red;font-size:40px">HE FOUND YOU</h1><p id="ss" style="color:white"></p><button onclick="location.reload()" style="margin-top:20px;background:white;color:black">TRY AGAIN</button></div>
+
 <script>
-let s=0,bat=100,px=50,py=50;
-const game=document.getElementById('game'),torch=document.getElementById('torch'),player=document.getElementById('player');
-function spawn(){for(let i=0;i<5;i++){let k=document.createElement('div');k.className='key';k.innerHTML='🔑';k.style.left=Math.random()*85+5+'%';k.style.top=Math.random()*75+10+'%';game.appendChild(k)}}
-spawn();
-setInterval(()=>{let e=document.createElement('div');e.className='eye';e.style.left=Math.random()*90+'%';e.style.top=Math.random()*90+'%';game.appendChild(e);setTimeout(()=>e.remove(),2000)},1500);
-setInterval(()=>{bat--;document.getElementById('b').innerText=bat;if(bat<=0){document.getElementById('scare').style.display='flex';setTimeout(()=>location.reload(),1500)}},700);
-game.addEventListener('touchmove',e=>{let x=e.touches[0].clientX/window.innerWidth*100,y=e.touches[0].clientY/window.innerHeight*100;player.style.left=x+'%';player.style.top=y+'%';torch.style.left=e.touches[0].clientX+'px';torch.style.top=e.touches[0].clientY+'px';document.querySelectorAll('.key').forEach(k=>{if(Math.abs(parseFloat(k.style.left)-x)<5 && Math.abs(parseFloat(k.style.top)-y)<5){k.remove();s++;document.getElementById('s').innerText=s;if(s>=5){alert('তুমি জিতে গেছো! তুমি প্রো!');location.reload()}}})},{passive:false});
-</script></body></html>
+const canvas=document.getElementById('c'), ctx=canvas.getContext('2d');
+canvas.width=innerWidth; canvas.height=innerHeight;
+let score=0, stamina=100, on=false;
+let player={x:canvas.width/2,y:canvas.height/2,s:3.5};
+let giant={x:-200,y:canvas.height/2,w:120,h:280,s:1.6};
+let souls=[], wolves=[];
+let forestImg=new Image(); forestImg.src='https://images.unsplash.com/photo-1448375240586-882707db888b?w=1000';
+let keys={}; let mouse={x:0,y:0,down:false};
+
+function init(){
+ souls=[]; for(let i=0;i<5;i++) souls.push({x:Math.random()*(canvas.width-100)+50,y:Math.random()*(canvas.height-100)+50,done:false});
+ wolves=[]; for(let i=0;i<3;i++) wolves.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,s:2.2});
+}
+
+function start(){
+ document.getElementById('start').style.display='none';
+ on=true; init();
+ // wolf howl audio
+ let a=new Audio('https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a650f7.mp3'); a.volume=0.4; a.play().catch(()=>{});
+ loop();
+}
+
+addEventListener('keydown',e=>keys[e.key.toLowerCase()]=true);
+addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+canvas.addEventListener('touchstart',e=>mouse.down=true);
+canvas.addEventListener('touchend',e=>mouse.down=false);
+canvas.addEventListener('touchmove',e=>{mouse.x=e.touches[0].clientX; mouse.y=e.touches[0].clientY});
+
+function loop(){
+ if(!on) return;
+ // controls - realistic
+ let dx=0,dy=0;
+ if(keys['w']||keys['arrowup']) dy=-1;
+ if(keys['s']||keys['arrowdown']) dy=1;
+ if(keys['a']||keys['arrowleft']) dx=-1;
+ if(keys['d']||keys['arrowright']) dx=1;
+ if(mouse.down){ dx=(mouse.x-player.x)/100; dy=(mouse.y-player.y)/100; }
+ let len=Math.hypot(dx,dy); if(len>1){dx/=len; dy/=len}
+ player.x+=dx*player.s; player.y+=dy*player.s;
+ player.x=Math.max(20,Math.min(canvas.width-20,player.x));
+ player.y=Math.max(20,Math.min(canvas.height-20,player.y));
+
+ // GIANT AI - original, not cartoon. Big human silhouette
+ let gdx=player.x-giant.x, gdy=player.y-giant.y, gd=Math.hypot(gdx,gdy);
+ giant.x+=gdx/gd*giant.s; giant.y+=gdy/gd*giant.s;
+ if(gd<80) die("GIANT টা তোমাকে তুলে নিয়ে গেল। তার হাত তোমার শরীরের সমান।");
+
+ // Wolves AI
+ wolves.forEach(w=>{
+   let ddx=player.x-w.x, ddy=player.y-w.y, dd=Math.hypot(ddx,ddy);
+   w.x+=ddx/dd*w.s; w.y+=ddy/dd*w.s;
+   if(dd<35){ stamina-=0.6; document.getElementById('h').innerText=Math.floor(stamina); if(stamina<=0) die("নেকড়ের পাল তোমাকে ঘিরে ফেলেছে।"); }
+ });
+
+ // souls
+ souls.forEach(s=>{ if(!s.done && Math.hypot(player.x-s.x, player.y-s.y)<25){ s.done=true; score++; document.getElementById('s').innerText=score; if(score==5){ alert("তুমি ৫ টা আত্মা মুক্ত করেছো! তুমি জঙ্গল থেকে বেরিয়ে গেছো।"); location.reload(); } } });
+
+ // DRAW - REALISTIC
+ ctx.drawImage(forestImg,0,0,canvas.width,canvas.height);
+ ctx.fillStyle='rgba(0,0,0,0.65)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ // souls - blue fire
+ souls.forEach(s=>{ if(!s.done){ ctx.fillStyle='rgba(100,180,255,0.9)'; ctx.shadowColor='#00aaff'; ctx.shadowBlur=20; ctx.beginPath(); ctx.arc(s.x,s.y,8,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0; } });
+
+ // giant - REAL GIANT HUMAN SHADOW - original, no cartoon
+ ctx.fillStyle='rgba(0,0,0,0.95)'; ctx.fillRect(giant.x-giant.w/2, giant.y-giant.h/2, giant.w, giant.h);
+ // giant head
+ ctx.beginPath(); ctx.ellipse(giant.x, giant.y-giant.h/2-20, 35, 40, 0,0,Math.PI*2); ctx.fill();
+ // glowing eyes - only eyes visible
+ ctx.fillStyle='red'; ctx.shadowColor='red'; ctx.shadowBlur=15; ctx.beginPath(); ctx.arc(giant.x-12, giant.y-giant.h/2-20, 5,0,Math.PI*2); ctx.arc(giant.x+12, giant.y-giant.h/2-20, 5,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0;
+
+ // player - real torch man silhouette
+ ctx.fillStyle='#111'; ctx.beginPath(); ctx.arc(player.x,player.y,10,0,Math.PI*2); ctx.fill();
+ // torch light
+ let g=ctx.createRadialGradient(player.x,player.y,10,player.x,player.y,220);
+ g.addColorStop(0,'rgba(255,255,180,0.22)'); g.addColorStop(1,'rgba(0,0,0,0)');
+ ctx.fillStyle=g; ctx.beginPath(); ctx.arc(player.x,player.y,220,0,Math.PI*2); ctx.fill();
+
+ // wolves - dark silhouette
+ wolves.forEach(w=>{ ctx.fillStyle='rgba(20,20,20,0.9)'; ctx.beginPath(); ctx.ellipse(w.x,w.y,18,10,0,0,Math.PI*2); ctx.fill(); ctx.fillStyle='yellow'; ctx.beginPath(); ctx.arc(w.x+8,w.y-2,2,0,Math.PI*2); ctx.fill(); });
+
+ requestAnimationFrame(loop);
+}
+function die(t){ on=false; document.getElementById('ss').innerText=t; document.getElementById('scare').style.display='flex'; if(navigator.vibrate) navigator.vibrate([300,100,300]); }
+addEventListener('resize',()=>{canvas.width=innerWidth; canvas.height=innerHeight})
+</script>
+</body>
+</html>
