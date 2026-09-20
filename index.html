@@ -12,5 +12,71 @@ body{margin:0;background:#000;overflow:hidden}
 #giant{width:110px;height:220px;object-fit:cover;border-radius:10px;filter:brightness(0.4) contrast(1.5);box-shadow:0 0 30px red}
 .wolf{width:65px;height:65px;object-fit:cover;border-radius:50%;border:2px solid yellow}
 #player{width:30px;height:30px;background:white;border-radius:50%;box-shadow:0 0 20px cyan;z-index:5}
-#ui{position:fixed;top:0;left:0;right:0;padding:12px;color:white;font-weight:bold;display:flex;justify-content:space-between;
+#ui{position:fixed;top:0;left:0;right:0;padding:12px;color:white;font-weight:bold;display:flex;justify-content:space-between;z-index:20;background:rgba(0,0,0,0.6)}
+#joy{position:fixed;bottom:30px;left:30px;width:110px;height:110px;background:rgba(255,255,255,0.15);border-radius:50%;z-index:20}
+#stick{position:absolute;left:40px;top:40px;width:30px;height:30px;background:white;border-radius:50%}
+</style>
+</head>
+<body>
+<img id="bg" src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1000">
+<div id="ui"><span>REAL GIANT FOREST - 100% REAL</span><span>FEAR <b id="f">0</b>%</span></div>
+<div id="game">
+<img id="giant" class="entity" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400">
+<div id="player" class="entity"></div>
+</div>
+<div id="joy"><div id="stick"></div></div>
 
+<script>
+const game=document.getElementById('game');
+const player=document.getElementById('player');
+const giant=document.getElementById('giant');
+const fearText=document.getElementById('f');
+
+let pl={x:innerWidth/2,y:innerHeight/2}, g={x:0,y:0}, wolves=[], fear=0;
+let joy=document.getElementById('joy'), stick=document.getElementById('stick'), j={x:0,y:0};
+
+// REAL ANIMAL IMAGES - 4 টা আসল নেকড়ে
+let wolfUrls=[
+'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=200',
+'https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=200',
+'https://images.unsplash.com/photo-1564166174574-a6a6adb0af94?w=200',
+'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=200'
+];
+wolfUrls.forEach(url=>{
+ let img=document.createElement('img'); img.src=url; img.className='entity wolf';
+ game.appendChild(img);
+ wolves.push({el:img,x:Math.random()*innerWidth,y:Math.random()*innerHeight});
+});
+
+let joyAct=false;
+joy.addEventListener('touchstart',()=>joyAct=true);
+joy.addEventListener('touchend',()=>{joyAct=false;j={x:0,y:0};stick.style.left='40px';stick.style.top='40px'});
+joy.addEventListener('touchmove',e=>{
+ let r=joy.getBoundingClientRect(), tx=e.touches[0].clientX-r.left-55, ty=e.touches[0].clientY-r.top-55, d=Math.hypot(tx,ty);
+ if(d>35){tx=tx/d*35;ty=ty/d*35} stick.style.left=40+tx+'px'; stick.style.top=40+ty+'px'; j.x=tx/35; j.y=ty/35;
+});
+
+function loop(){
+ pl.x+=j.x*5; pl.y+=j.y*5;
+ pl.x=Math.max(20,Math.min(innerWidth-20,pl.x)); pl.y=Math.max(20,Math.min(innerHeight-20,pl.y));
+ player.style.left=pl.x+'px'; player.style.top=pl.y+'px';
+
+ fear+=0.15; fearText.innerText=Math.floor(fear);
+
+ g.x+=(pl.x-g.x)*0.015; g.y+=(pl.y-g.y)*0.015;
+ giant.style.left=g.x+'px'; giant.style.top=g.y+'px';
+
+ if(Math.hypot(pl.x-g.x, pl.y-g.y)<70){alert('GIANT - আসল মানুষ তোমাকে ধরে ফেললো!'); location.reload();}
+
+ wolves.forEach(w=>{
+   let dx=pl.x-w.x, dy=pl.y-w.y, d=Math.hypot(dx,dy);
+   w.x+=dx/d*2; w.y+=dy/d*2;
+   w.el.style.left=w.x+'px'; w.el.style.top=w.y+'px';
+ });
+
+ requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
