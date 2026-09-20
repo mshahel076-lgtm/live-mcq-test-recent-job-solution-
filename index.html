@@ -3,71 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>BLUE WHALE - DON'T LOOK BACK</title>
+<title>REAL HUMAN & ANIMAL - GIANT FOREST</title>
 <style>
 body{margin:0;background:#000;overflow:hidden}
-canvas{display:block}
-#ui{position:fixed;top:0;left:0;right:0;padding:12px;color:#fff;font-family:Arial;font-weight:bold;display:flex;justify-content:space-between;z-index:5}
-</style>
-</head>
-<body>
-<div id="ui"><span id="t">DON'T LOOK BACK</span><span>FEAR: <b id="f">0%</b></span></div>
-<canvas id="c"></canvas>
-<script>
-const cv=document.getElementById('c'),ctx=cv.getContext('2d');
-cv.width=innerWidth; cv.height=innerHeight;
-let pl={x:cv.width/2,y:cv.height/2}, giant={x:100,y:100}, dogs=[], run=true, fear=0;
-let bg=new Image(); bg.src='https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800';
+#bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover}
+#game{position:fixed;inset:0}
+.entity{position:absolute;transform:translate(-50%,-50%);pointer-events:none}
+#giant{width:110px;height:220px;object-fit:cover;border-radius:10px;filter:brightness(0.4) contrast(1.5);box-shadow:0 0 30px red}
+.wolf{width:65px;height:65px;object-fit:cover;border-radius:50%;border:2px solid yellow}
+#player{width:30px;height:30px;background:white;border-radius:50%;box-shadow:0 0 20px cyan;z-index:5}
+#ui{position:fixed;top:0;left:0;right:0;padding:12px;color:white;font-weight:bold;display:flex;justify-content:space-between;
 
-function init(){
- dogs=[]; for(let i=0;i<5;i++) dogs.push({x:Math.random()*cv.width,y:Math.random()*cv.height});
- giant.x=0; giant.y=0; fear=0; pl.x=cv.width/2; pl.y=cv.height/2;
-}
-
-let tx=0,ty=0,touch=false;
-cv.addEventListener('touchstart',e=>{touch=true; tx=e.touches[0].clientX; ty=e.touches[0].clientY});
-cv.addEventListener('touchmove',e=>{tx=e.touches[0].clientX; ty=e.touches[0].clientY});
-cv.addEventListener('touchend',()=>touch=false);
-
-function loop(){
- if(!run) return;
- if(touch){ let dx=tx-pl.x, dy=ty-pl.y, d=Math.hypot(dx,dy); if(d>5){pl.x+=dx/d*3.5; pl.y+=dy/d*3.5;} }
-
- // GIANT - if you stay, fear increases
- fear+=0.15; document.getElementById('f').innerText=Math.floor(fear)+'%';
- giant.x+=(pl.x-giant.x)*0.008; giant.y+=(pl.y-giant.y)*0.008;
-
- let dist=Math.hypot(pl.x-giant.x, pl.y-giant.y);
- if(dist<70){ alert('BLUE WHALE তোমাকে নিয়ে গেল...'); location.reload(); }
- if(fear>100){ alert('তুমি ভয়ে মারা গেলে!'); location.reload(); }
-
- dogs.forEach(d=>{ let dx=pl.x-d.x, dy=pl.y-d.y, dd=Math.hypot(dx,dy); d.x+=dx/dd*1.6; d.y+=dy/dd*1.6; if(dd<25){fear+=1} });
-
- // DRAW
- ctx.drawImage(bg,0,0,cv.width,cv.height);
- ctx.fillStyle='rgba(0,10,30,0.75)'; ctx.fillRect(0,0,cv.width,cv.height);
-
- // giant - HUGE HUMAN, REALISTIC
- ctx.fillStyle='rgba(0,0,0,0.9)';
- let gh=300, gw=100;
- ctx.fillRect(giant.x-gw/2, giant.y-gh/2, gw, gh);
- ctx.beginPath(); ctx.arc(giant.x, giant.y-gh/2-10, 45,0,Math.PI*2); ctx.fill();
- // blue glowing eyes
- ctx.fillStyle='#00ccff'; ctx.shadowColor='#00ccff'; ctx.shadowBlur=25;
- ctx.beginPath(); ctx.arc(giant.x-15, giant.y-gh/2-15, 6,0,Math.PI*2); ctx.arc(giant.x+15, giant.y-gh/2-15, 6,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0;
-
- // dogs - real animals
- dogs.forEach(d=>{ ctx.fillStyle='#050505'; ctx.beginPath(); ctx.ellipse(d.x,d.y,18,10,0,0,Math.PI*2); ctx.fill(); ctx.fillStyle='red'; ctx.beginPath(); ctx.arc(d.x+8,d.y,2.5,0,Math.PI*2); ctx.fill(); });
-
- // player torch - blue whale style
- let g=ctx.createRadialGradient(pl.x,pl.y,10,pl.x,pl.y,140);
- g.addColorStop(0,'rgba(0,200,255,0.3)'); g.addColorStop(1,'transparent');
- ctx.fillStyle=g; ctx.beginPath(); ctx.arc(pl.x,pl.y,140,0,Math.PI*2); ctx.fill();
- ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(pl.x,pl.y,5,0,Math.PI*2); ctx.fill();
-
- requestAnimationFrame(loop);
-}
-init(); loop();
-</script>
-</body>
-</html>
