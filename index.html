@@ -1,62 +1,15 @@
-
-
-html
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Midnight School</title>
-<style>
-body{margin:0;background:#000;color:#fff;font-family:sans-serif;overflow:hidden}
-#game{width:100vw;height:100vh;background:radial-gradient(circle at center, #222 0%, #000 70%);position:relative}
-#player{width:30px;height:30px;background:yellow;border-radius:50%;position:absolute;box-shadow:0 0 20px yellow;left:50%;top:80%}
-.key{width:20px;height:20px;background:gold;position:absolute;border-radius:3px;box-shadow:0 0 10px gold}
-.ghost{width:50px;height:50px;background:red;position:absolute;border-radius:50% 50% 0 0;display:none;box-shadow:0 0 20px red}
-#ui{position:fixed;top:10px;left:10px;font-size:20px;z-index:10}
-</style>
-</head>
-<body>
-<div id="ui">Chabi: <span id="score">0/3</span> | Voy paiona!</div>
-<div id="game">
- <div id="player"></div>
-</div>
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BHOOT.COM</title>
+<style>body{margin:0;background:#000;overflow:hidden;color:#fff;font-family:sans-serif} #game{width:100vw;height:100vh;background:#050505;position:relative} #player{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;box-shadow:0 0 20px #fff;left:50%;top:50%;z-index:5}.key{position:absolute;font-size:32px;animation:f 1s infinite alternate}.eye{position:absolute;width:10px;height:10px;background:red;border-radius:50%;box-shadow:0 0 20px red} #torch{width:250px;height:250px;background:radial-gradient(circle,rgba(255,255,200,0.18) 0%,transparent 70%);position:absolute;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:4} #ui{position:fixed;top:0;width:100%;padding:12px;display:flex;justify-content:space-between;z-index:10;background:linear-gradient(#000,transparent)} @keyframes f{from{transform:translateY(0)}to{transform:translateY(-8px)}} #scare{position:fixed;inset:0;background:#000;display:none;justify-content:center;align-items:center;z-index:999;color:red;font-size:40px;text-align:center}</style></head><body>
+<div id="ui"><div>🔑 <span id="s">0</span>/5</div><div>🔦 <span id="b">100</span>%</div></div>
+<div id="game"><div id="torch"></div><div id="player"></div></div>
+<div id="scare">ও ধরে ফেলেছে!<br><small style="color:#fff">আবার চেষ্টা করো</small></div>
 <script>
-let score=0;
-let px=50, py=80;
-const game=document.getElementById('game');
-function spawnKeys(){
- for(let i=0;i<3;i++){
-  let k=document.createElement('div');k.className='key';
-  k.style.left=Math.random()*80+'%';k.style.top=Math.random()*60+'%';
-  k.onclick=()=>{score++;k.remove();document.getElementById('score').innerText=score+'/3';
-   if(score==3){alert('Tumi paliye geso! Tumi Jitse!');location.reload()}
-  }
-  game.appendChild(k);
- }
-}
-function spawnGhost(){
- let g=document.createElement('div');g.className='ghost';
- g.style.left=Math.random()*80+'%';g.style.top=Math.random()*50+'%';
- g.style.display='block';game.appendChild(g);
- setTimeout(()=>{
-   // JUMP SCARE
-   document.body.innerHTML='<h1 style=\"font-size:60px;text-align:center;margin-top:40vh;color:red\">BHOOT DHORE FELSE!</h1>';
-   let audio=new Audio('https://www.soundjay.com/misc/sounds/scream-01a.mp3');audio.play();
-   setTimeout(()=>location.reload(),2000);
- },1000);
-}
-spawnKeys();
-setInterval(()=>{ if(Math.random()>0.7) spawnGhost(); },3000);
-
-// Player move with touch
-document.addEventListener('touchmove',(e)=>{
- px=e.touches[0].clientX/window.innerWidth*100;
- py=e.touches[0].clientY/window.innerHeight*100;
- document.getElementById('player').style.left=px+'%';
- document.getElementById('player').style.top=py+'%';
-});
-</script>
-</body>
-</html>
-
-
+let s=0,bat=100,px=50,py=50;
+const game=document.getElementById('game'),torch=document.getElementById('torch'),player=document.getElementById('player');
+function spawn(){for(let i=0;i<5;i++){let k=document.createElement('div');k.className='key';k.innerHTML='🔑';k.style.left=Math.random()*85+5+'%';k.style.top=Math.random()*75+10+'%';game.appendChild(k)}}
+spawn();
+setInterval(()=>{let e=document.createElement('div');e.className='eye';e.style.left=Math.random()*90+'%';e.style.top=Math.random()*90+'%';game.appendChild(e);setTimeout(()=>e.remove(),2000)},1500);
+setInterval(()=>{bat--;document.getElementById('b').innerText=bat;if(bat<=0){document.getElementById('scare').style.display='flex';setTimeout(()=>location.reload(),1500)}},700);
+game.addEventListener('touchmove',e=>{let x=e.touches[0].clientX/window.innerWidth*100,y=e.touches[0].clientY/window.innerHeight*100;player.style.left=x+'%';player.style.top=y+'%';torch.style.left=e.touches[0].clientX+'px';torch.style.top=e.touches[0].clientY+'px';document.querySelectorAll('.key').forEach(k=>{if(Math.abs(parseFloat(k.style.left)-x)<5 && Math.abs(parseFloat(k.style.top)-y)<5){k.remove();s++;document.getElementById('s').innerText=s;if(s>=5){alert('তুমি জিতে গেছো! তুমি প্রো!');location.reload()}}})},{passive:false});
+</script></body></html>
