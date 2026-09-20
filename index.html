@@ -1,125 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>100% REAL WALK & RUN - GIANT FOREST</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Racing</title>
 <style>
-body{margin:0;background:#000;overflow:hidden} canvas{display:block}
-#ui{position:fixed;top:0;left:0;right:0;padding:12px;color:#fff;font:bold 14px Arial;display:flex;justify-content:space-between;z-index:10;background:rgba(0,0,0,0.7)}
-#joy{position:fixed;bottom:25px;left:25px;width:110px;height:110px;background:rgba(255,255,255,0.15);border-radius:50%;z-index:10;border:2px solid rgba(255,255,255,0.3)}
-#stick{position:absolute;left:40px;top:40px;width:30px;height:30px;background:white;border-radius:50%}
+  body{margin:0; background:#111; overflow:hidden; font-family:sans-serif; color:white}
+  canvas{display:block; margin:0 auto; background:#333}
+  #ui{position:absolute; top:10px; left:50%; transform:translateX(-50%); text-align:center}
+  #controls{position:absolute; bottom:20px; width:100%; display:flex; justify-content:space-between; padding:0 20px; box-sizing:border-box}
+  .btn{width:80px; height:80px; background:rgba(255,255,255,0.2); border-radius:50%; border:2px solid white; font-size:30px; line-height:80px; text-align:center; user-select:none}
 </style>
 </head>
 <body>
-<div id="ui"><span>REAL HUMAN WALK & WOLF RUN</span><span>FEAR <b id="f">0</b>%</span></div>
-<div id="joy"><div id="stick"></div></div>
-<canvas id="c"></canvas>
+<div id="ui"><h2 id="score">Score: 0</h2><p id="speed">Speed: 0 km/h</p></div>
+<canvas id="game" width="400" height="700"></canvas>
+<div id="controls">
+  <div class="btn" id="left">◀</div>
+  <div class="btn" id="right">▶</div>
+</div>
 <script>
-const cv=document.getElementById('c'), ctx=cv.getContext('2d');
-cv.width=innerWidth; cv.height=innerHeight;
-let pl={x:cv.width/2,y:cv.height/2}, giant={x:100,y:100}, wolves=[], fear=0, time=0;
-let joy=document.getElementById('joy'), stick=document.getElementById('stick'), j={x:0,y:0};
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+let carX = 175, score = 0, speed = 5;
+let keys = {}, enemies = [];
+let gameOver = false;
 
-joy.addEventListener('touchmove',e=>{
- e.preventDefault();
- let r=joy.getBoundingClientRect(), tx=e.touches[0].clientX-r.left-55, ty=e.touches[0].clientY-r.top-55, d=Math.hypot(tx,ty);
- if(d>40){tx=tx/d*40;ty=ty/d*40}
- stick.style.left=40+tx+'px'; stick.style.top=40+ty+'px'; j.x=tx/40; j.y=ty/40;
-},{passive:false});
-joy.addEventListener('touchend',()=>{j={x:0,y:0};stick.style.left='40px';stick.style.top='40px'});
-
-for(let i=0;i<4;i++) wolves.push({x:Math.random()*cv.width,y:Math.random()*cv.height, phase:Math.random()*6});
-
-function drawWalkingHuman(x,y,walk){
- let legSwing=Math.sin(walk)*18;
- let armSwing=Math.sin(walk)*12;
- // shadow
- ctx.fillStyle='rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(x,y+35,25,6,0,0,Math.PI*2); ctx.fill();
- // legs - walking
- ctx.fillStyle='#1e3a5f';
- ctx.fillRect(x-12+legSwing/3, y+5, 10, 30); // left leg
- ctx.fillRect(x+2-legSwing/3, y+5, 10, 30); // right leg
- ctx.fillStyle='#000';
- ctx.fillRect(x-12+legSwing/3, y+32, 10, 6);
- ctx.fillRect(x+2-legSwing/3, y+32, 10, 6);
- // body
- ctx.fillStyle='#111'; ctx.fillRect(x-18, y-35, 36, 42);
- // arms - swinging when walking
- ctx.fillStyle='#ffdbac';
- ctx.fillRect(x-24+armSwing/2, y-30, 8, 28);
- ctx.fillRect(x+16-armSwing/2, y-30, 8, 28);
- // head
- ctx.fillStyle='#ffdbac'; ctx.beginPath(); ctx.arc(x, y-48, 20, 0, Math.PI*2); ctx.fill();
- ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(x-6, y-50, 2.5,0,Math.PI*2); ctx.arc(x+6, y-50, 2.5,0,Math.PI*2); ctx.fill();
- // glowing eyes when close
- ctx.fillStyle='#00e5ff'; ctx.shadowColor='#00e5ff'; ctx.shadowBlur=15;
- ctx.beginPath(); ctx.arc(x-6, y-51, 3,0,Math.PI*2); ctx.arc(x+6, y-51, 3,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0;
+function spawnEnemy(){
+  enemies.push({x: Math.random()*300+20, y: -100, w:50, h:90, speed: 3+Math.random()*3});
 }
 
-function drawRunningWolf(x,y,run){
- let leg=Math.sin(run*1.5)*10;
- // body
- ctx.fillStyle='#4a3b2a'; ctx.beginPath(); ctx.ellipse(x, y, 20, 10, 0, 0, Math.PI*2); ctx.fill();
- // head
- ctx.beginPath(); ctx.ellipse(x+18, y-5, 12, 9, 0, 0, Math.PI*2); ctx.fill();
- ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(x+23, y-6, 1.8, 0, Math.PI*2); ctx.fill();
- // ears
- ctx.fillStyle='#2b2218'; ctx.beginPath(); ctx.moveTo(x+18,y-12); ctx.lineTo(x+22,y-18); ctx.lineTo(x+24,y-10); ctx.fill();
- // legs running
- ctx.fillStyle='#3a2f22';
- ctx.fillRect(x-12+leg/2, y+6, 4, 12);
- ctx.fillRect(x-2-leg/2, y+6, 4, 12);
- ctx.fillRect(x+6+leg/2, y+6, 4, 12);
- ctx.fillRect(x+12-leg/2, y+6, 4, 12);
- // tail wagging
- ctx.beginPath(); ctx.ellipse(x-22+Math.sin(run)*3, y, 8, 4, 0, 0, Math.PI*2); ctx.fill();
+setInterval(spawnEnemy, 1200);
+
+function update(){
+  if(gameOver) return;
+  if(keys['ArrowLeft'] || keys['a']) carX -= 7;
+  if(keys['ArrowRight'] || keys['d']) carX += 7;
+  carX = Math.max(0, Math.min(350, carX));
+  
+  enemies.forEach(e=>{
+    e.y += e.speed + speed*0.1;
+    // collision
+    if(e.y+ e.h > 600 && e.y < 690 && carX < e.x+e.w && carX+50 > e.x){
+      gameOver = true;
+      alert('Game Over! Score: '+score);
+      location.reload();
+    }
+  });
+  enemies = enemies.filter(e=> e.y < 750);
+  score++;
+  speed = 5 + score*0.01;
+  document.getElementById('score').innerText = 'Score: '+score;
+  document.getElementById('speed').innerText = 'Speed: '+Math.floor(speed*20)+' km/h';
 }
 
-let trees=[];
-for(let i=0;i<15;i++) trees.push({x:Math.random()*cv.width,y:Math.random()*cv.height,s:15+Math.random()*15});
+function drawRoad(){
+  ctx.fillStyle = '#444';
+  ctx.fillRect(0,0,400,700);
+  ctx.fillStyle = '#222';
+  ctx.fillRect(50,0,300,700);
+  // dashed line
+  ctx.strokeStyle = 'white';
+  ctx.setLineDash([20,20]);
+  ctx.beginPath();
+  ctx.moveTo(200,0);
+  ctx.lineTo(200,700);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function draw(){
+  drawRoad();
+  // player car
+  ctx.fillStyle = '#00d2ff';
+  ctx.fillRect(carX, 600, 50, 90);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(carX+10, 610, 30, 15);
+  
+  // enemy cars
+  ctx.fillStyle = 'red';
+  enemies.forEach(e=>{
+    ctx.fillRect(e.x, e.y, e.w, e.h);
+    ctx.fillStyle = '#333';
+    ctx.fillRect(e.x+5, e.y+10, e.w-10, 15);
+    ctx.fillStyle = 'red';
+  });
+}
 
 function loop(){
- time+=0.18;
- pl.x+=j.x*4.5; pl.y+=j.y*4.5;
- pl.x=Math.max(15,Math.min(cv.width-15,pl.x)); pl.y=Math.max(15,Math.min(cv.height-15,pl.y));
- fear+=0.15; document.getElementById('f').innerText=Math.floor(fear);
-
- // Giant walks to player
- let dx=pl.x-giant.x, dy=pl.y-giant.y, d=Math.hypot(dx,dy);
- let speed = d>200? 1.8 : 0.9; // দূরে থাকলে দৌড়াবে, কাছে আসলে হাঁটবে
- giant.x+=dx/d*speed; giant.y+=dy/d*speed;
-
- if(d<55){alert('আসল মানুষ তোমাকে ধরে ফেললো!'); location.reload();}
-
- wolves.forEach(w=>{
-  let dx=pl.x-w.x, dy=pl.y-w.y, dd=Math.hypot(dx,dy);
-  w.x+=dx/dd*2.3; w.y+=dy/dd*2.3; // নেকড়ে সবসময় দৌড়াবে
-  w.phase+=0.3;
- });
-
- // DRAW
- ctx.fillStyle='#0a1f0a'; ctx.fillRect(0,0,cv.width,cv.height);
- trees.forEach(t=>{
-  ctx.fillStyle='#3d2817'; ctx.fillRect(t.x-4,t.y-10,8,20);
-  ctx.fillStyle='#0d3b0d'; ctx.beginPath(); ctx.arc(t.x,t.y-20,t.s,0,Math.PI*2); ctx.fill();
- });
-
- wolves.forEach(w=>drawRunningWolf(w.x,w.y,w.phase));
-
- let walkSpeed = d>150? time*1.2 : time*0.6; // দৌড়ানো vs হাঁটা
- drawWalkingHuman(giant.x, giant.y, walkSpeed);
-
- // player
- let g=ctx.createRadialGradient(pl.x,pl.y,5,pl.x,pl.y,150);
- g.addColorStop(0,'rgba(200,255,200,0.3)'); g.addColorStop(1,'transparent');
- ctx.fillStyle=g; ctx.beginPath(); ctx.arc(pl.x,pl.y,150,0,Math.PI*2); ctx.fill();
- ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(pl.x,pl.y,6,0,Math.PI*2); ctx.fill();
-
- if(fear>100){alert('ভয়ে মারা গেলে!'); location.reload();}
- requestAnimationFrame(loop);
+  update();
+  draw();
+  requestAnimationFrame(loop);
 }
 loop();
+
+window.addEventListener('keydown', e=> keys[e.key]=true);
+window.addEventListener('keyup', e=> keys[e.key]=false);
+
+document.getElementById('left').addEventListener('touchstart', ()=> keys['ArrowLeft']=true);
+document.getElementById('left').addEventListener('touchend', ()=> keys['ArrowLeft']=false);
+document.getElementById('right').addEventListener('touchstart', ()=> keys['ArrowRight']=true);
+document.getElementById('right').addEventListener('touchend', ()=> keys['ArrowRight']=false);
 </script>
 </body>
 </html>
