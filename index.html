@@ -66,3 +66,248 @@ function go(cat){
 </script>
 </body>
 </html>
+[
+
+from pathlib import Path
+import zipfile, textwrap, json
+
+out = Path("/mnt/data/bcs_mcq_section")
+out.mkdir(exist_ok=True)
+
+index_html = r"""<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCS MCQ Test | 10th–50th BCS</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;background:#f7fafb;color:#234}
+.header{background:#116f7b;color:#fff;padding:26px 18px 34px;border-radius:0 0 28px 28px}
+.header h1{margin:0;font-size:28px}.header p{margin:8px 0 0;font-size:16px}
+.container{max-width:900px;margin:auto;padding:18px}
+.section-title{font-size:23px;font-weight:700;margin:12px 0 18px;color:#116f7b}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:#fff;border-radius:22px;padding:22px;min-height:175px;box-shadow:0 4px 14px #d9e1e4;display:flex;flex-direction:column;justify-content:space-between}
+.card:nth-child(4n+1){background:#e9fbf8}.card:nth-child(4n+2){background:#eef7ff}.card:nth-child(4n+3){background:#fff7d9}.card:nth-child(4n+4){background:#f4efff}
+.card h3{margin:0;color:#3b4650;font-size:23px}.card p{margin:8px 0;color:#5b6268}
+button{border:0;border-radius:12px;background:#116f7b;color:white;padding:13px 20px;font-size:16px;font-weight:700;cursor:pointer}
+button:active{transform:scale(.98)}
+#test{display:none}.testbox{background:#fff;border-radius:22px;padding:20px;box-shadow:0 4px 14px #d9e1e4}
+.topline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#116f7b;font-weight:700}
+.question{font-size:21px;font-weight:700;line-height:1.55;margin:22px 0}
+.option{display:block;width:100%;text-align:left;background:#f5f7f8;color:#243;padding:14px;margin:10px 0;border:2px solid transparent}
+.option.correct{background:#d8f7df;border-color:#27a34a}.option.wrong{background:#ffdede;border-color:#d33}
+.option:disabled{opacity:1}
+.explain{display:none;background:#eef8fa;padding:15px;border-radius:12px;margin-top:14px;line-height:1.6}
+.nav{display:flex;gap:10px;margin-top:18px}.nav button{flex:1}
+.result{text-align:center;padding:20px}.source{font-size:13px;color:#65747b;margin-top:14px;word-break:break-word}
+.back{background:#58656a;margin-bottom:15px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.header h1{font-size:24px}.question{font-size:19px}}
+</style>
+</head>
+<body>
+<header class="header">
+  <h1>📚 BCS MCQ Test</h1>
+  <p>৫০তম → ১০ম BCS | ধারাবাহিক প্রশ্ন ও অনুশীলন</p>
+</header>
+
+<main class="container">
+  <section id="bank">
+    <div class="section-title">বিসিএস প্রশ্ন ও সমাধান</div>
+    <div id="examGrid" class="grid"></div>
+  </section>
+
+  <section id="test">
+    <button class="back" onclick="showBank()">← BCS তালিকায় ফিরে যান</button>
+    <div class="testbox">
+      <div class="topline">
+        <span id="examTitle"></span>
+        <span id="progress"></span>
+      </div>
+      <div id="question" class="question"></div>
+      <div id="options"></div>
+      <div id="explain" class="explain"></div>
+      <div class="nav">
+        <button id="prevBtn" onclick="prevQuestion()">পূর্বের প্রশ্ন</button>
+        <button id="nextBtn" onclick="nextQuestion()">পরের প্রশ্ন</button>
+      </div>
+      <div id="source" class="source"></div>
+    </div>
+  </section>
+</main>
+
+<script src="qbank.js"></script>
+<script>
+let activeExam=null, list=[], index=0, score=0, answered=false;
+
+const grid=document.getElementById("examGrid");
+bcsExams.forEach(exam=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
+    <div>
+      <h3>${exam.name}</h3>
+      <p>${exam.description}</p>
+    </div>
+    <button onclick="startExam('${exam.id}')">শুরু করুন</button>`;
+  grid.appendChild(card);
+});
+
+function startExam(id){
+  activeExam=bcsExams.find(x=>x.id===id);
+  list=removeDuplicates(activeExam.questions);
+  index=0; score=0;
+  document.getElementById("bank").style.display="none";
+  document.getElementById("test").style.display="block";
+  render();
+}
+function removeDuplicates(arr){
+  const seen=new Set();
+  return arr.filter(q=>{
+    const key=(q.question+"|"+q.options.join("|")).replace(/\s+/g," ").trim().toLowerCase();
+    if(seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+}
+function render(){
+  if(index>=list.length){showResult();return}
+  const q=list[index]; answered=false;
+  document.getElementById("examTitle").textContent=activeExam.name;
+  document.getElementById("progress").textContent=`${index+1}/${list.length}`;
+  document.getElementById("question").textContent=q.question;
+  document.getElementById("explain").style.display="none";
+  document.getElementById("explain").innerHTML="";
+  document.getElementById("source").innerHTML=q.source ? "Source: "+q.source : "";
+  const box=document.getElementById("options"); box.innerHTML="";
+  q.options.forEach((op,i)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.textContent=op;
+    b.onclick=()=>checkAnswer(i,b);
+    box.appendChild(b);
+  });
+  document.getElementById("prevBtn").disabled=index===0;
+  document.getElementById("nextBtn").disabled=true;
+}
+function checkAnswer(selected,btn){
+  if(answered)return;
+  answered=true;
+  const q=list[index], buttons=document.querySelectorAll(".option");
+  buttons.forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.answer)b.classList.add("correct");
+  });
+  if(selected===q.answer){score++;btn.classList.add("correct")}
+  else btn.classList.add("wrong");
+  const ex=document.getElementById("explain");
+  ex.style.display="block";
+  ex.innerHTML=`<b>${selected===q.answer?"সঠিক উত্তর ✅":"ভুল উত্তর ❌"}</b><br>
+  সঠিক উত্তর: ${q.options[q.answer]}<br>${q.explanation||""}`;
+  document.getElementById("nextBtn").disabled=false;
+}
+function nextQuestion(){if(!answered)return;index++;render()}
+function prevQuestion(){if(index>0){index--;render()}}
+function showResult(){
+  document.querySelector(".testbox").innerHTML=`
+    <div class="result">
+      <h2>🎉 Test Complete</h2>
+      <p>মোট প্রশ্ন: <b>${list.length}</b></p>
+      <p>সঠিক উত্তর: <b>${score}</b></p>
+      <p>ভুল/উত্তরহীন: <b>${list.length-score}</b></p>
+      <h2>Score: ${score}/${list.length}</h2>
+      <button onclick="startExam('${activeExam.id}')">আবার পরীক্ষা দিন</button>
+      <button class="back" onclick="showBank()">BCS তালিকায় যান</button>
+    </div>`;
+}
+function showBank(){
+  document.getElementById("test").style.display="none";
+  document.getElementById("bank").style.display="block";
+  location.reload();
+}
+</script>
+</body>
+</html>
+"""
+
+# 10th BCS sample questions are sourced from publicly available question pages.
+# The full 10th–50th question text is intentionally not copied from a commercial book.
+sample10 = [
+    {
+        "question":"‘আনারস’ ও ‘চাবি’ শব্দ দু’টি বাংলা ভাষা গ্রহণ করেছে—",
+        "options":["ক) পর্তুগিজ ভাষা হতে","খ) আরবি ভাষা হতে","গ) দেশী ভাষা হতে","ঘ) ওলন্দাজ ভাষা হতে"],
+        "answer":0,
+        "explanation":"উৎসে উত্তর হিসেবে পর্তুগিজ ভাষা দেওয়া হয়েছে।",
+        "source":"https://onlinebcs.com/2025/06/08/10th-bcs-preliminary-question-full-solution/"
+    },
+    {
+        "question":"বাংলার নববর্ষ পহেলা বৈশাখ চালু করেছিল—",
+        "options":["ক) লক্ষণ সেন","খ) ইলিয়াস শাহ","গ) আকবর","ঘ) বিজয় সেন"],
+        "answer":2,
+        "explanation":"উৎসে উত্তর: আকবর।",
+        "source":"https://onlinebcs.com/2018/06/02/10th-bcs-priliminary-question-solution/"
+    },
+    {
+        "question":"কোন মুঘল সম্রাট বাংলার নাম দেন ‘জান্নাতবাদ’?",
+        "options":["ক) বাবর","খ) হুমায়ুন","গ) আকবর","ঘ) জাহাঙ্গীর"],
+        "answer":1,
+        "explanation":"উৎসে উত্তর: হুমায়ুন।",
+        "source":"https://onlinebcs.com/2018/06/02/10th-bcs-priliminary-question-solution/"
+    },
+    {
+        "question":"‘কবর’ নাটকের নাট্যকার কে?",
+        "options":["ক) মুনীর চৌধুরী","খ) শওকত ওসমান","গ) জহির রায়হান","ঘ) সৈয়দ শামসুল হক"],
+        "answer":0,
+        "explanation":"উৎসে উত্তর: মুনীর চৌধুরী।",
+        "source":"https://primarypreparation.com/10th-bcs-priliminary-question-solution/"
+    },
+    {
+        "question":"‘অগ্নিবীণা’ কাব্যের প্রথম কবিতা কোনটি?",
+        "options":["ক) বিদ্রোহী","খ) প্রলয়োল্লাস","গ) সাম্যবাদী","ঘ) দারিদ্র্য"],
+        "answer":1,
+        "explanation":"উৎসে উত্তর: প্রলয়োল্লাস।",
+        "source":"https://primarypreparation.com/10th-bcs-priliminary-question-solution/"
+    }
+]
+
+# Create ordered cards 50 -> 10. Empty exams are ready for verified question data to be inserted.
+exams=[]
+for n in range(50,9,-1):
+    exams.append({
+        "id":f"bcs{n}",
+        "name":f"{n}তম BCS",
+        "description":"প্রিলিমিনারি প্রশ্ন ও সমাধান",
+        "source":"Professor's BCS Preliminary Question Bank (2026) — 10th–50th BCS coverage",
+        "sourceUrl":"https://www.pbs.com.bd/book/2407538/professor-s-bcs-question-bank",
+        "questions": sample10 if n==10 else []
+    })
+
+qbank = "const bcsExams = " + json.dumps(exams, ensure_ascii=False, indent=2) + ";\n"
+
+(out/"index.html").write_text(index_html, encoding="utf-8")
+(out/"qbank.js").write_text(qbank, encoding="utf-8")
+(out/"README.txt").write_text(
+"""BCS MCQ Section
+=================
+Files:
+1. index.html
+2. qbank.js
+
+How to use:
+- Upload/replace these files in your GitHub Pages project.
+- Keep qbank.js in the same folder as index.html.
+- The home screen shows 50th -> 10th BCS in order.
+- Each exam opens as an MCQ test.
+- Duplicate questions inside a test are automatically removed.
+
+IMPORTANT:
+The supplied qbank includes only a small 10th BCS sample for demonstration.
+The commercial Professor's book is used only as a source reference; its full text is not copied here.
+For a full question bank, add question data you have permission to use or data you supply.
+""", encoding="utf-8")
+
+zip_path=Path("/mnt/data/BCS_10th_to_50th_MCQ_App_Code.zip")
+with zipfile.ZipFile(zip_path,"w",zipfile.ZIP_DEFLATED) as z:
+    for f in out.iterdir():
+        z.write(f, f.name)
+
+print(zip_path)
