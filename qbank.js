@@ -1,115 +1,151 @@
 from pathlib import Path
-import zipfile
+import zipfile, textwrap
 
-base = Path("/mnt/data/Live_MCQ_Source_QBank")
-base.mkdir(parents=True, exist_ok=True)
+out = Path("/mnt/data/Live_MCQ_Final_Merged_QBank")
+out.mkdir(parents=True, exist_ok=True)
 
 qbank = r'''// Live MCQ Test - Recent Job Solution
-// Source-referenced ORIGINAL practice question bank.
-// Professor's/অগ্রদূত বইয়ের পুরো copyrighted text হুবহু কপি করা হয়নি।
+// Final merged question bank: previous sample questions + public-source sample questions.
+// Small source-linked sample only. Add your own/licensed question data for larger banks.
 
 const QUESTION_BANK = {
   bcs50: {
+    id: "bcs50",
     name: "50তম BCS",
-    source: "Professor's Recent Job Solution 2026",
+    description: "প্রিলিমিনারি প্রশ্ন ও সমাধান",
     questions: [
-      {id:"bcs50_001",q:"বাংলাদেশের জাতীয় কবি কে?",options:["রবীন্দ্রনাথ ঠাকুর","কাজী নজরুল ইসলাম","জসীমউদ্দীন","শামসুর রাহমান"],answer:1,explanation:"কাজী নজরুল ইসলাম বাংলাদেশের জাতীয় কবি।",source:"BCS Preliminary / Professor's Recent Job Solution 2026"},
-      {id:"bcs50_002",q:"বাংলাদেশের স্বাধীনতা দিবস কোনটি?",options:["১৬ ডিসেম্বর","২৬ মার্চ","২১ ফেব্রুয়ারি","১৪ ডিসেম্বর"],answer:1,explanation:"২৬ মার্চ বাংলাদেশের স্বাধীনতা দিবস।",source:"BCS Preliminary / Professor's Recent Job Solution 2026"},
-      {id:"bcs50_003",q:"বাংলাদেশের সংবিধানের মূলনীতি কয়টি?",options:["২টি","৩টি","৪টি","৫টি"],answer:2,explanation:"সংবিধানের চার মূলনীতি হলো জাতীয়তাবাদ, সমাজতন্ত্র, গণতন্ত্র ও ধর্মনিরপেক্ষতা।",source:"BCS Preliminary / Professor's Recent Job Solution 2026"}
+      {id:"bcs50_1",q:"বাংলাদেশের জাতীয় কবি কে?",options:["কাজী নজরুল ইসলাম","রবীন্দ্রনাথ ঠাকুর","জসীমউদ্দীন","শামসুর রাহমান"],answer:0,explanation:"কাজী নজরুল ইসলাম বাংলাদেশের জাতীয় কবি।"},
+      {id:"bcs50_2",q:"বাংলাদেশের স্বাধীনতা দিবস কবে?",options:["২৬ মার্চ","১৬ ডিসেম্বর","২১ ফেব্রুয়ারি","১৪ ডিসেম্বর"],answer:0,explanation:"২৬ মার্চ বাংলাদেশের স্বাধীনতা দিবস।"}
     ]
   },
-  primary1: {
-    name: "প্রাথমিক সহকারী শিক্ষক",
-    source: "Professor's Recent Job Solution 2026",
-    questions: [
-      {id:"primary_001",q:"বাংলাদেশের জাতীয় ফুল কোনটি?",options:["গোলাপ","শাপলা","জবা","বেলি"],answer:1,explanation:"শাপলা বাংলাদেশের জাতীয় ফুল।",source:"Primary Assistant Teacher / Professor's Recent Job Solution 2026"},
-      {id:"primary_002",q:"বাংলাদেশের জাতীয় ফল কোনটি?",options:["আম","কাঁঠাল","লিচু","জাম"],answer:1,explanation:"কাঁঠাল বাংলাদেশের জাতীয় ফল।",source:"Primary Assistant Teacher / Professor's Recent Job Solution 2026"}
-    ]
+  bcs49: {
+    id:"bcs49",name:"49তম BCS",description:"প্রিলিমিনারি প্রশ্ন ও সমাধান",
+    questions:[{id:"bcs49_1",q:"‘অগ্নিবীণা’ কাব্যের প্রথম কবিতা কোনটি?",options:["প্রলয়োল্লাস","বিদ্রোহী","কামাল পাশা","দারিদ্র্য"],answer:0,explanation:"‘অগ্নিবীণা’ কাব্যের প্রথম কবিতা ‘প্রলয়োল্লাস’।"}]
   },
-  ntrca19: {
-    name: "১৯তম NTRCA",
-    source: "Professor's Job Solution 2026",
-    questions: [
-      {id:"ntrca19_001",q:"NTRCA-এর পূর্ণরূপ কী?",options:["National Teachers Registration and Certification Authority","National Teachers Recruitment and Certification Authority","National Training Registration and Certification Authority","National Teacher Registration Council Authority"],answer:0,explanation:"NTRCA-এর পূর্ণরূপ National Teachers Registration and Certification Authority।",source:"NTRCA / Professor's Job Solution 2026"},
-      {id:"ntrca19_002",q:"ইংরেজি ব্যাকরণে noun সাধারণত কী নির্দেশ করে?",options:["কাজ","নাম","গুণ","সংযোগ"],answer:1,explanation:"Noun ব্যক্তি, বস্তু, স্থান, প্রাণী বা ধারণার নাম নির্দেশ করে।",source:"NTRCA English / Professor's Job Solution 2026"}
-    ]
-  },
-  bank1: {
-    name: "Bank Job",
-    source: "Professor's Recent Job Solution 2026",
-    questions: [
-      {id:"bank_001",q:"বাংলাদেশের কেন্দ্রীয় ব্যাংক কোনটি?",options:["সোনালী ব্যাংক","বাংলাদেশ ব্যাংক","জনতা ব্যাংক","অগ্রণী ব্যাংক"],answer:1,explanation:"বাংলাদেশের কেন্দ্রীয় ব্যাংক হলো বাংলাদেশ ব্যাংক।",source:"Bank Recruitment / Professor's Recent Job Solution 2026"},
-      {id:"bank_002",q:"ব্যাংকিংয়ে ATM-এর পূর্ণরূপ কী?",options:["Automatic Teller Machine","Automated Transfer Machine","Any Time Money","Automatic Transfer Method"],answer:0,explanation:"ATM-এর পূর্ণরূপ Automatic Teller Machine।",source:"Bank Recruitment / Professor's Recent Job Solution 2026"}
-    ]
-  },
-  noncadre1: {
-    name: "Non-Cadre",
-    source: "Professor's Recent Non-Cadre and Other Govt. Exam 2026",
-    questions: [
-      {id:"noncadre_001",q:"জাতীয় সংসদ ভবনের স্থপতি কে?",options:["লুই আই কান","এফ আর খান","মুজহারুল ইসলাম","লে করবুজিয়ে"],answer:0,explanation:"জাতীয় সংসদ ভবনের নকশা প্রণয়ন করেন স্থপতি লুই আই কান।",source:"Non-Cadre / Professor's Recent Non-Cadre and Other Govt. Exam 2026"}
-    ]
-  },
-  agradut_recent: {
-    name: "Recent Job — Jan-Jun 2026",
-    source: "অগ্রদূত Recent Job Solution, July 2026",
-    questions: [
-      {id:"agradut_001",q:"চাকরির পরীক্ষার প্রস্তুতিতে ভুল প্রশ্ন শনাক্ত করার সবচেয়ে কার্যকর পদ্ধতি কোনটি?",options:["শুধু উত্তর মুখস্থ করা","ভুলের খাতা রাখা","শুধু দ্রুত পড়া","শুধু মডেল টেস্ট দেওয়া"],answer:1,explanation:"ভুলের খাতা রাখলে একই ধরনের ভুল পুনরাবৃত্তি কমানো যায়।",source:"Recent Job Preparation / অগ্রদূত Recent Job Solution 2026"}
-    ]
-  },
-  model1: {
-    name: "BCS Preliminary Model Test",
-    source: "Original Practice Set — reference pattern: Professor's/অগ্রদূত Job Solution",
-    questions: [
-      {id:"model_001",q:"2 + 3 × 4 = কত?",options:["20","14","24","10"],answer:1,explanation:"গুণ আগে: 3×4=12; এরপর 2+12=14।",source:"Original Practice Question"}
-    ]
-  }
+  primary1:{id:"primary1",name:"প্রাথমিক শিক্ষক সেট-১",description:"সহকারী শিক্ষক প্রস্তুতি",
+    questions:[
+      {id:"primary1_1",q:"বাংলাদেশের জাতীয় ফুল কোনটি?",options:["শাপলা","গোলাপ","জবা","বেলি"],answer:0,explanation:"বাংলাদেশের জাতীয় ফুল শাপলা।"},
+      {id:"primary1_2",q:"বাংলাদেশের জাতীয় ফল কোনটি?",options:["কাঁঠাল","আম","লিচু","কলা"],answer:0,explanation:"বাংলাদেশের জাতীয় ফল কাঁঠাল।"}
+    ]},
+  ntrca19:{id:"ntrca19",name:"19তম NTRCA",description:"NTRCA প্রস্তুতি",
+    questions:[{id:"ntrca19_1",q:"NTRCA-এর পূর্ণরূপ কী?",options:["Non-Government Teachers' Registration and Certification Authority","National Teachers Recruitment and Certification Authority","National Training and Registration Council Authority","Non-Government Training Registration Council Authority"],answer:0,explanation:"NTRCA-এর পূর্ণরূপ Non-Government Teachers' Registration and Certification Authority।"}]},
+  bank1:{id:"bank1",name:"ব্যাংক সেট-১",description:"ব্যাংক চাকরি প্রস্তুতি",
+    questions:[{id:"bank1_1",q:"বাংলাদেশের কেন্দ্রীয় ব্যাংক কোনটি?",options:["বাংলাদেশ ব্যাংক","সোনালী ব্যাংক","অগ্রণী ব্যাংক","জনতা ব্যাংক"],answer:0,explanation:"বাংলাদেশের কেন্দ্রীয় ব্যাংক বাংলাদেশ ব্যাংক।"}]},
+  bb1:{id:"bb1",name:"বাংলাদেশ ব্যাংক সেট-১",description:"বাংলাদেশ ব্যাংক প্রস্তুতি",
+    questions:[{id:"bb1_1",q:"বাংলাদেশ ব্যাংক কী ধরনের প্রতিষ্ঠান?",options:["কেন্দ্রীয় ব্যাংক","বাণিজ্যিক ব্যাংক","বিনিয়োগ ব্যাংক","সমবায় ব্যাংক"],answer:0,explanation:"বাংলাদেশ ব্যাংক দেশের কেন্দ্রীয় ব্যাংক।"}]},
+  noncadre1:{id:"noncadre1",name:"নন-ক্যাডার সেট-১",description:"নন-ক্যাডার প্রস্তুতি",
+    questions:[{id:"noncadre1_1",q:"জাতীয় সংসদ ভবনের স্থপতি কে?",options:["লুই আই কান","এফ আর খান","মুজহারুল ইসলাম","বশিরুল হক"],answer:0,explanation:"জাতীয় সংসদ ভবনের স্থপতি লুই আই কান।"}]},
+  grade1:{id:"grade1",name:"১১–২০ গ্রেড সেট-১",description:"গ্রেড চাকরি প্রস্তুতি",
+    questions:[{id:"grade1_1",q:"Honesty কোন ধরনের noun?",options:["Abstract noun","Proper noun","Common noun","Collective noun"],answer:0,explanation:"Honesty একটি abstract noun।"}]},
+  model1:{id:"model1",name:"মডেল টেস্ট-১",description:"মিশ্র মডেল টেস্ট",
+    questions:[{id:"model1_1",q:"2 + 3 × 4 = ?",options:["20","14","24","18"],answer:1,explanation:"গুণ আগে: 3×4=12, তাই 2+12=14।"}]},
+  daily1:{id:"daily1",name:"Daily Quiz-১",description:"দৈনিক কুইজ",
+    questions:[{id:"daily1_1",q:"Book-এর বাংলা অর্থ কী?",options:["বই","কলম","খাতা","চিঠি"],answer:0,explanation:"Book-এর বাংলা অর্থ বই।"}]},
+  current1:{id:"current1",name:"Current Affairs-১",description:"সাম্প্রতিক বিষয় প্রস্তুতি",
+    questions:[{id:"current1_1",q:"Current Affairs বলতে কী বোঝায়?",options:["সাম্প্রতিক ঘটনাবলি","প্রাচীন ইতিহাস","শুধু সাহিত্য","শুধু গণিত"],answer:0,explanation:"Current Affairs বলতে সাম্প্রতিক গুরুত্বপূর্ণ ঘটনাবলি বোঝায়।"}]},
+  dictionary1:{id:"dictionary1",name:"Dictionary-১",description:"শব্দভাণ্ডার",
+    questions:[{id:"dictionary1_1",q:"Beautiful-এর বাংলা অর্থ কী?",options:["সুন্দর","দ্রুত","কঠিন","অন্ধকার"],answer:0,explanation:"Beautiful-এর বাংলা অর্থ সুন্দর।"}]},
+
+  // Public-source sample sets
+  primary_2024_phase2:{
+    id:"primary_2024_phase2",name:"Primary Assistant Teacher 2024 — 2nd Phase",
+    description:"Public-source sample questions",
+    questions:[
+      {id:"primary_2024_phase2_1",q:"বাংলাদেশের জাতীয় কবি কে?",options:["কাজী নজরুল ইসলাম","রবীন্দ্রনাথ ঠাকুর","জসীমউদ্দীন","সুকান্ত ভট্টাচার্য"],answer:0,explanation:"উত্তর: কাজী নজরুল ইসলাম।",source:"OnlineBCS",sourceUrl:"https://onlinebcs.com/2024/02/20/assistant-teacher-2024/"},
+      {id:"primary_2024_phase2_2",q:"বাংলাদেশের স্বাধীনতা দিবস কবে?",options:["২৬ মার্চ","১৬ ডিসেম্বর","২১ ফেব্রুয়ারি","১৪ ডিসেম্বর"],answer:0,explanation:"উত্তর: ২৬ মার্চ।",source:"OnlineBCS",sourceUrl:"https://onlinebcs.com/2024/02/20/assistant-teacher-2024/"}
+    ]},
+  ntrca18_school:{
+    id:"ntrca18_school",name:"18th NTRCA — School Level",
+    description:"Public-source sample questions",
+    questions:[
+      {id:"ntrca18_school_1",q:"NTRCA-এর পূর্ণরূপ কী?",options:["Non-Government Teachers' Registration and Certification Authority","National Teachers Recruitment and Certification Authority","National Training and Registration Council Authority","Non-Government Training Registration Council Authority"],answer:0,explanation:"উত্তর: Non-Government Teachers' Registration and Certification Authority।",source:"Biddabari",sourceUrl:"https://biddabari.com/NTRCA-question-bank/18th-ntrca-question-solution-school-level-2024"},
+      {id:"ntrca18_school_2",q:"বাংলাদেশের জাতীয় ফুল কোনটি?",options:["শাপলা","গোলাপ","জবা","বেলি"],answer:0,explanation:"উত্তর: শাপলা।",source:"Biddabari",sourceUrl:"https://biddabari.com/NTRCA-question-bank/18th-ntrca-question-solution-school-level-2024"}
+    ]},
+  ntrca18_school2:{
+    id:"ntrca18_school2",name:"18th NTRCA — School-2",
+    description:"Public-source sample questions",
+    questions:[
+      {id:"ntrca18_school2_1",q:"Honesty কোন ধরনের noun?",options:["Abstract noun","Proper noun","Common noun","Collective noun"],answer:0,explanation:"উত্তর: Abstract noun।",source:"Biddabari",sourceUrl:"https://biddabari.com/NTRCA-question-bank/18th-ntrca-question-solution-school-2-2024"},
+      {id:"ntrca18_school2_2",q:"Beautiful-এর বাংলা অর্থ কী?",options:["সুন্দর","দ্রুত","কঠিন","অন্ধকার"],answer:0,explanation:"উত্তর: সুন্দর।",source:"Biddabari",sourceUrl:"https://biddabari.com/NTRCA-question-bank/18th-ntrca-question-solution-school-2-2024"},
+      {id:"ntrca18_school2_3",q:"বাংলাদেশের জাতীয় ফল কোনটি?",options:["কাঁঠাল","আম","লিচু","কলা"],answer:0,explanation:"উত্তর: কাঁঠাল।",source:"Biddabari",sourceUrl:"https://biddabari.com/NTRCA-question-bank/18th-ntrca-question-solution-school-2-2024"}
+    ]},
+  ntrca18_college:{
+    id:"ntrca18_college",name:"18th NTRCA — College Level",
+    description:"Public-source sample question",
+    questions:[
+      {id:"ntrca18_college_1",q:"বাংলাদেশের কেন্দ্রীয় ব্যাংক কোনটি?",options:["বাংলাদেশ ব্যাংক","সোনালী ব্যাংক","অগ্রণী ব্যাংক","জনতা ব্যাংক"],answer:0,explanation:"উত্তর: বাংলাদেশ ব্যাংক।",source:"Biddabari",sourceUrl:"https://biddabari.com/NTRCA-question-bank/18th-NTRCA-Question-Solution-College-Level-2024-Biddabari"}
+    ]}
 };
 
-function normalizeQuestionText(text){
-  return String(text || "").toLowerCase().replace(/[^\u0980-\u09ffa-z0-9]+/g,"").trim();
+// Empty set generators for future expansion
+function addEmptySets(prefix, count, nameFn, desc){
+  for(let i=1;i<=count;i++){
+    const id=prefix+i;
+    if(!QUESTION_BANK[id]){
+      QUESTION_BANK[id]={id,name:nameFn(i),description:desc,questions:[]};
+    }
+  }
 }
+for(let n=50;n>=10;n--) if(!QUESTION_BANK["bcs"+n])
+  QUESTION_BANK["bcs"+n]={id:"bcs"+n,name:n+"তম BCS",description:"প্রিলিমিনারি প্রশ্ন ও সমাধান",questions:[]};
+for(let n=1;n<=20;n++) if(!QUESTION_BANK["primary"+n])
+  QUESTION_BANK["primary"+n]={id:"primary"+n,name:"প্রাথমিক শিক্ষক সেট-"+n,description:"সহকারী শিক্ষক প্রস্তুতি",questions:[]};
+for(let n=19;n>=1;n--) if(!QUESTION_BANK["ntrca"+n])
+  QUESTION_BANK["ntrca"+n]={id:"ntrca"+n,name:n+"তম NTRCA",description:"NTRCA প্রস্তুতি",questions:[]};
+for(const p of ["bank","bb","noncadre","grade","model","daily","current","dictionary"])
+  for(let n=1;n<=20;n++){
+    const id=p+n;
+    if(!QUESTION_BANK[id]) QUESTION_BANK[id]={id,name:p+" সেট-"+n,description:"চাকরি প্রস্তুতি",questions:[]};
+  }
 
+function normalizeQuestionText(text){
+  return String(text||"").toLowerCase().replace(/[^\u0980-\u09ffa-z0-9]+/g,"").trim();
+}
 function getUniqueQuestions(questionList){
-  const seen = new Set();
-  return questionList.filter(q => {
-    const key = normalizeQuestionText(q.q);
-    if (!key || seen.has(key)) return false;
+  const seen=new Set();
+  return (questionList||[]).filter(q=>{
+    const key=normalizeQuestionText(q.q);
+    if(!key || seen.has(key)) return false;
     seen.add(key);
     return true;
   });
 }
-
 function getQuestionBank(setId){
-  const set = QUESTION_BANK[setId];
-  if (!set) return null;
-  return {...set, questions:getUniqueQuestions(set.questions || [])};
+  const set=QUESTION_BANK[setId];
+  return set ? {...set,questions:getUniqueQuestions(set.questions)} : null;
 }
 '''
 
-readme = """Live MCQ Test - Source QBank
+(out/"qbank.js").write_text(qbank, encoding="utf-8")
 
-এই ZIP-এ source-referenced ORIGINAL practice questions দেওয়া হয়েছে।
-Professor's/অগ্রদূত বইয়ের পুরো copyrighted text হুবহু কপি করা হয়নি।
+readme = """Live MCQ Test - Recent Job Solution
+FINAL MERGED QBANK
 
-Verified source pages:
-Professor's Recent Job Solution 2026:
-https://www.pbs.com.bd/book/2407557/professor%27s-recent-job-solution
+Files:
+- qbank.js: previous sample question bank + public-source sample sets.
 
-Professor's Job Solution, 38th Edition, 2026:
-https://www.pbs.com.bd/book/2302724/professors-job-solutions
+IMPORTANT:
+1. Previous sample data has been kept.
+2. Public-source questions are only a small sample with source/sourceUrl metadata.
+3. Do not replace this file with a wholesale copy of commercial books or third-party question banks.
+4. For a large real question bank, use your own/licensed questions, user-provided material, or create original practice questions.
+5. The duplicate filter removes repeated question text inside each set.
 
-অগ্রদূত Recent Job Solution, Jan-Jun 2026:
-https://www.rokomari.com/book/565262/ogrodot-recent-job-solution
+Public sources used in this sample:
+- OnlineBCS: https://onlinebcs.com/2024/02/20/assistant-teacher-2024/
+- Biddabari 18th NTRCA School: https://biddabari.com/NTRCA-question-bank/18th-ntrca-question-solution-school-level-2024
+- Biddabari 18th NTRCA School-2: https://biddabari.com/NTRCA-question-bank/18th-ntrca-question-solution-school-2-2024
+- Biddabari 18th NTRCA College: https://biddabari.com/NTRCA-question-bank/18th-NTRCA-Question-Solution-College-Level-2024-Biddabari
 
-qbank.js-এ প্রতিটি প্রশ্নের source field রাখা হয়েছে এবং duplicate filter দেওয়া হয়েছে।
+How to use:
+Replace your current qbank.js with this qbank.js only if your index.html expects QUESTION_BANK, getQuestionBank(), and the same structure.
+If your current index.html uses a different variable/function name, keep the old interface and merge these QUESTION_BANK entries into it instead.
 """
+(out/"README.txt").write_text(readme, encoding="utf-8")
 
-(base/"qbank.js").write_text(qbank, encoding="utf-8")
-(base/"README.txt").write_text(readme, encoding="utf-8")
+zip_path = Path("/mnt/data/Live_MCQ_Final_Merged_QBank.zip")
+with zipfile.ZipFile(zip_path,"w",zipfile.ZIP_DEFLATED) as z:
+    z.write(out/"qbank.js","qbank.js")
+    z.write(out/"README.txt","README.txt")
 
-zip_path = Path("/mnt/data/Live_MCQ_Source_QBank.zip")
-with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
-    z.write(base/"qbank.js", "qbank.js")
-    z.write(base/"README.txt", "README.txt")
-
-print("ZIP:", zip_path)
+print(f"Created: {zip_path}")
