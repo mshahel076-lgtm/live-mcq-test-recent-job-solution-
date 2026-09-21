@@ -1,87 +1,50 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live MCQ Test</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10-50th BCS Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&display=swap" rel="stylesheet">
 <style>
 *{font-family:'Hind Siliguri',sans-serif; box-sizing:border-box}
-body{margin:0; background:#f5f0ff; padding:12px}
-.header{background:#5e35b1; color:white; padding:15px; border-radius:15px; text-align:center; margin-bottom:15px}
-.header h2{margin:0}
-.card{background:white; border-radius:16px; padding:18px; box-shadow:0 6px 20px rgba(0,0,0,.08); margin-bottom:12px}
-.q{font-size:18px; font-weight:600; margin-bottom:14px}
-.opt{border:2px solid #ede7f6; border-radius:12px; padding:12px; margin-bottom:10px; cursor:pointer; font-size:16px}
-.opt:active{transform:scale(.98)}
-.correct{background:#e8f5e9!important; border-color:#4caf50!important; color:#2e7d32}
-.wrong{background:#ffebee!important; border-color:#f44336!important; color:#c62828}
-.btn{width:100%; background:#5e35b1; color:white; border:0; padding:14px; border-radius:12px; font-size:17px; font-weight:600}
-.top{display:flex; justify-content:space-between; font-weight:600; margin-bottom:10px}
+body{background:#f3f0ff; margin:0; padding:10px}
+.header{background:#5e35b1; color:#fff; padding:16px; border-radius:14px; text-align:center}
+.card{background:#fff; border-radius:12px; padding:15px; margin-top:12px; box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.opt{border:2px solid #eee; border-radius:10px; padding:10px; margin-top:8px}
+.correct{background:#e8f5e9!important; border-color:#4caf50!important}
+.wrong{background:#ffebee!important; border-color:#f44336!important}
+.btn{width:100%; background:#5e35b1; color:#fff; border:0; padding:13px; border-radius:10px; font-size:16px; margin-top:10px}
 </style>
 </head>
 <body>
-
-<div class="header">
-<h2>🔴 Live MCQ Test</h2>
-<p style="margin:5px 0 0">BCS | Primary | NTRCA Model Test</p>
-</div>
-
-<div class="top">
-<span id="qCount">1 / 5</span>
-<span id="score">Score: 0</span>
-</div>
-
-<div id="quizBox"></div>
-<button class="btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Poroborti ➡️</button>
-<div id="final" class="card" style="display:none; text-align:center"></div>
-
+<div class="header"><h3 style="margin:0">10-50th BCS Original Question Bank</h3><p id="stat"></p></div>
+<div id="box"></div>
+<button class="btn" id="nbtn" onclick="nextQ()" style="display:none">পরবর্তী</button>
+<div id="res" class="card" style="display:none; text-align:center"></div>
 <script>
-const quizData = [
-{q:"বাংলাদেশের জাতীয় সংসদের আসন কতটি?", o:["৩০০","৩৫০","৩৪৫","৩২৫"], a:0},
-{q:"পদ্মা সেতুর দৈর্ঘ্য কত?", o:["৫.৮ কিমি","৬.১৫ কিমি","৬.৫ কিমি","৫.৫ কিমি"], a:1},
-{q:"বাংলা একাডেমি প্রতিষ্ঠিত হয় কত সালে?", o:["১৯৫২","১৯৫৫","১৯৬০","১৯৭১"], a:1},
-{q:"মুক্তিযুদ্ধে বীরশ্রেষ্ঠ কতজন?", o:["৭ জন","৬ জন","১১ জন","৪ জন"], a:0},
-{q:"WHO এর সদর দপ্তর কোথায়?", o:["নিউইয়র্ক","জেনেভা","প্যারিস","লন্ডন"], a:1}
+const data=[
+{q:"[10th] জাতীয় সংসদের ১ নং আসন কোনটি?",o:["পঞ্চগড়-১","রংপুর-১","দিনাজপুর-১","পঞ্চগড়"],a:0},
+{q:"[15th] বাংলা ভাষার আদি নিদর্শন?",o:["চর্যাপদ","মহাভারত","রামায়ণ","চন্ডীমঙ্গল"],a:0},
+{q:"[20th] বাংলাদেশের জাতীয় পতাকার মাপের অনুপাত?",o:["১০:৬","১১:৬","১২:৮","১০:৭"],a:0},
+{q:"[27th] বাংলাদেশের প্রথম রাষ্ট্রপতি?",o:["শেখ মুজিবুর রহমান","তাজউদ্দীন","সৈয়দ নজরুল","জিয়াউর রহমান"],a:0},
+{q:"[30th] ECNEC এর সভাপতি?",o:["প্রধানমন্ত্রী","রাষ্ট্রপতি","অর্থমন্ত্রী","স্পিকার"],a:0},
+{q:"[35th] বীর প্রতীক কতজন?",o:["৪২৬","৬৮","১৭৫","৭"],a:0},
+{q:"[37th] ১৯৭৪ সালে প্রথম আদমশুমারি অনুযায়ী জনসংখ্যা ছিল?",o:["৭.৬৪ কোটি","৮.৫ কোটি","৯ কোটি","৭ কোটি"],a:0},
+{q:"[38th] চর্যাপদ আবিষ্কৃত হয়?",o:["১৯০৭","১৯১৬","১৯০৯","১৯১৯"],a:0},
+{q:"[40th] সংবিধানের মূলনীতি?",o:["৪ টি","৫ টি","৬ টি","৩ টি"],a:0},
+{q:"[41st] পদ্মা সেতুর পিলার কয়টি?",o:["৪২","৪১","৪০","৪৩"],a:0},
+{q:"[43rd] মেট্রোরেল প্রথম চালু?",o:["২৮ ডিসেম্বর ২০২২","২৬ মার্চ ২০২২","১৬ ডিসেম্বর ২০২২","১ জানুয়ারি ২০২৩"],a:0},
+{q:"[44th] বাংলাদেশের প্রথম প্রধানমন্ত্রী?",o:["তাজউদ্দীন আহমদ","শেখ মুজিব","নজরুল ইসলাম","মনসুর আলী"],a:0},
+{q:"[45th] বাংলাদেশের জাতীয় স্মৃতিসৌধের স্থপতি?",o:["মাইনুল হোসেন","লুই আই কান","হামিদুর রহমান","মাজহারুল ইসলাম"],a:0},
+{q:"[BCS] 'সোনার তরী' কার লেখা?",o:["রবীন্দ্রনাথ","নজরুল","জসীমউদ্দীন","শামসুর রাহমান"],a:0},
+{q:"[BCS] বাংলাদেশের সবচেয়ে বড় জেলা?",o:["রাঙামাটি","চট্টগ্রাম","বান্দরবান","ময়মনসিংহ"],a:0}
 ];
-
-let current = 0, score = 0;
-const quizBox = document.getElementById("quizBox");
-const qCount = document.getElementById("qCount");
-const scoreEl = document.getElementById("score");
-
-function loadQuestion(){
-qCount.innerText = `${current+1} / ${quizData.length}`;
-scoreEl.innerText = `Score: ${score}`;
-let q = quizData[current];
-quizBox.innerHTML = `<div class="card"><div class="q">${current+1}. ${q.q}</div>${q.o.map((op,i)=>`<div class="opt" onclick="checkAns(this,${i})">${op}</div>`).join('')}</div>`;
-document.getElementById("nextBtn").style.display="none";
-}
-
-function checkAns(el, idx){
-let q = quizData[current];
-let all = document.querySelectorAll(".opt");
-all.forEach(o=>o.style.pointerEvents="none");
-if(idx === q.a){ el.classList.add("correct"); score++; scoreEl.innerText = `Score: ${score}`; }
-else{ el.classList.add("wrong"); all[q.a].classList.add("correct"); }
-document.getElementById("nextBtn").style.display="block";
-}
-
-function nextQuestion(){
-current++;
-if(current < quizData.length){ loadQuestion(); }
-else{ showFinal(); }
-}
-
-function showFinal(){
-quizBox.innerHTML = "";
-document.getElementById("nextBtn").style.display="none";
-let finalDiv = document.getElementById("final");
-finalDiv.style.display="block";
-let msg = score>=4? "🎉 অসাধারণ! আপনি প্রস্তুত!" : score>=2? "👍 ভালো, আরও প্র্যাকটিস করুন" : "💪 আবার চেষ্টা করুন";
-finalDiv.innerHTML = `<h2>আপনার স্কোর: ${score}/${quizData.length}</h2><p>${msg}</p><br><button class="btn" onclick="location.reload()">আবার পরীক্ষা দিন</button>`;
-}
-loadQuestion();
+// No Repeat Shuffle
+for(let i=data.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[data[i],data[j]]=[data[j],data[i]];}
+let c=0,s=0;
+function load(){document.getElementById("stat").innerText=`${c+1}/${data.length} | Score: ${s}`; let q=data[c]; document.getElementById("box").innerHTML=`<div class="card"><b>${q.q}</b>${q.o.map((o,i)=>`<div class="opt" onclick="chk(this,${i})">${o}</div>`).join('')}</div>`; document.getElementById("nbtn").style.display="none";}
+function chk(el,i){let q=data[c]; document.querySelectorAll(".opt").forEach(x=>x.style.pointerEvents="none"); if(i==q.a){el.classList.add("correct"); s++;}else{el.classList.add("wrong"); document.querySelectorAll(".opt")[q.a].classList.add("correct");} document.getElementById("stat").innerText=`${c+1}/${data.length} | Score: ${s}`; document.getElementById("nbtn").style.display="block";}
+function nextQ(){c++; if(c<data.length)load(); else{ document.getElementById("box").innerHTML=""; document.getElementById("nbtn").style.display="none"; let r=document.getElementById("res"); r.style.display="block"; r.innerHTML=`<h2>Score ${s}/${data.length}</h2><p>Repeat chara test sesh!</p><button class="btn" onclick="location.reload()">আবার শুরু</button>`;}}
+load();
 </script>
 </body>
 </html>
