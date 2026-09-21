@@ -2,49 +2,98 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10-50th BCS Bank</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&display=swap" rel="stylesheet">
+<title>BCS Preparation</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600&display=swap" rel="stylesheet">
 <style>
-*{font-family:'Hind Siliguri',sans-serif; box-sizing:border-box}
-body{background:#f3f0ff; margin:0; padding:10px}
-.header{background:#5e35b1; color:#fff; padding:16px; border-radius:14px; text-align:center}
-.card{background:#fff; border-radius:12px; padding:15px; margin-top:12px; box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.opt{border:2px solid #eee; border-radius:10px; padding:10px; margin-top:8px}
-.correct{background:#e8f5e9!important; border-color:#4caf50!important}
-.wrong{background:#ffebee!important; border-color:#f44336!important}
-.btn{width:100%; background:#5e35b1; color:#fff; border:0; padding:13px; border-radius:10px; font-size:16px; margin-top:10px}
+*{font-family:'Hind Siliguri',sans-serif;box-sizing:border-box;margin:0}
+body{background:#f9fafb}
+.top{background:#0f5b5e; padding:20px 16px 90px; color:white}
+.top h2{text-align:right; line-height:1.4}
+.banner{background:#fde68a; border-radius:20px; padding:18px; display:flex; align-items:center; justify-content:space-between; margin:-60px 16px 16px; position:relative; z-index:2; box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.banner h3{font-size:18px; color:#422006; line-height:1.3}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:12px 12px 80px}
+.card{border-radius:18px; padding:14px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,.06); display:flex; flex-direction:column; justify-content:space-between; min-height:190px}
+.card p{font-size:15px; font-weight:600; color:#333; line-height:1.3}
+.icon{font-size:48px; margin:10px 0}
+.btn{background:#0f5b5e; color:white; border:0; padding:10px; border-radius:20px; font-weight:600; margin-top:8px; cursor:pointer}
+.c1{background:#e6f7f6}.c2{background:#e6f0ff}.c3{background:#fff9c4}.c4{background:#e8f5f2}
+.c5{background:#fde2e4}.c6{background:#e6ffe9}.c7{background:#f1f5f9}.c8{background:#ede9fe}
+#quizPage{display:none; padding:16px}
+.opt{border:2px solid #e5e7eb; padding:10px; border-radius:10px; margin-top:8px; background:white}
+.correct{border-color:#22c55e!important; background:#dcfce7!important}
+.wrong{border-color:#ef4444!important; background:#fee2e2!important}
 </style>
 </head>
 <body>
-<div class="header"><h3 style="margin:0">10-50th BCS Original Question Bank</h3><p id="stat"></p></div>
-<div id="box"></div>
-<button class="btn" id="nbtn" onclick="nextQ()" style="display:none">পরবর্তী</button>
-<div id="res" class="card" style="display:none; text-align:center"></div>
+<div id="home">
+<div class="top"><h2>স্বাগতম,<br>আপনার লক্ষ্যে এগিয়ে যান।</h2></div>
+<div class="banner"><h3>পরীক্ষার<br>প্রস্তুতি হোক আরো<br>সহজে।</h3><div style="font-size:50px">👫📱</div></div>
+<div class="grid">
+<div class="card c1"><p>৫০তম - ১০তম বিসিএস<br>প্রশ্ন সমাধান ও ব্যাখ্যা</p><div class="icon">💡</div><button class="btn" onclick="openQuiz('bcs')">শুরু করুন</button></div>
+<div class="card c2"><p>বিসিএস বিষয়াবলী</p><div class="icon">📚</div><button class="btn" onclick="openQuiz('subject')">শুরু করুন</button></div>
+<div class="card c4"><p>সকল বিসিএস প্রশ্ন ও<br>কুইজ</p><div class="icon">📝</div><button class="btn" onclick="openQuiz('allbcs')">কুইজ খেলুন</button></div>
+<div class="card c3"><p>বিসিএস প্রিলিমিনারি<br>মডেল টেস্ট</p><div class="icon">📄</div><button class="btn" onclick="openQuiz('model')">শুরু করুন</button></div>
+<div class="card c5"><p>সকল প্রাইমারি নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</p><div class="icon">🏫</div><button class="btn" onclick="openQuiz('primary')">শুরু করুন</button></div>
+<div class="card c6"><p>কারেন্ট অ্যাফেয়ার্স</p><div class="icon">📰</div><button class="btn" onclick="openQuiz('current')">শুরু করুন</button></div>
+<div class="card c7"><p>অফলাইন ডিকশনারি</p><div class="icon">Aa</div><button class="btn" onclick="alert('ডিকশনারি শীঘ্রই আসছে')">শুরু করুন</button></div>
+<div class="card c8"><p>বাংলাদেশ ব্যাংক নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</p><div class="icon">🏦</div><button class="btn" onclick="openQuiz('bank')">শুরু করুন</button></div>
+<div class="card c4"><p>শিক্ষক নিবন্ধন নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</p><div class="icon">🏢</div><button class="btn" onclick="openQuiz('ntrca')">শুরু করুন</button></div>
+</div>
+</div>
+
+<div id="quizPage">
+<button onclick="goHome()" style="background:#0f5b5e;color:white;border:0;padding:8px 14px;border-radius:20px;margin-bottom:10px">← হোম</button>
+<h3 id="qTitle" style="margin-bottom:10px"></h3>
+<p id="qStat"></p>
+<div id="qBox"></div>
+<button class="btn" id="nextBtn" onclick="nextQ()" style="display:none;width:100%;padding:14px">পরবর্তী</button>
+<div id="qRes" style="display:none;text-align:center;background:white;padding:20px;border-radius:14px;margin-top:20px"></div>
+</div>
+
 <script>
-const data=[
-{q:"[10th] জাতীয় সংসদের ১ নং আসন কোনটি?",o:["পঞ্চগড়-১","রংপুর-১","দিনাজপুর-১","পঞ্চগড়"],a:0},
-{q:"[15th] বাংলা ভাষার আদি নিদর্শন?",o:["চর্যাপদ","মহাভারত","রামায়ণ","চন্ডীমঙ্গল"],a:0},
-{q:"[20th] বাংলাদেশের জাতীয় পতাকার মাপের অনুপাত?",o:["১০:৬","১১:৬","১২:৮","১০:৭"],a:0},
-{q:"[27th] বাংলাদেশের প্রথম রাষ্ট্রপতি?",o:["শেখ মুজিবুর রহমান","তাজউদ্দীন","সৈয়দ নজরুল","জিয়াউর রহমান"],a:0},
-{q:"[30th] ECNEC এর সভাপতি?",o:["প্রধানমন্ত্রী","রাষ্ট্রপতি","অর্থমন্ত্রী","স্পিকার"],a:0},
-{q:"[35th] বীর প্রতীক কতজন?",o:["৪২৬","৬৮","১৭৫","৭"],a:0},
-{q:"[37th] ১৯৭৪ সালে প্রথম আদমশুমারি অনুযায়ী জনসংখ্যা ছিল?",o:["৭.৬৪ কোটি","৮.৫ কোটি","৯ কোটি","৭ কোটি"],a:0},
-{q:"[38th] চর্যাপদ আবিষ্কৃত হয়?",o:["১৯০৭","১৯১৬","১৯০৯","১৯১৯"],a:0},
-{q:"[40th] সংবিধানের মূলনীতি?",o:["৪ টি","৫ টি","৬ টি","৩ টি"],a:0},
-{q:"[41st] পদ্মা সেতুর পিলার কয়টি?",o:["৪২","৪১","৪০","৪৩"],a:0},
-{q:"[43rd] মেট্রোরেল প্রথম চালু?",o:["২৮ ডিসেম্বর ২০২২","২৬ মার্চ ২০২২","১৬ ডিসেম্বর ২০২২","১ জানুয়ারি ২০২৩"],a:0},
-{q:"[44th] বাংলাদেশের প্রথম প্রধানমন্ত্রী?",o:["তাজউদ্দীন আহমদ","শেখ মুজিব","নজরুল ইসলাম","মনসুর আলী"],a:0},
-{q:"[45th] বাংলাদেশের জাতীয় স্মৃতিসৌধের স্থপতি?",o:["মাইনুল হোসেন","লুই আই কান","হামিদুর রহমান","মাজহারুল ইসলাম"],a:0},
-{q:"[BCS] 'সোনার তরী' কার লেখা?",o:["রবীন্দ্রনাথ","নজরুল","জসীমউদ্দীন","শামসুর রাহমান"],a:0},
-{q:"[BCS] বাংলাদেশের সবচেয়ে বড় জেলা?",o:["রাঙামাটি","চট্টগ্রাম","বান্দরবান","ময়মনসিংহ"],a:0}
-];
-// No Repeat Shuffle
-for(let i=data.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[data[i],data[j]]=[data[j],data[i]];}
-let c=0,s=0;
-function load(){document.getElementById("stat").innerText=`${c+1}/${data.length} | Score: ${s}`; let q=data[c]; document.getElementById("box").innerHTML=`<div class="card"><b>${q.q}</b>${q.o.map((o,i)=>`<div class="opt" onclick="chk(this,${i})">${o}</div>`).join('')}</div>`; document.getElementById("nbtn").style.display="none";}
-function chk(el,i){let q=data[c]; document.querySelectorAll(".opt").forEach(x=>x.style.pointerEvents="none"); if(i==q.a){el.classList.add("correct"); s++;}else{el.classList.add("wrong"); document.querySelectorAll(".opt")[q.a].classList.add("correct");} document.getElementById("stat").innerText=`${c+1}/${data.length} | Score: ${s}`; document.getElementById("nbtn").style.display="block";}
-function nextQ(){c++; if(c<data.length)load(); else{ document.getElementById("box").innerHTML=""; document.getElementById("nbtn").style.display="none"; let r=document.getElementById("res"); r.style.display="block"; r.innerHTML=`<h2>Score ${s}/${data.length}</h2><p>Repeat chara test sesh!</p><button class="btn" onclick="location.reload()">আবার শুরু</button>`;}}
+let allData={
+bcs:[
+{q:"বাংলাদেশের জাতীয় সংসদের আসন কতটি?",o:["৩০০","৩৫০","৩৪৫","৩২৫"],a:0,ex:"সংবিধান অনুযায়ী ৩০০"},
+{q:"পদ্মা সেতুর দৈর্ঘ্য?",o:["৬.১৫ কিমি","৫.৮ কিমি","৬.৫ কিমি","৫.৫ কিমি"],a:0,ex:"৪১ স্প্যান, ৬.১৫ কিমি"},
+{q:"বাংলা একাডেমি প্রতিষ্ঠা?",o:["১৯৫৫","১৯৫২","১৯৬০","১৯৭১"],a:0,ex:"৩ ডিসেম্বর ১৯৫৫"}
+],
+primary:[
+{q:"প্রাইমারি সহকারী শিক্ষক নিয়োগ পরীক্ষা ২০২৩ - 'আমার ভাইয়ের রক্তে রাঙানো' গানটির রচয়িতা?",o:["আবদুল গাফফার চৌধুরী","আলতাফ মাহমুদ","মুনীর চৌধুরী","শামসুর রাহমান"],a:0,ex:"Original Primary Question"},
+{q:"প্রাথমিক শিক্ষা অধিদপ্তর কোন মন্ত্রণালয়ের অধীনে?",o:["প্রাথমিক ও গণশিক্ষা","শিক্ষা","সমাজকল্যাণ","মহিলা ও শিশু"],a:0,ex:"DPE"}
+],
+bank:[
+{q:"বাংলাদেশ ব্যাংক প্রতিষ্ঠা?",o:["১৬ ডিসেম্বর ১৯৭১","২৬ মার্চ ১৯৭১","১৬ ডিসেম্বর ১৯৭২","১ জানুয়ারি ১৯৭২"],a:0,ex:"১৬ ডিসেম্বর ১৯৭১"},
+{q:"ব্যাংক নোট কয়টি?",o:["৭ টি","৬ টি","৩ টি","১০ টি"],a:0,ex:"১০,২০,৫০,১০০,২০০,৫০০,১০০০"}
+],
+ntrca:[
+{q:"NTRCA প্রতিষ্ঠা কত সালে?",o:["২০০৫","২০০৩","২০০১","২০১০"],a:0,ex:"২০০৫ সালে"}
+],
+current:[{q:"২০২৪ সালে বাংলাদেশের নতুন প্রধান বিচারপতি কে?",o:["সৈয়দ রেফাত আহমেদ","ওবায়দুল হাসান","হাসান ফয়েজ","ড. ইউনূস"],a:0,ex:"Current Affairs"}],
+subject:[{q:"বাংলা বিষয়াবলী - চর্যাপদ কোন ছন্দে লেখা?",o:["মাত্রাবৃত্ত","অক্ষরবৃত্ত","স্বরবৃত্ত","অমিত্রাক্ষর"],a:0,ex:"মাত্রাবৃত্ত"}],
+model:[{q:"[মডেল টেস্ট] বাংলাদেশের বৃহত্তম জেলা?",o:["রাঙামাটি","চট্টগ্রাম","বান্দরবান","ময়মনসিংহ"],a:0,ex:"আয়তনে রাঙামাটি"}],
+allbcs:[{q:"৪৪তম BCS - মেট্রোরেল উদ্বোধন কবে?",o:["২৮ ডিসেম্বর ২০২২","২৬ মার্চ ২০২২","১৬ ডিসেম্বর ২০২২","১ জানুয়ারি ২০২৩"],a:0,ex:"২৮ ডিসেম্বর ২০২২"}]
+};
+let curData=[], cur=0, score=0, curCat="";
+function openQuiz(cat){
+curCat=cat; curData=[...allData[cat]]; for(let i=curData.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[curData[i],curData[j]]=[curData[j],curData[i]];}
+cur=0; score=0; document.getElementById("home").style.display="none"; document.getElementById("quizPage").style.display="block";
+document.getElementById("qTitle").innerText={bcs:"৫০তম-১০তম BCS Original Bank",primary:"প্রাইমারি নিয়োগ প্রশ্ন ব্যাংক",bank:"ব্যাংক নিয়োগ প্রশ্ন ব্যাংক",ntrca:"শিক্ষক নিবন্ধন",current:"কারেন্ট অ্যাফেয়ার্স",subject:"BCS বিষয়াবলী",model:"BCS মডেল টেস্ট",allbcs:"সকল BCS কুইজ"}[cat];
 load();
+}
+function load(){
+document.getElementById("qStat").innerText=`প্রশ্ন ${cur+1}/${curData.length} | স্কোর ${score}`;
+document.getElementById("qRes").style.display="none";
+let q=curData[cur]; document.getElementById("qBox").innerHTML=`<div style="background:white;padding:14px;border-radius:12px"><b>${q.q}</b>${q.o.map((o,i)=>`<div class="opt" onclick="check(this,${i})">${o}</div>`).join('')}<div id="exp" style="display:none;margin-top:10px;background:#f0fdf4;padding:10px;border-radius:8px"><b>ব্যাখ্যা:</b> ${q.ex}</div></div>`;
+document.getElementById("nextBtn").style.display="none";
+}
+function check(el,i){
+let q=curData[cur]; document.querySelectorAll(".opt").forEach(o=>o.style.pointerEvents="none");
+if(i==q.a){el.classList.add("correct"); score++;}else{el.classList.add("wrong"); document.querySelectorAll(".opt")[q.a].classList.add("correct");}
+document.getElementById("exp").style.display="block"; document.getElementById("qStat").innerText=`প্রশ্ন ${cur+1}/${curData.length} | স্কোর ${score}`;
+document.getElementById("nextBtn").style.display="block";
+}
+function nextQ(){cur++; if(cur<curData.length)load(); else{ document.getElementById("qBox").innerHTML=""; document.getElementById("nextBtn").style.display="none"; let r=document.getElementById("qRes"); r.style.display="block"; r.innerHTML=`<h2>স্কোর ${score}/${curData.length}</h2><p>আবার চেষ্টা করুন, No Repeat!</p><br><button class="btn" style="width:100%" onclick="openQuiz(curCat)">আবার খেলুন</button>`;}}
+function goHome(){document.getElementById("home").style.display="block"; document.getElementById("quizPage").style.display="none";}
 </script>
 </body>
 </html>
