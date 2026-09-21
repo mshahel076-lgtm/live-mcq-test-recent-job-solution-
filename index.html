@@ -2,73 +2,67 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BCS Preparation</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600&display=swap" rel="stylesheet">
+<title>BCS Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{font-family:'Hind Siliguri',sans-serif;box-sizing:border-box;margin:0}
-body{background:#f9fafb}
-.top{background:#0f5b5e;padding:20px 16px 90px;color:white}
-.top h2{text-align:right;line-height:1.4}
-.banner{background:#fde68a;border-radius:20px;padding:18px;display:flex;align-items:center;justify-content:space-between;margin:-60px 16px 16px;position:relative;z-index:2;box-shadow:0 8px 20px rgba(0,0,0,.15)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 80px}
-.card{border-radius:18px;padding:14px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.06);display:flex;flex-direction:column;justify-content:space-between;min-height:190px}
-.card p{font-size:14px;font-weight:600;color:#333}
-.icon{font-size:42px;margin:8px 0}
-.btn{background:#0f5b5e;color:white;border:0;padding:10px;border-radius:20px;font-weight:600;margin-top:8px}
-.c1{background:#e6f7f6}.c2{background:#e6f0ff}.c3{background:#fff9c4}.c4{background:#e8f5f2}.c5{background:#fde2e4}.c6{background:#e6ffe9}
-#quizPage{display:none;padding:16px}
-.opt{border:2px solid #e5e7eb;padding:12px;border-radius:10px;margin-top:8px;background:white;cursor:pointer}
-.correct{border-color:#22c55e!important;background:#dcfce7!important}
-.wrong{border-color:#ef4444!important;background:#fee2e2!important}
+body{background:#ffffff}
+.header{background:#0f5e5e;height:190px;padding:20px 16px;color:white;position:relative}
+.header h2{text-align:right;line-height:1.4;font-size:24px}
+.banner{background:#fdd86f;border-radius:24px;padding:18px 18px;display:flex;align-items:center;justify-content:space-between;margin:-70px 16px 16px;position:relative;z-index:10;box-shadow:0 10px 25px rgba(0,0,0,.15);overflow:hidden}
+.banner h3{color:#222;font-size:20px;line-height:1.3;font-weight:700}
+.wrap{background:white;border-radius:30px 30px 0 0;margin-top:-30px;padding:24px 12px 40px;position:relative;z-index:5}
+.masonry{column-count:2;column-gap:12px}
+.card{break-inside:avoid;background:white;border-radius:22px;padding:14px 10px;text-align:center;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,.06);min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+.card-title{font-size:13px;font-weight:600;color:#444;line-height:1.3;min-height:36px}
+.icon{font-size:52px;margin:10px 0;color:#f9a825}
+.btn{background:#0f5e5e;color:white;border:0;padding:10px 14px;border-radius:22px;font-weight:700;font-size:13px;width:90%;margin:0 auto;cursor:pointer}
+.c1{background:#e8f8f6}.c2{background:#eaf2ff}.c3{background:#fffbd6}.c4{background:#eef8ff}
+.c5{background:#ffeaec}.c6{background:#eafff1}.c7{background:#f5f1e8}.c8{background:#ede9ff}.c9{background:#e6f7f6}
+h4.headline{font-size:18px;color:#0f5e5e;margin:10px 4px 14px;font-weight:700}
 </style>
 </head>
 <body>
-<div id="home">
-<div class="top"><h2>স্বাগতম,<br>আপনার লক্ষ্যে এগিয়ে যান।</h2></div>
-<div class="banner"><h3>পরীক্ষার<br>প্রস্তুতি হোক আরো<br>সহজে।</h3><div style="font-size:48px">👫</div></div>
-<div class="grid">
-<div class="card c1"><p>৫০তম - ১০তম BCS<br>প্রশ্ন সমাধান</p><div class="icon">💡</div><button class="btn" onclick="openQuiz('bcs')">শুরু করুন</button></div>
-<div class="card c2"><p>বিসিএস বিষয়াবলী</p><div class="icon">📚</div><button class="btn" onclick="openQuiz('subject')">শুরু করুন</button></div>
-<div class="card c4"><p>সকল BCS কুইজ</p><div class="icon">📝</div><button class="btn" onclick="openQuiz('bcs')">কুইজ খেলুন</button></div>
-<div class="card c3"><p>প্রিলিমিনারি মডেল টেস্ট</p><div class="icon">📄</div><button class="btn" onclick="openQuiz('model')">শুরু করুন</button></div>
-<div class="card c5"><p>প্রাইমারি নিয়োগ</p><div class="icon">🏫</div><button class="btn" onclick="openQuiz('primary')">শুরু করুন</button></div>
-<div class="card c6"><p>কারেন্ট অ্যাফেয়ার্স</p><div class="icon">📰</div><button class="btn" onclick="openQuiz('current')">শুরু করুন</button></div>
+<div class="header"><h2>স্বাগতম,<br>আপনার লক্ষ্যে এগিয়ে যান।</h2></div>
+<div class="banner"><h3>পরীক্ষার<br>প্রস্তুতি হোক আরো<br>সহজে।</h3><div style="font-size:60px">👫📱</div></div>
+<div class="wrap">
+<h4 class="headline">BCS কঠিন নয়; লক্ষ্য<br>যদি সঠিক হয়।</h4>
+<div class="masonry">
+<div class="card c1"><div class="card-title">৫০তম - ১০তম বিসিএস<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">💡</div><button class="btn" onclick="go('bcs')">শুরু করুন</button></div>
+<div class="card c4"><div class="card-title">সকল বিসিএস প্রশ্ন ও<br>কুইজ</div><div class="icon">📝</div><button class="btn" onclick="go('bcs')">কুইজ খেলুন</button></div>
+<div class="card c5"><div class="card-title">সকল প্রাইমারি নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">🏫</div><button class="btn" onclick="go('primary')">শুরু করুন</button></div>
+<div class="card c7"><div class="card-title">অফলাইন ডিকশনারি</div><div class="icon">📖</div><button class="btn">শুরু করুন</button></div>
+
+<div class="card c2"><div class="card-title">বিসিএস বিষয়াবলী</div><div class="icon">📚</div><button class="btn" onclick="go('subject')">শুরু করুন</button></div>
+<div class="card c3"><div class="card-title">বিসিএস প্রিলিমিনারি<br>মডেল টেস্ট</div><div class="icon">📄</div><button class="btn" onclick="go('model')">শুরু করুন</button></div>
+<div class="card c6"><div class="card-title">কারেন্ট অ্যাফেয়ার্স</div><div class="icon">📰</div><button class="btn" onclick="go('current')">শুরু করুন</button></div>
+<div class="card c8"><div class="card-title">বাংলাদেশ ব্যাংক নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">🏛️</div><button class="btn" onclick="go('bank')">শুরু করুন</button></div>
+<div class="card c9"><div class="card-title">শিক্ষক নিবন্ধন নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">🏢</div><button class="btn" onclick="go('ntrca')">শুরু করুন</button></div>
 </div>
 </div>
-<div id="quizPage">
-<button onclick="goHome()" style="background:#0f5b5e;color:white;border:0;padding:8px 14px;border-radius:20px">← হোম</button>
-<h3 id="qTitle" style="margin:12px 0"></h3><p id="qStat"></p><div id="qBox"></div>
-<button class="btn" id="nextBtn" onclick="nextQ()" style="display:none;width:100%;padding:14px;margin-top:10px">পরবর্তী</button>
-<div id="qRes" style="display:none;text-align:center;background:white;padding:20px;border-radius:14px;margin-top:20px"></div>
 </div>
+
 <script>
-let allData={
-bcs:[
-{q:"জাতীয় সংসদের ১নং আসন কোনটি?",o:["পঞ্চগড়-১","রংপুর-১","দিনাজপুর-১","পঞ্চগড়-৫"],a:0,ex:"পঞ্চগড়-১ হলো ১নং আসন"},
-{q:"বাংলা ভাষার আদি নিদর্শন চর্যাপদ আবিষ্কৃত হয়?",o:["১৯০৭","১৯০৯","১৯১৬","১৯১৯"],a:0,ex:"১৯০৭ সালে হরপ্রসাদ শাস্ত্রী"},
-{q:"ECNEC এর সভাপতি কে?",o:["প্রধানমন্ত্রী","রাষ্ট্রপতি","অর্থমন্ত্রী","স্পিকার"],a:0,ex:"প্রধানমন্ত্রী সভাপতি"},
-{q:"বীর প্রতীক কতজন?",o:["৪২৬ জন","৬৮ জন","১৭৫ জন","৭ জন"],a:0,ex:"৪২৬ জন বীর প্রতীক"},
-{q:"সংবিধানের মূলনীতি কয়টি?",o:["৪টি","৫টি","৩টি","৬টি"],a:0,ex:"৪টি মূলনীতি"},
-{q:"পদ্মা সেতুর পিলার কয়টি?",o:["৪২টি","৪১টি","৪০টি","৪৩টি"],a:0,ex:"৪২টি পিলার"},
-{q:"মেট্রোরেল উদ্বোধন?",o:["২৮ ডিসেম্বর ২০২২","২৬ মার্চ ২০২২","১৬ ডিসেম্বর ২০২২","১ জানুয়ারি ২০২৩"],a:0,ex:"২৮ ডিসেম্বর ২০২২"},
-{q:"বাংলাদেশের জাতীয় স্মৃতিসৌধের স্থপতি?",o:["মাইনুল হোসেন","লুই আই কান","হামিদুর রহমান","মাজহারুল"],a:0,ex:"সৈয়দ মাইনুল হোসেন"},
-{q:"বাংলাদেশের সবচেয়ে বড় জেলা?",o:["রাঙামাটি","চট্টগ্রাম","বান্দরবান","ময়মনসিংহ"],a:0,ex:"আয়তনে রাঙামাটি"},
-{q:"বাংলা একাডেমি প্রতিষ্ঠা?",o:["১৯৫৫","১৯৫২","১৯৬০","১৯৭১"],a:0,ex:"৩ ডিসেম্বর ১৯৫৫"},
-{q:"সোনার তরী কার লেখা?",o:["রবীন্দ্রনাথ","নজরুল","জসীমউদ্দীন","শামসুর রাহমান"],a:0,ex:"রবীন্দ্রনাথ ঠাকুর"},
-{q:"বাংলাদেশের প্রথম রাষ্ট্রপতি?",o:["বঙ্গবন্ধু","তাজউদ্দীন","সৈয়দ নজরুল","জিয়া"],a:0,ex:"শেখ মুজিবুর রহমান"},
-{q:"জাতীয় পতাকার অনুপাত?",o:["১০:৬","১১:৬","১২:৮","১০:৭"],a:0,ex:"দৈর্ঘ্য:প্রস্থ ১০:৬"}
-],
-primary:[{q:"আমার ভাইয়ের রক্তে রাঙানো গানের রচয়িতা?",o:["গাফফার চৌধুরী","আলতাফ মাহমুদ","মুনীর চৌধুরী","শামসুর রাহমান"],a:0,ex:"আবদুল গাফফার চৌধুরী"}],
-subject:[{q:"চর্যাপদ কোন ছন্দে লেখা?",o:["মাত্রাবৃত্ত","অক্ষরবৃত্ত","স্বরবৃত্ত","অমিত্রাক্ষর"],a:0,ex:"মাত্রাবৃত্ত ছন্দে"}],
-model:[{q:"[Model] বাংলাদেশের বৃহত্তম জেলা?",o:["রাঙামাটি","চট্টগ্রাম","বান্দরবান","ময়মনসিংহ"],a:0,ex:"রাঙামাটি"}],
-current:[{q:"২০২৪ সালের প্রধান বিচারপতি?",o:["সৈয়দ রেফাত আহমেদ","ওবায়দুল হাসান","হাসান ফয়েজ","ড. ইউনূস"],a:0,ex:"সৈয়দ রেফাত আহমেদ"}]
+// ========= EKHANE APNI PROTI DIN QUESTION ADD KORBEN, CODE DELETE KORA LAGBE NA =========
+let DB = {
+bcs: [], // ekhane bcs question add korben
+primary: [],
+bank: [],
+ntrca: [],
+current: [],
+subject: [],
+model: []
 };
-let curData=[],cur=0,score=0,curCat="";
-function openQuiz(c){curCat=c;curData=[...allData[c]];for(let i=curData.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[curData[i],curData[j]]=[curData[j],curData[i]];}cur=0;score=0;document.getElementById("home").style.display="none";document.getElementById("quizPage").style.display="block";load();}
-function load(){document.getElementById("qStat").innerText=`প্রশ্ন ${cur+1}/${curData.length} | স্কোর ${score}`;let q=curData[cur];document.getElementById("qBox").innerHTML=`<div style="background:white;padding:14px;border-radius:12px"><b>${q.q}</b>${q.o.map((o,i)=>`<div class="opt" onclick="check(this,${i})">${o}</div>`).join('')}<div id="exp" style="display:none;margin-top:10px;background:#f0fdf4;padding:10px;border-radius:8px"><b>ব্যাখ্যা:</b> ${q.ex}</div></div>`;document.getElementById("nextBtn").style.display="none";document.getElementById("qRes").style.display="none";}
-function check(el,i){let q=curData[cur];document.querySelectorAll(".opt").forEach(o=>o.style.pointerEvents="none");if(i==q.a){el.classList.add("correct");score++;}else{el.classList.add("wrong");document.querySelectorAll(".opt")[q.a].classList.add("correct");}document.getElementById("exp").style.display="block";document.getElementById("qStat").innerText=`প্রশ্ন ${cur+1}/${curData.length} | স্কোর ${score}`;document.getElementById("nextBtn").style.display="block";}
-function nextQ(){cur++;if(cur<curData.length)load();else{document.getElementById("qBox").innerHTML="";document.getElementById("nextBtn").style.display="none";let r=document.getElementById("qRes");r.style.display="block";r.innerHTML=`<h2>স্কোর ${score}/${curData.length}</h2><p>No Repeat Test Complete!</p><br><button class="btn" style="width:100%" onclick="openQuiz(curCat)">আবার খেলুন</button>`;}}
-function goHome(){document.getElementById("home").style.display="block";document.getElementById("quizPage").style.display="none";}
+
+// Example: add korar niom - niche line ta copy kore bcs: [] er vitore bosaben
+// {q:"প্রশ্ন?",o:["ক","খ","গ","ঘ"],a:0,ex:"ব্যাখ্যা"},
+
+function go(cat){
+ if(DB[cat].length==0){alert(cat+" এর প্রশ্ন এখনো যোগ করা হয়নি। আপনি DB er vitore add korun."); return;}
+ localStorage.setItem("cat",cat);
+ localStorage.setItem("db",JSON.stringify(DB[cat]));
+ location.href="quiz.html";
+}
 </script>
 </body>
 </html>
