@@ -1,105 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Car Racing</title>
+<title>Live MCQ Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  body{margin:0; background:#111; overflow:hidden; font-family:sans-serif; color:white}
-  canvas{display:block; margin:0 auto; background:#333}
-  #ui{position:absolute; top:10px; left:50%; transform:translateX(-50%); text-align:center}
-  #controls{position:absolute; bottom:20px; width:100%; display:flex; justify-content:space-between; padding:0 20px; box-sizing:border-box}
-  .btn{width:80px; height:80px; background:rgba(255,255,255,0.2); border-radius:50%; border:2px solid white; font-size:30px; line-height:80px; text-align:center; user-select:none}
+*{font-family:'Hind Siliguri',sans-serif; box-sizing:border-box}
+body{margin:0; background:#f5f0ff; padding:12px}
+.header{background:#5e35b1; color:white; padding:15px; border-radius:15px; text-align:center; margin-bottom:15px}
+.header h2{margin:0}
+.card{background:white; border-radius:16px; padding:18px; box-shadow:0 6px 20px rgba(0,0,0,.08); margin-bottom:12px}
+.q{font-size:18px; font-weight:600; margin-bottom:14px}
+.opt{border:2px solid #ede7f6; border-radius:12px; padding:12px; margin-bottom:10px; cursor:pointer; font-size:16px}
+.opt:active{transform:scale(.98)}
+.correct{background:#e8f5e9!important; border-color:#4caf50!important; color:#2e7d32}
+.wrong{background:#ffebee!important; border-color:#f44336!important; color:#c62828}
+.btn{width:100%; background:#5e35b1; color:white; border:0; padding:14px; border-radius:12px; font-size:17px; font-weight:600}
+.top{display:flex; justify-content:space-between; font-weight:600; margin-bottom:10px}
 </style>
 </head>
 <body>
-<div id="ui"><h2 id="score">Score: 0</h2><p id="speed">Speed: 0 km/h</p></div>
-<canvas id="game" width="400" height="700"></canvas>
-<div id="controls">
-  <div class="btn" id="left">◀</div>
-  <div class="btn" id="right">▶</div>
+
+<div class="header">
+<h2>🔴 Live MCQ Test</h2>
+<p style="margin:5px 0 0">BCS | Primary | NTRCA Model Test</p>
 </div>
+
+<div class="top">
+<span id="qCount">1 / 5</span>
+<span id="score">Score: 0</span>
+</div>
+
+<div id="quizBox"></div>
+<button class="btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Poroborti ➡️</button>
+<div id="final" class="card" style="display:none; text-align:center"></div>
+
 <script>
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
-let carX = 175, score = 0, speed = 5;
-let keys = {}, enemies = [];
-let gameOver = false;
+const quizData = [
+{q:"বাংলাদেশের জাতীয় সংসদের আসন কতটি?", o:["৩০০","৩৫০","৩৪৫","৩২৫"], a:0},
+{q:"পদ্মা সেতুর দৈর্ঘ্য কত?", o:["৫.৮ কিমি","৬.১৫ কিমি","৬.৫ কিমি","৫.৫ কিমি"], a:1},
+{q:"বাংলা একাডেমি প্রতিষ্ঠিত হয় কত সালে?", o:["১৯৫২","১৯৫৫","১৯৬০","১৯৭১"], a:1},
+{q:"মুক্তিযুদ্ধে বীরশ্রেষ্ঠ কতজন?", o:["৭ জন","৬ জন","১১ জন","৪ জন"], a:0},
+{q:"WHO এর সদর দপ্তর কোথায়?", o:["নিউইয়র্ক","জেনেভা","প্যারিস","লন্ডন"], a:1}
+];
 
-function spawnEnemy(){
-  enemies.push({x: Math.random()*300+20, y: -100, w:50, h:90, speed: 3+Math.random()*3});
+let current = 0, score = 0;
+const quizBox = document.getElementById("quizBox");
+const qCount = document.getElementById("qCount");
+const scoreEl = document.getElementById("score");
+
+function loadQuestion(){
+qCount.innerText = `${current+1} / ${quizData.length}`;
+scoreEl.innerText = `Score: ${score}`;
+let q = quizData[current];
+quizBox.innerHTML = `<div class="card"><div class="q">${current+1}. ${q.q}</div>${q.o.map((op,i)=>`<div class="opt" onclick="checkAns(this,${i})">${op}</div>`).join('')}</div>`;
+document.getElementById("nextBtn").style.display="none";
 }
 
-setInterval(spawnEnemy, 1200);
-
-function update(){
-  if(gameOver) return;
-  if(keys['ArrowLeft'] || keys['a']) carX -= 7;
-  if(keys['ArrowRight'] || keys['d']) carX += 7;
-  carX = Math.max(0, Math.min(350, carX));
-  
-  enemies.forEach(e=>{
-    e.y += e.speed + speed*0.1;
-    // collision
-    if(e.y+ e.h > 600 && e.y < 690 && carX < e.x+e.w && carX+50 > e.x){
-      gameOver = true;
-      alert('Game Over! Score: '+score);
-      location.reload();
-    }
-  });
-  enemies = enemies.filter(e=> e.y < 750);
-  score++;
-  speed = 5 + score*0.01;
-  document.getElementById('score').innerText = 'Score: '+score;
-  document.getElementById('speed').innerText = 'Speed: '+Math.floor(speed*20)+' km/h';
+function checkAns(el, idx){
+let q = quizData[current];
+let all = document.querySelectorAll(".opt");
+all.forEach(o=>o.style.pointerEvents="none");
+if(idx === q.a){ el.classList.add("correct"); score++; scoreEl.innerText = `Score: ${score}`; }
+else{ el.classList.add("wrong"); all[q.a].classList.add("correct"); }
+document.getElementById("nextBtn").style.display="block";
 }
 
-function drawRoad(){
-  ctx.fillStyle = '#444';
-  ctx.fillRect(0,0,400,700);
-  ctx.fillStyle = '#222';
-  ctx.fillRect(50,0,300,700);
-  // dashed line
-  ctx.strokeStyle = 'white';
-  ctx.setLineDash([20,20]);
-  ctx.beginPath();
-  ctx.moveTo(200,0);
-  ctx.lineTo(200,700);
-  ctx.stroke();
-  ctx.setLineDash([]);
+function nextQuestion(){
+current++;
+if(current < quizData.length){ loadQuestion(); }
+else{ showFinal(); }
 }
 
-function draw(){
-  drawRoad();
-  // player car
-  ctx.fillStyle = '#00d2ff';
-  ctx.fillRect(carX, 600, 50, 90);
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(carX+10, 610, 30, 15);
-  
-  // enemy cars
-  ctx.fillStyle = 'red';
-  enemies.forEach(e=>{
-    ctx.fillRect(e.x, e.y, e.w, e.h);
-    ctx.fillStyle = '#333';
-    ctx.fillRect(e.x+5, e.y+10, e.w-10, 15);
-    ctx.fillStyle = 'red';
-  });
+function showFinal(){
+quizBox.innerHTML = "";
+document.getElementById("nextBtn").style.display="none";
+let finalDiv = document.getElementById("final");
+finalDiv.style.display="block";
+let msg = score>=4? "🎉 অসাধারণ! আপনি প্রস্তুত!" : score>=2? "👍 ভালো, আরও প্র্যাকটিস করুন" : "💪 আবার চেষ্টা করুন";
+finalDiv.innerHTML = `<h2>আপনার স্কোর: ${score}/${quizData.length}</h2><p>${msg}</p><br><button class="btn" onclick="location.reload()">আবার পরীক্ষা দিন</button>`;
 }
-
-function loop(){
-  update();
-  draw();
-  requestAnimationFrame(loop);
-}
-loop();
-
-window.addEventListener('keydown', e=> keys[e.key]=true);
-window.addEventListener('keyup', e=> keys[e.key]=false);
-
-document.getElementById('left').addEventListener('touchstart', ()=> keys['ArrowLeft']=true);
-document.getElementById('left').addEventListener('touchend', ()=> keys['ArrowLeft']=false);
-document.getElementById('right').addEventListener('touchstart', ()=> keys['ArrowRight']=true);
-document.getElementById('right').addEventListener('touchend', ()=> keys['ArrowRight']=false);
+loadQuestion();
 </script>
 </body>
 </html>
