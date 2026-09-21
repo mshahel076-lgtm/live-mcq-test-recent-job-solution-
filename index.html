@@ -1,313 +1,911 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BCS Prep</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-*{font-family:'Hind Siliguri',sans-serif;box-sizing:border-box;margin:0}
-body{background:#ffffff}
-.header{background:#0f5e5e;height:190px;padding:20px 16px;color:white;position:relative}
-.header h2{text-align:right;line-height:1.4;font-size:24px}
-.banner{background:#fdd86f;border-radius:24px;padding:18px 18px;display:flex;align-items:center;justify-content:space-between;margin:-70px 16px 16px;position:relative;z-index:10;box-shadow:0 10px 25px rgba(0,0,0,.15);overflow:hidden}
-.banner h3{color:#222;font-size:20px;line-height:1.3;font-weight:700}
-.wrap{background:white;border-radius:30px 30px 0 0;margin-top:-30px;padding:24px 12px 40px;position:relative;z-index:5}
-.masonry{column-count:2;column-gap:12px}
-.card{break-inside:avoid;background:white;border-radius:22px;padding:14px 10px;text-align:center;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,.06);min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
-.card-title{font-size:13px;font-weight:600;color:#444;line-height:1.3;min-height:36px}
-.icon{font-size:52px;margin:10px 0;color:#f9a825}
-.btn{background:#0f5e5e;color:white;border:0;padding:10px 14px;border-radius:22px;font-weight:700;font-size:13px;width:90%;margin:0 auto;cursor:pointer}
-.c1{background:#e8f8f6}.c2{background:#eaf2ff}.c3{background:#fffbd6}.c4{background:#eef8ff}
-.c5{background:#ffeaec}.c6{background:#eafff1}.c7{background:#f5f1e8}.c8{background:#ede9ff}.c9{background:#e6f7f6}
-h4.headline{font-size:18px;color:#0f5e5e;margin:10px 4px 14px;font-weight:700}
-</style>
-</head>
-<body>
-<div class="header"><h2>স্বাগতম,<br>আপনার লক্ষ্যে এগিয়ে যান।</h2></div>
-<div class="banner"><h3>পরীক্ষার<br>প্রস্তুতি হোক আরো<br>সহজে।</h3><div style="font-size:60px">👫📱</div></div>
-<div class="wrap">
-<h4 class="headline">BCS কঠিন নয়; লক্ষ্য<br>যদি সঠিক হয়।</h4>
-<div class="masonry">
-<div class="card c1"><div class="card-title">৫০তম - ১০তম বিসিএস<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">💡</div><button class="btn" onclick="go('bcs')">শুরু করুন</button></div>
-<div class="card c4"><div class="card-title">সকল বিসিএস প্রশ্ন ও<br>কুইজ</div><div class="icon">📝</div><button class="btn" onclick="go('bcs')">কুইজ খেলুন</button></div>
-<div class="card c5"><div class="card-title">সকল প্রাইমারি নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">🏫</div><button class="btn" onclick="go('primary')">শুরু করুন</button></div>
-<div class="card c7"><div class="card-title">অফলাইন ডিকশনারি</div><div class="icon">📖</div><button class="btn">শুরু করুন</button></div>
-
-<div class="card c2"><div class="card-title">বিসিএস বিষয়াবলী</div><div class="icon">📚</div><button class="btn" onclick="go('subject')">শুরু করুন</button></div>
-<div class="card c3"><div class="card-title">বিসিএস প্রিলিমিনারি<br>মডেল টেস্ট</div><div class="icon">📄</div><button class="btn" onclick="go('model')">শুরু করুন</button></div>
-<div class="card c6"><div class="card-title">কারেন্ট অ্যাফেয়ার্স</div><div class="icon">📰</div><button class="btn" onclick="go('current')">শুরু করুন</button></div>
-<div class="card c8"><div class="card-title">বাংলাদেশ ব্যাংক নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">🏛️</div><button class="btn" onclick="go('bank')">শুরু করুন</button></div>
-<div class="card c9"><div class="card-title">শিক্ষক নিবন্ধন নিয়োগ<br>প্রশ্ন সমাধান ও ব্যাখ্যা</div><div class="icon">🏢</div><button class="btn" onclick="go('ntrca')">শুরু করুন</button></div>
-</div>
-</div>
-</div>
-
-<script>
-// ========= EKHANE APNI PROTI DIN QUESTION ADD KORBEN, CODE DELETE KORA LAGBE NA =========
-let DB = {
-bcs: [], // ekhane bcs question add korben
-primary: [],
-bank: [],
-ntrca: [],
-current: [],
-subject: [],
-model: []
-};
-
-// Example: add korar niom - niche line ta copy kore bcs: [] er vitore bosaben
-// {q:"প্রশ্ন?",o:["ক","খ","গ","ঘ"],a:0,ex:"ব্যাখ্যা"},
-
-function go(cat){
- if(DB[cat].length==0){alert(cat+" এর প্রশ্ন এখনো যোগ করা হয়নি। আপনি DB er vitore add korun."); return;}
- localStorage.setItem("cat",cat);
- localStorage.setItem("db",JSON.stringify(DB[cat]));
- location.href="quiz.html";
-}
-</script>
-</body>
-</html>
-[
-
-from pathlib import Path
-import zipfile, textwrap, json
-
-out = Path("/mnt/data/bcs_mcq_section")
-out.mkdir(exist_ok=True)
-
-index_html = r"""<!DOCTYPE html>
-<html lang="bn">
-<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BCS MCQ Test | 10th–50th BCS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Live MCQ Test - Recent Job Solution</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;background:#f7fafb;color:#234}
-.header{background:#116f7b;color:#fff;padding:26px 18px 34px;border-radius:0 0 28px 28px}
-.header h1{margin:0;font-size:28px}.header p{margin:8px 0 0;font-size:16px}
-.container{max-width:900px;margin:auto;padding:18px}
-.section-title{font-size:23px;font-weight:700;margin:12px 0 18px;color:#116f7b}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.card{background:#fff;border-radius:22px;padding:22px;min-height:175px;box-shadow:0 4px 14px #d9e1e4;display:flex;flex-direction:column;justify-content:space-between}
-.card:nth-child(4n+1){background:#e9fbf8}.card:nth-child(4n+2){background:#eef7ff}.card:nth-child(4n+3){background:#fff7d9}.card:nth-child(4n+4){background:#f4efff}
-.card h3{margin:0;color:#3b4650;font-size:23px}.card p{margin:8px 0;color:#5b6268}
-button{border:0;border-radius:12px;background:#116f7b;color:white;padding:13px 20px;font-size:16px;font-weight:700;cursor:pointer}
-button:active{transform:scale(.98)}
-#test{display:none}.testbox{background:#fff;border-radius:22px;padding:20px;box-shadow:0 4px 14px #d9e1e4}
-.topline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#116f7b;font-weight:700}
-.question{font-size:21px;font-weight:700;line-height:1.55;margin:22px 0}
-.option{display:block;width:100%;text-align:left;background:#f5f7f8;color:#243;padding:14px;margin:10px 0;border:2px solid transparent}
-.option.correct{background:#d8f7df;border-color:#27a34a}.option.wrong{background:#ffdede;border-color:#d33}
-.option:disabled{opacity:1}
-.explain{display:none;background:#eef8fa;padding:15px;border-radius:12px;margin-top:14px;line-height:1.6}
-.nav{display:flex;gap:10px;margin-top:18px}.nav button{flex:1}
-.result{text-align:center;padding:20px}.source{font-size:13px;color:#65747b;margin-top:14px;word-break:break-word}
-.back{background:#58656a;margin-bottom:15px}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.header h1{font-size:24px}.question{font-size:19px}}
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f3f6fb;
+  color:#172033;
+}
+header{
+  background:linear-gradient(135deg,#075e54,#128c7e);
+  color:white;
+  padding:22px 15px;
+  text-align:center;
+}
+header h1{margin:0;font-size:24px}
+header p{margin:8px 0 0;font-size:14px}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:15px;
+}
+
+.search{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  margin-bottom:15px;
+  font-size:16px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:14px;
+}
+
+.card{
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  box-shadow:0 3px 12px #00000012;
+  cursor:pointer;
+  transition:.2s;
+}
+.card:hover{transform:translateY(-3px)}
+.card h3{margin:0 0 8px}
+.card p{color:#666;margin:0 0 15px}
+.btn{
+  border:0;
+  background:#075e54;
+  color:white;
+  padding:12px 18px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:15px;
+}
+.btn.secondary{background:#555}
+.btn.danger{background:#c62828}
+
+.question{
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px #00000012;
+}
+
+.option{
+  display:block;
+  width:100%;
+  text-align:left;
+  margin:10px 0;
+  padding:14px;
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:16px;
+}
+.option:hover{background:#f1f8f7}
+.option.correct{
+  background:#d8f5df;
+  border-color:#159447;
+}
+.option.wrong{
+  background:#ffe0e0;
+  border-color:#d32f2f;
+}
+
+.explanation{
+  background:#eef7ff;
+  border-left:4px solid #1976d2;
+  padding:12px;
+  margin-top:15px;
+  border-radius:7px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin-bottom:15px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  background:#e7f5f2;
+  color:#075e54;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:14px;
+}
+
+.hidden{display:none}
+
+.result{
+  background:white;
+  padding:30px 20px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 3px 12px #00000012;
+}
+.score{
+  font-size:40px;
+  font-weight:bold;
+  color:#075e54;
+}
 </style>
 </head>
+
 <body>
-<header class="header">
-  <h1>📚 BCS MCQ Test</h1>
-  <p>৫০তম → ১০ম BCS | ধারাবাহিক প্রশ্ন ও অনুশীলন</p>
+
+<header>
+  <h1>📚 Live MCQ Test</h1>
+  <p>Recent Job Solution • প্রশ্ন • কুইজ • ব্যাখ্যা</p>
 </header>
 
-<main class="container">
-  <section id="bank">
-    <div class="section-title">বিসিএস প্রশ্ন ও সমাধান</div>
-    <div id="examGrid" class="grid"></div>
-  </section>
+<div class="container">
 
-  <section id="test">
-    <button class="back" onclick="showBank()">← BCS তালিকায় ফিরে যান</button>
-    <div class="testbox">
-      <div class="topline">
-        <span id="examTitle"></span>
-        <span id="progress"></span>
-      </div>
-      <div id="question" class="question"></div>
-      <div id="options"></div>
-      <div id="explain" class="explain"></div>
-      <div class="nav">
-        <button id="prevBtn" onclick="prevQuestion()">পূর্বের প্রশ্ন</button>
-        <button id="nextBtn" onclick="nextQuestion()">পরের প্রশ্ন</button>
-      </div>
-      <div id="source" class="source"></div>
-    </div>
-  </section>
-</main>
+<!-- HOME -->
+<section id="home">
+  <h2>স্বাগতম 👋</h2>
+  <p>আপনার লক্ষ্যে এগিয়ে যান। পরীক্ষার প্রস্তুতি হোক আরো সহজে।</p>
 
-<script src="qbank.js"></script>
+  <input
+    id="search"
+    class="search"
+    placeholder="🔎 বিভাগ খুঁজুন..."
+    oninput="searchCategory()"
+  >
+
+  <div id="categories" class="grid"></div>
+</section>
+
+
+<!-- SET PAGE -->
+<section id="sets" class="hidden">
+  <div class="topbar">
+    <h2 id="setTitle"></h2>
+    <button class="btn secondary" onclick="goHome()">← ফিরে যান</button>
+  </div>
+
+  <div id="setList" class="grid"></div>
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="hidden">
+
+  <div class="topbar">
+    <span id="quizTitle"></span>
+    <span class="badge" id="progress"></span>
+  </div>
+
+  <div id="questionBox"></div>
+
+  <button id="nextBtn" class="btn hidden" onclick="nextQuestion()">
+    পরের প্রশ্ন →
+  </button>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="result" class="hidden">
+  <div class="result">
+    <h2>🎉 পরীক্ষা শেষ</h2>
+
+    <div class="score" id="finalScore">0</div>
+
+    <p id="resultText"></p>
+
+    <button class="btn" onclick="retryQuiz()">
+      🔄 আবার পরীক্ষা দিন
+    </button>
+
+    <button class="btn secondary" onclick="goHome()">
+      🏠 হোম
+    </button>
+  </div>
+</section>
+
+</div>
+
+
 <script>
-let activeExam=null, list=[], index=0, score=0, answered=false;
 
-const grid=document.getElementById("examGrid");
-bcsExams.forEach(exam=>{
-  const card=document.createElement("div");
-  card.className="card";
-  card.innerHTML=`
-    <div>
-      <h3>${exam.name}</h3>
-      <p>${exam.description}</p>
+/* =====================================================
+   QUESTION BANK
+   এখানে নতুন প্রশ্ন যোগ করবেন
+===================================================== */
+
+const QUESTION_BANK = {
+
+  bcs10: [
+    {
+      q:"‘অগ্নিবীণা’ কাব্যের প্রথম কবিতা কোনটি?",
+      options:["বিদ্রোহী","প্রলয়োল্লাস","সাম্যবাদী","দারিদ্র্য"],
+      answer:1,
+      explanation:"‘অগ্নিবীণা’ কাব্যের প্রথম কবিতা হলো ‘প্রলয়োল্লাস’।"
+    },
+    {
+      q:"বাংলাদেশের জাতীয় কবি কে?",
+      options:["রবীন্দ্রনাথ ঠাকুর","কাজী নজরুল ইসলাম","জীবনানন্দ দাশ","শামসুর রাহমান"],
+      answer:1,
+      explanation:"কাজী নজরুল ইসলাম বাংলাদেশের জাতীয় কবি।"
+    }
+  ],
+
+  bcs11: [
+    {
+      q:"বাংলাদেশের স্বাধীনতা দিবস কবে?",
+      options:["২১ ফেব্রুয়ারি","২৬ মার্চ","১৬ ডিসেম্বর","১৭ এপ্রিল"],
+      answer:1,
+      explanation:"২৬ মার্চ বাংলাদেশের স্বাধীনতা দিবস।"
+    }
+  ],
+
+  primary1: [
+    {
+      q:"বাংলাদেশের জাতীয় ফুল কোনটি?",
+      options:["গোলাপ","শাপলা","জবা","বেলি"],
+      answer:1,
+      explanation:"বাংলাদেশের জাতীয় ফুল শাপলা।"
+    },
+    {
+      q:"বাংলা ভাষার আদি কবি হিসেবে কাকে ধরা হয়?",
+      options:["বিদ্যাপতি","চণ্ডীদাস","লুইপা","জ্ঞানদাস"],
+      answer:2,
+      explanation:"চর্যাপদের কবি লুইপাকে বাংলা ভাষার আদি কবিদের একজন হিসেবে ধরা হয়।"
+    }
+  ],
+
+  ntrca19: [
+    {
+      q:"NTRCA-এর পূর্ণরূপ কী?",
+      options:[
+        "National Teachers Registration and Certification Authority",
+        "National Teacher Recruitment and Certification Authority",
+        "National Training Registration Council Authority",
+        "National Teachers Recruitment Council Association"
+      ],
+      answer:0,
+      explanation:"NTRCA-এর পূর্ণরূপ National Teachers Registration and Certification Authority।"
+    }
+  ],
+
+  bank1: [
+    {
+      q:"বাংলাদেশের কেন্দ্রীয় ব্যাংকের নাম কী?",
+      options:[
+        "সোনালী ব্যাংক",
+        "বাংলাদেশ ব্যাংক",
+        "জনতা ব্যাংক",
+        "অগ্রণী ব্যাংক"
+      ],
+      answer:1,
+      explanation:"বাংলাদেশের কেন্দ্রীয় ব্যাংক হলো বাংলাদেশ ব্যাংক।"
+    }
+  ],
+
+  bb1: [
+    {
+      q:"বাংলাদেশ ব্যাংক কোন ধরনের প্রতিষ্ঠান?",
+      options:[
+        "বাণিজ্যিক ব্যাংক",
+        "কেন্দ্রীয় ব্যাংক",
+        "বেসরকারি ব্যাংক",
+        "সমবায় ব্যাংক"
+      ],
+      answer:1,
+      explanation:"বাংলাদেশ ব্যাংক বাংলাদেশের কেন্দ্রীয় ব্যাংক।"
+    }
+  ],
+
+  noncadre1: [
+    {
+      q:"বাংলাদেশের জাতীয় সংসদ ভবনের স্থপতি কে?",
+      options:[
+        "লুই আই কান",
+        "এফ আর খান",
+        "মুজহারুল ইসলাম",
+        "লুই কাহন"
+      ],
+      answer:0,
+      explanation:"জাতীয় সংসদ ভবনের স্থপতি লুই আই কান।"
+    }
+  ],
+
+  grade1: [
+    {
+      q:"‘Honesty is the best policy’ বাক্যে Honesty কোন পদ?",
+      options:["Verb","Adjective","Noun","Adverb"],
+      answer:2,
+      explanation:"Honesty একটি Abstract Noun।"
+    }
+  ],
+
+  model1: [
+    {
+      q:"2 + 3 × 4 = কত?",
+      options:["20","14","24","10"],
+      answer:1,
+      explanation:"BODMAS অনুযায়ী আগে গুণ: 3×4=12; তারপর 2+12=14।"
+    }
+  ],
+
+  daily1: [
+    {
+      q:"আজকের অনুশীলনী প্রশ্ন: ‘Book’ শব্দের বাংলা অর্থ কী?",
+      options:["কলম","বই","খাতা","টেবিল"],
+      answer:1,
+      explanation:"Book = বই।"
+    }
+  ],
+
+  current1: [
+    {
+      q:"Current Affairs অংশে নতুন প্রশ্ন নিয়মিত যোগ করা যাবে।",
+      options:["সঠিক","ভুল","কোনোটিই নয়","জানা নেই"],
+      answer:0,
+      explanation:"এই অংশটি নিয়মিত আপডেট করার জন্য রাখা হয়েছে।"
+    }
+  ],
+
+  dictionary1: [
+    {
+      q:"‘Beautiful’ শব্দের বাংলা অর্থ কী?",
+      options:["সুন্দর","দ্রুত","বড়","ছোট"],
+      answer:0,
+      explanation:"Beautiful = সুন্দর।"
+    }
+  ]
+
+};
+
+
+/* =====================================================
+   CATEGORY DATA
+===================================================== */
+
+const CATEGORIES = [
+
+  {
+    id:"bcs",
+    title:"৫০তম–১০ম BCS",
+    icon:"🏛️",
+    description:"BCS প্রশ্ন সমাধান ও ব্যাখ্যা",
+    sets:createBCSSets()
+  },
+
+  {
+    id:"primary",
+    title:"Primary + Headmaster",
+    icon:"🏫",
+    description:"প্রাইমারি নিয়োগ প্রশ্ন সমাধান",
+    sets:createPrimarySets()
+  },
+
+  {
+    id:"ntrca",
+    title:"NTRCA ১ম–১৯তম",
+    icon:"👨‍🏫",
+    description:"শিক্ষক নিবন্ধন প্রশ্ন সমাধান",
+    sets:createNTRCASets()
+  },
+
+  {
+    id:"bank",
+    title:"Bank Job",
+    icon:"🏦",
+    description:"ব্যাংক নিয়োগ প্রশ্ন",
+    sets:createSets("bank","Bank",10)
+  },
+
+  {
+    id:"bb",
+    title:"Bangladesh Bank",
+    icon:"🏛️",
+    description:"বাংলাদেশ ব্যাংক নিয়োগ",
+    sets:createSets("bb","Bangladesh Bank",10)
+  },
+
+  {
+    id:"noncadre",
+    title:"Non-Cadre",
+    icon:"📑",
+    description:"নন-ক্যাডার নিয়োগ প্রস্তুতি",
+    sets:createSets("noncadre","Non-Cadre",10)
+  },
+
+  {
+    id:"grade",
+    title:"১১–২০ গ্রেড",
+    icon:"📚",
+    description:"১১–২০ গ্রেড চাকরি প্রস্তুতি",
+    sets:createSets("grade","১১–২০ গ্রেড",10)
+  },
+
+  {
+    id:"model",
+    title:"BCS Preliminary Model Test",
+    icon:"📝",
+    description:"মডেল টেস্ট",
+    sets:createSets("model","Model Test",10)
+  },
+
+  {
+    id:"daily",
+    title:"Daily Quiz",
+    icon:"⚡",
+    description:"প্রতিদিনের কুইজ",
+    sets:createSets("daily","Daily Quiz",10)
+  },
+
+  {
+    id:"current",
+    title:"Current Affairs",
+    icon:"📰",
+    description:"সাম্প্রতিক বিষয়াবলি",
+    sets:createSets("current","Current Affairs",10)
+  },
+
+  {
+    id:"dictionary",
+    title:"Offline Dictionary",
+    icon:"📖",
+    description:"English → Bangla",
+    sets:createSets("dictionary","Dictionary",10)
+  }
+
+];
+
+
+/* =====================================================
+   CREATE SETS
+===================================================== */
+
+function createSets(prefix,name,total){
+
+  const arr=[];
+
+  for(let i=1;i<=total;i++){
+
+    arr.push({
+      id:prefix+i,
+      name:name+" Set "+i,
+      questions:QUESTION_BANK[prefix+i] || []
+    });
+
+  }
+
+  return arr;
+}
+
+
+function createBCSSets(){
+
+  const arr=[];
+
+  for(let i=50;i>=10;i--){
+
+    arr.push({
+      id:"bcs"+i,
+      name:i+"তম BCS",
+      questions:QUESTION_BANK["bcs"+i] || []
+    });
+
+  }
+
+  return arr;
+}
+
+
+function createPrimarySets(){
+
+  const arr=[];
+
+  for(let i=1;i<=20;i++){
+
+    arr.push({
+      id:"primary"+i,
+      name:"Primary Set "+i,
+      questions:QUESTION_BANK["primary"+i] || []
+    });
+
+  }
+
+  return arr;
+}
+
+
+function createNTRCASets(){
+
+  const arr=[];
+
+  for(let i=19;i>=1;i--){
+
+    arr.push({
+      id:"ntrca"+i,
+      name:i+"তম NTRCA",
+      questions:QUESTION_BANK["ntrca"+i] || []
+    });
+
+  }
+
+  return arr;
+}
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentCategory=null;
+let currentSet=null;
+let currentQuestions=[];
+let currentIndex=0;
+let score=0;
+let answered=false;
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+function renderCategories(){
+
+  const box=document.getElementById("categories");
+
+  box.innerHTML="";
+
+  CATEGORIES.forEach(cat=>{
+
+    const div=document.createElement("div");
+
+    div.className="card";
+
+    div.dataset.name=(
+      cat.title+" "+cat.description
+    ).toLowerCase();
+
+    div.innerHTML=`
+      <h3>${cat.icon} ${cat.title}</h3>
+      <p>${cat.description}</p>
+      <button class="btn">
+        শুরু করুন →
+      </button>
+    `;
+
+    div.onclick=()=>showSets(cat);
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+function searchCategory(){
+
+  const text=
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+  document.querySelectorAll("#categories .card")
+    .forEach(card=>{
+
+      card.style.display=
+        card.dataset.name.includes(text)
+        ?"block"
+        :"none";
+
+    });
+
+}
+
+
+/* =====================================================
+   SET PAGE
+===================================================== */
+
+function showSets(category){
+
+  currentCategory=category;
+
+  hideAll();
+
+  document.getElementById("sets")
+    .classList.remove("hidden");
+
+  document.getElementById("setTitle")
+    .innerText=category.icon+" "+category.title;
+
+  const box=document.getElementById("setList");
+
+  box.innerHTML="";
+
+  category.sets.forEach(set=>{
+
+    const div=document.createElement("div");
+
+    div.className="card";
+
+    const count=set.questions.length;
+
+    div.innerHTML=`
+      <h3>${set.name}</h3>
+      <p>
+        ${count>0
+          ?count+"টি প্রশ্ন প্রস্তুত"
+          :"এখনও প্রশ্ন যোগ করা হয়নি"}
+      </p>
+
+      <button
+        class="btn"
+        ${count===0?"disabled":""}>
+        ${count===0?"Coming Soon":"পরীক্ষা দিন →"}
+      </button>
+    `;
+
+    if(count>0){
+      div.onclick=()=>startQuiz(set);
+    }
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+/* =====================================================
+   START QUIZ
+===================================================== */
+
+function startQuiz(set){
+
+  currentSet=set;
+
+  currentQuestions=[
+    ...set.questions
+  ];
+
+  currentIndex=0;
+  score=0;
+  answered=false;
+
+  hideAll();
+
+  document.getElementById("quiz")
+    .classList.remove("hidden");
+
+  document.getElementById("quizTitle")
+    .innerText=set.name;
+
+  showQuestion();
+
+}
+
+
+/* =====================================================
+   SHOW QUESTION
+===================================================== */
+
+function showQuestion(){
+
+  answered=false;
+
+  const q=currentQuestions[currentIndex];
+
+  document.getElementById("progress")
+    .innerText=
+    `${currentIndex+1} / ${currentQuestions.length}`;
+
+  const box=document.getElementById("questionBox");
+
+  box.innerHTML=`
+
+    <div class="question">
+
+      <h3>
+        ${currentIndex+1}. ${q.q}
+      </h3>
+
+      <div id="options"></div>
+
+      <div id="explanation"></div>
+
     </div>
-    <button onclick="startExam('${exam.id}')">শুরু করুন</button>`;
-  grid.appendChild(card);
-});
+  `;
 
-function startExam(id){
-  activeExam=bcsExams.find(x=>x.id===id);
-  list=removeDuplicates(activeExam.questions);
-  index=0; score=0;
-  document.getElementById("bank").style.display="none";
-  document.getElementById("test").style.display="block";
-  render();
-}
-function removeDuplicates(arr){
-  const seen=new Set();
-  return arr.filter(q=>{
-    const key=(q.question+"|"+q.options.join("|")).replace(/\s+/g," ").trim().toLowerCase();
-    if(seen.has(key)) return false;
-    seen.add(key); return true;
+  const options=
+    document.getElementById("options");
+
+  q.options.forEach((option,index)=>{
+
+    const btn=document.createElement("button");
+
+    btn.className="option";
+
+    btn.innerText=
+      String.fromCharCode(65+index)+". "+option;
+
+    btn.onclick=()=>checkAnswer(index);
+
+    options.appendChild(btn);
+
   });
+
+  document.getElementById("nextBtn")
+    .classList.add("hidden");
+
 }
-function render(){
-  if(index>=list.length){showResult();return}
-  const q=list[index]; answered=false;
-  document.getElementById("examTitle").textContent=activeExam.name;
-  document.getElementById("progress").textContent=`${index+1}/${list.length}`;
-  document.getElementById("question").textContent=q.question;
-  document.getElementById("explain").style.display="none";
-  document.getElementById("explain").innerHTML="";
-  document.getElementById("source").innerHTML=q.source ? "Source: "+q.source : "";
-  const box=document.getElementById("options"); box.innerHTML="";
-  q.options.forEach((op,i)=>{
-    const b=document.createElement("button");
-    b.className="option"; b.textContent=op;
-    b.onclick=()=>checkAnswer(i,b);
-    box.appendChild(b);
-  });
-  document.getElementById("prevBtn").disabled=index===0;
-  document.getElementById("nextBtn").disabled=true;
-}
-function checkAnswer(selected,btn){
+
+
+/* =====================================================
+   CHECK ANSWER
+===================================================== */
+
+function checkAnswer(selected){
+
   if(answered)return;
+
   answered=true;
-  const q=list[index], buttons=document.querySelectorAll(".option");
-  buttons.forEach((b,i)=>{
-    b.disabled=true;
-    if(i===q.answer)b.classList.add("correct");
+
+  const q=currentQuestions[currentIndex];
+
+  const buttons=
+    document.querySelectorAll(".option");
+
+  buttons.forEach((btn,index)=>{
+
+    btn.disabled=true;
+
+    if(index===q.answer){
+
+      btn.classList.add("correct");
+
+    }
+
+    if(index===selected && selected!==q.answer){
+
+      btn.classList.add("wrong");
+
+    }
+
   });
-  if(selected===q.answer){score++;btn.classList.add("correct")}
-  else btn.classList.add("wrong");
-  const ex=document.getElementById("explain");
-  ex.style.display="block";
-  ex.innerHTML=`<b>${selected===q.answer?"সঠিক উত্তর ✅":"ভুল উত্তর ❌"}</b><br>
-  সঠিক উত্তর: ${q.options[q.answer]}<br>${q.explanation||""}`;
-  document.getElementById("nextBtn").disabled=false;
+
+  if(selected===q.answer){
+
+    score++;
+
+  }
+
+  document.getElementById("explanation")
+    .innerHTML=`
+      <div class="explanation">
+        <b>✅ সঠিক উত্তর:</b>
+        ${q.options[q.answer]}
+        <br><br>
+        <b>💡 ব্যাখ্যা:</b>
+        ${q.explanation}
+      </div>
+    `;
+
+  document.getElementById("nextBtn")
+    .classList.remove("hidden");
+
 }
-function nextQuestion(){if(!answered)return;index++;render()}
-function prevQuestion(){if(index>0){index--;render()}}
+
+
+/* =====================================================
+   NEXT
+===================================================== */
+
+function nextQuestion(){
+
+  currentIndex++;
+
+  if(currentIndex>=currentQuestions.length){
+
+    showResult();
+
+  }else{
+
+    showQuestion();
+
+  }
+
+}
+
+
+/* =====================================================
+   RESULT
+===================================================== */
+
 function showResult(){
-  document.querySelector(".testbox").innerHTML=`
-    <div class="result">
-      <h2>🎉 Test Complete</h2>
-      <p>মোট প্রশ্ন: <b>${list.length}</b></p>
-      <p>সঠিক উত্তর: <b>${score}</b></p>
-      <p>ভুল/উত্তরহীন: <b>${list.length-score}</b></p>
-      <h2>Score: ${score}/${list.length}</h2>
-      <button onclick="startExam('${activeExam.id}')">আবার পরীক্ষা দিন</button>
-      <button class="back" onclick="showBank()">BCS তালিকায় যান</button>
-    </div>`;
+
+  hideAll();
+
+  document.getElementById("result")
+    .classList.remove("hidden");
+
+  const total=currentQuestions.length;
+
+  const percentage=
+    Math.round((score/total)*100);
+
+  document.getElementById("finalScore")
+    .innerText=
+    `${score} / ${total}`;
+
+  document.getElementById("resultText")
+    .innerHTML=
+    `আপনার স্কোর: <b>${percentage}%</b><br>
+     সঠিক উত্তর: ${score}<br>
+     ভুল উত্তর: ${total-score}`;
+
+  localStorage.setItem(
+    "lastScore",
+    JSON.stringify({
+      score:score,
+      total:total,
+      set:currentSet.name
+    })
+  );
+
 }
-function showBank(){
-  document.getElementById("test").style.display="none";
-  document.getElementById("bank").style.display="block";
-  location.reload();
+
+
+/* =====================================================
+   RETRY
+===================================================== */
+
+function retryQuiz(){
+
+  startQuiz(currentSet);
+
 }
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+function goHome(){
+
+  hideAll();
+
+  document.getElementById("home")
+    .classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   HIDE ALL
+===================================================== */
+
+function hideAll(){
+
+  document.querySelectorAll("section")
+    .forEach(section=>{
+      section.classList.add("hidden");
+    });
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderCategories();
+
 </script>
+
 </body>
 </html>
-"""
-
-# 10th BCS sample questions are sourced from publicly available question pages.
-# The full 10th–50th question text is intentionally not copied from a commercial book.
-sample10 = [
-    {
-        "question":"‘আনারস’ ও ‘চাবি’ শব্দ দু’টি বাংলা ভাষা গ্রহণ করেছে—",
-        "options":["ক) পর্তুগিজ ভাষা হতে","খ) আরবি ভাষা হতে","গ) দেশী ভাষা হতে","ঘ) ওলন্দাজ ভাষা হতে"],
-        "answer":0,
-        "explanation":"উৎসে উত্তর হিসেবে পর্তুগিজ ভাষা দেওয়া হয়েছে।",
-        "source":"https://onlinebcs.com/2025/06/08/10th-bcs-preliminary-question-full-solution/"
-    },
-    {
-        "question":"বাংলার নববর্ষ পহেলা বৈশাখ চালু করেছিল—",
-        "options":["ক) লক্ষণ সেন","খ) ইলিয়াস শাহ","গ) আকবর","ঘ) বিজয় সেন"],
-        "answer":2,
-        "explanation":"উৎসে উত্তর: আকবর।",
-        "source":"https://onlinebcs.com/2018/06/02/10th-bcs-priliminary-question-solution/"
-    },
-    {
-        "question":"কোন মুঘল সম্রাট বাংলার নাম দেন ‘জান্নাতবাদ’?",
-        "options":["ক) বাবর","খ) হুমায়ুন","গ) আকবর","ঘ) জাহাঙ্গীর"],
-        "answer":1,
-        "explanation":"উৎসে উত্তর: হুমায়ুন।",
-        "source":"https://onlinebcs.com/2018/06/02/10th-bcs-priliminary-question-solution/"
-    },
-    {
-        "question":"‘কবর’ নাটকের নাট্যকার কে?",
-        "options":["ক) মুনীর চৌধুরী","খ) শওকত ওসমান","গ) জহির রায়হান","ঘ) সৈয়দ শামসুল হক"],
-        "answer":0,
-        "explanation":"উৎসে উত্তর: মুনীর চৌধুরী।",
-        "source":"https://primarypreparation.com/10th-bcs-priliminary-question-solution/"
-    },
-    {
-        "question":"‘অগ্নিবীণা’ কাব্যের প্রথম কবিতা কোনটি?",
-        "options":["ক) বিদ্রোহী","খ) প্রলয়োল্লাস","গ) সাম্যবাদী","ঘ) দারিদ্র্য"],
-        "answer":1,
-        "explanation":"উৎসে উত্তর: প্রলয়োল্লাস।",
-        "source":"https://primarypreparation.com/10th-bcs-priliminary-question-solution/"
-    }
-]
-
-# Create ordered cards 50 -> 10. Empty exams are ready for verified question data to be inserted.
-exams=[]
-for n in range(50,9,-1):
-    exams.append({
-        "id":f"bcs{n}",
-        "name":f"{n}তম BCS",
-        "description":"প্রিলিমিনারি প্রশ্ন ও সমাধান",
-        "source":"Professor's BCS Preliminary Question Bank (2026) — 10th–50th BCS coverage",
-        "sourceUrl":"https://www.pbs.com.bd/book/2407538/professor-s-bcs-question-bank",
-        "questions": sample10 if n==10 else []
-    })
-
-qbank = "const bcsExams = " + json.dumps(exams, ensure_ascii=False, indent=2) + ";\n"
-
-(out/"index.html").write_text(index_html, encoding="utf-8")
-(out/"qbank.js").write_text(qbank, encoding="utf-8")
-(out/"README.txt").write_text(
-"""BCS MCQ Section
-=================
-Files:
-1. index.html
-2. qbank.js
-
-How to use:
-- Upload/replace these files in your GitHub Pages project.
-- Keep qbank.js in the same folder as index.html.
-- The home screen shows 50th -> 10th BCS in order.
-- Each exam opens as an MCQ test.
-- Duplicate questions inside a test are automatically removed.
-
-IMPORTANT:
-The supplied qbank includes only a small 10th BCS sample for demonstration.
-The commercial Professor's book is used only as a source reference; its full text is not copied here.
-For a full question bank, add question data you have permission to use or data you supply.
-""", encoding="utf-8")
-
-zip_path=Path("/mnt/data/BCS_10th_to_50th_MCQ_App_Code.zip")
-with zipfile.ZipFile(zip_path,"w",zipfile.ZIP_DEFLATED) as z:
-    for f in out.iterdir():
-        z.write(f, f.name)
-
-print(zip_path)
