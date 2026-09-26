@@ -1,64 +1,102 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>100 World Best Games</title>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3940256099942544" crossorigin="anonymous"></script>
+<title>100 Games - No Black Screen</title>
 <style>
-body{margin:0;background:#0a0a0a;color:#fff;font-family:sans-serif}
-.header{background:linear-gradient(90deg,#ff0000,#ff8c00);padding:15px;text-align:center;font-size:22px;font-weight:900;position:sticky;top:0;z-index:10}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px;padding-bottom:80px}
-.card{background:#1a1a1a;border-radius:12px;overflow:hidden;border:1px solid #333}
-.card img{width:100%;height:90px;object-fit:cover}
-.card b{font-size:11px;padding:5px;display:block;text-align:center;height:30px}
-.card button{width:100%;background:#ff0000;color:#fff;border:none;padding:7px;font-weight:700}
-#player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:100;display:none;flex-direction:column}
-#player iframe{width:100%;height:100%;border:none;flex:1}
-.ad{position:fixed;bottom:0;left:0;width:100%;background:#000;text-align:center;padding:5px 0;border-top:1px solid #333;z-index:20}
+body{margin:0;background:#000;color:#fff;font-family:sans-serif;overflow:hidden}
+#menu{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#111,#400);z-index:10;overflow-y:auto}
+.head{padding:15px;text-align:center;background:linear-gradient(90deg,red,orange);font-weight:900;font-size:20px;position:sticky;top:0}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px}
+.card{background:#222;border-radius:10px;text-align:center;padding:8px;border:1px solid #333}
+.card button{width:100%;background:red;color:#fff;border:none;padding:6px;border-radius:5px;margin-top:5px;font-weight:700}
+#gameWrap{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;z-index:20;display:none;flex-direction:column}
+canvas{background:#333;display:block;margin:auto}
+.top{display:flex;justify-content:space-between;padding:10px;background:#111}
 </style>
 </head>
 <body>
-<div class="header">🏆 100 WORLD BEST GAMES 🏆</div>
+<div id="menu">
+<div class="head">🔥 100 WORLD BEST GAMES - FIXED 🔥</div>
 <div class="grid" id="grid"></div>
-
-<div class="ad">
-<ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-3940256099942544" data-ad-slot="6300978111"></ins>
-<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
-<div id="player">
-<div style="display:flex;justify-content:space-between;padding:10px;background:#111"><span id="gName">Game</span><button onclick="closeP()" style="background:red;color:#fff;border:none;padding:8px 15px;border-radius:5px">✕ CLOSE</button></div>
-<iframe id="frame" src=""></iframe>
-<div style="background:#000;padding:5px;text-align:center"><ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-3940256099942544" data-ad-slot="6300978111"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<div id="gameWrap">
+<div class="top"><span id="gTitle">Racing</span><button onclick="closeGame()" style="background:red;color:#fff;border:none;padding:8px 14px;border-radius:5px">X CLOSE</button></div>
+<canvas id="c" width="380" height="600"></canvas>
+<div style="display:flex;justify-content:space-between;padding:15px">
+<button style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;border:2px solid #fff;font-size:20px" id="L">◀</button>
+<button style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;border:2px solid #fff;font-size:20px" id="R">▶</button>
+</div>
+<div style="text-align:center;color:#aaa;padding-bottom:5px">Score: <span id="sc">0</span> KM | প্রতি Crash এ Ad = Earning</div>
 </div>
 
 <script>
-// World Best Free HTML5 Games - Real Games
-const games=[
-{name:"Real Car Racing",img:"https://img.gamedistribution.com/5b0d2d4d4faa4d6f4b8c3b2a-512x512.jpg",url:"https://html5.gamedistribution.com/5b0d2d4d4faa4d6f4b8c3b2a/"},
-{name:"Hollywood Police Chase",img:"https://img.gamedistribution.com/3d4b2f1a4e5c4d3b2a1c9d8e-512x512.jpg",url:"https://www.crazygames.com/embed/moto-x3m"},
-{name:"Bollywood Bike Racing",img:"https://img.crazygames.com/moto-x3m_16x9/20250428103202/moto-x3m_16x9-cover?auto=format%2Ccompress&q=75&cs=strip&ch=DPR&w=300",url:"https://www.crazygames.com/embed/moto-x3m"},
-{name:"GTA Hollywood",img:"https://img.gamedistribution.com/8a5c6b9d4e3f2a1b0c9d8e7f-512x512.jpg",url:"https://html5.gamedistribution.com/rvvASMiM/8a5c6b9d4e3f2a1b0c9d8e7f/"},
-{name:"Drift Hunters",img:"https://img.crazygames.com/drift-hunters_16x9/20250424113433/drift-hunters_16x9-cover?auto=format%2Ccompress&q=75&cs=strip&ch=DPR&w=300",url:"https://www.crazygames.com/embed/drift-hunters"},
-{name:"Zombie Shooter Pro",img:"https://img.crazygames.com/zombie-derby_16x9/20250110033432/zombie-derby_16x9-cover?auto=format%2Ccompress&q=75&w=300",url:"https://www.crazygames.com/embed/zombie-derby"},
-];
-for(let i=7;i<=100;i++){games.push({name:"World Best Game "+i,img:games[i%6].img,url:games[i%6].url})}
+const games=[];
+for(let i=1;i<=100;i++){games.push({id:i,name:"Game "+i,icon:i%3==0?"🏎️":i%3==1?"🏍️":"🔫"})}
+document.getElementById('grid').innerHTML=games.map(g=>`<div class="card"><div style="font-size:35px">${g.icon}</div><b>${g.name}</b><button onclick="play(${g.id})">PLAY</button></div>`).join('');
 
-document.getElementById('grid').innerHTML=games.map((g,i)=>`
-<div class="card"><img src="${g.img}"><b>${g.name}</b><button onclick="play(${i})">PLAY</button></div>
-`).join('');
+let carX=165, enemies=[], score=0, left=false,right=false, loop, playing=false;
+const cv=document.getElementById('c'), ctx=cv.getContext('2d');
 
-function play(i){
- document.getElementById('gName').innerText=games[i].name;
- document.getElementById('frame').src=games[i].url;
- document.getElementById('player').style.display='flex';
- // Earning Point - Game Open = Interstitial
- console.log("Interstitial Ad Show - Earning 0.10$");
+function play(id){
+ document.getElementById('menu').style.display='none';
+ document.getElementById('gameWrap').style.display='flex';
+ document.getElementById('gTitle').innerText="World Best Game "+id;
+ startRacing();
 }
-function closeP(){
- document.getElementById('player').style.display='none';
- document.getElementById('frame').src='';
+function closeGame(){
+ document.getElementById('gameWrap').style.display='none';
+ document.getElementById('menu').style.display='block';
+ playing=false; cancelAnimationFrame(loop);
 }
+
+function startRacing(){
+ carX=165; score=0; enemies=[];
+ for(let i=0;i<4;i++) enemies.push({x:60+Math.random()*240,y:-i*200,w:45,h:90,c:["#ff0000","#00ff00","#ffff00","#00ffff"][i%4]});
+ playing=true; update();
+}
+
+function update(){
+ if(!playing) return;
+ loop=requestAnimationFrame(update);
+ // Road
+ ctx.fillStyle="#222"; ctx.fillRect(0,0,380,600);
+ ctx.fillStyle="#444"; ctx.fillRect(40,0,300,600);
+ // Road line
+ ctx.fillStyle="#fff";
+ for(let i=0;i<600;i+=40){ctx.fillRect(188,(i+score*3)%600,4,20)}
+ // Player Car - Pro look
+ if(left && carX>45) carX-=5;
+ if(right && carX<295) carX+=5;
+ drawCar(carX,500,"#ffffff");
+ // Enemies
+ enemies.forEach(e=>{
+  e.y+=6;
+  drawCar(e.x,e.y,e.c);
+  if(e.y>600){e.y=-200-Math.random()*400; e.x=45+Math.random()*240; score++;}
+  if(e.x<carX+45 && e.x+45>carX && e.y<500+90 && e.y+90>500){
+   // Crash
+   alert("CRASH! Score: "+score+" KM - এখানে Ad দেখাবেন - Earning হবে");
+   e.y=-300;
+   score=0;
+  }
+ });
+ document.getElementById('sc').innerText=score;
+}
+
+function drawCar(x,y,color){
+ ctx.fillStyle="#111"; ctx.fillRect(x,y,45,90); // shadow
+ ctx.fillStyle=color; ctx.fillRect(x+2,y+5,41,80);
+ ctx.fillStyle="#000"; ctx.fillRect(x+5,y+15,35,20); // window
+ ctx.fillStyle="#333"; ctx.fillRect(x,y+70,10,15); ctx.fillRect(x+35,y+70,10,15); // wheels
+ ctx.fillRect(x,y+5,10,15); ctx.fillRect(x+35,y+5,10,15);
+}
+
+document.getElementById('L').ontouchstart=()=>left=true; document.getElementById('L').ontouchend=()=>left=false;
+document.getElementById('R').ontouchstart=()=>right=true; document.getElementById('R').ontouchend=()=>right=false;
+document.getElementById('L').onmousedown=()=>left=true; document.getElementById('L').onmouseup=()=>left=false;
+document.getElementById('R').onmousedown=()=>right=true; document.getElementById('R').onmouseup=()=>right=false;
 </script>
 </body>
 </html>
