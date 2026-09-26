@@ -1,107 +1,79 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>100 Real Games - Racing & Action</title>
+<title>Real Racing - Earning Game</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3940256099942544" crossorigin="anonymous"></script>
 <style>
-body{margin:0;background:#0f0f0f;color:#fff;font-family:sans-serif;padding-bottom:70px}
-.header{background:linear-gradient(90deg,#ff0000,#ff6a00);padding:14px;text-align:center;font-size:20px;font-weight:900;position:sticky;top:0;z-index:10}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-.card{background:#1e1e1e;border-radius:14px;overflow:hidden;border:1px solid #333;text-align:center}
-.card .thumb{height:80px;display:flex;align-items:center;justify-content:center;font-size:50px;background:#000}
-.card b{font-size:13px;display:block;padding:6px 0}
-.card button{width:90%;margin:0 0 8px 0;padding:9px;background:linear-gradient(90deg,#ff0000,#ff6a00);border:none;color:#fff;border-radius:20px;font-weight:800}
-#modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:100;display:none;flex-direction:column}
-canvas{background:#222;margin:auto;display:block}
+body{margin:0;background:#000;overflow:hidden}
+canvas{display:block;margin:0 auto;background:#2a2a2a}
+#ui{position:fixed;top:0;left:0;width:100%;padding:10px;color:#fff;font-family:sans-serif;display:flex;justify-content:space-between;box-sizing:border-box}
+#controls{position:fixed;bottom:20px;width:100%;display:flex;justify-content:space-between;padding:0 20px;box-sizing:border-box}
+.btn{width:70px;height:70px;background:rgba(255,255,255,0.2);border:2px solid #fff;border-radius:50%;color:#fff;font-size:24px}
+#menu{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#000,#330000);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;z-index:10}
+#menu button{padding:15px 40px;background:#ff0000;border:none;color:#fff;font-size:18px;font-weight:900;border-radius:30px;margin-top:20px}
 </style>
 </head>
 <body>
-<div class="header">🔥 100 REAL GAMES - RACING & ACTION 🔥</div>
-<div class="grid" id="grid"></div>
-
-<div id="modal">
-<div style="display:flex;justify-content:space-between;padding:10px;background:#111"><span id="gName"></span><button onclick="closeG()" style="background:red;color:#fff;border:none;padding:8px 14px;border-radius:6px">X CLOSE</button></div>
-<canvas id="cv" width="360" height="520"></canvas>
-<div style="display:flex;justify-content:space-around;padding:10px">
-<button id="leftBtn" style="padding:15px 30px;background:#333;color:#fff;border:none;border-radius:10px">◀️</button>
-<button id="actionBtn" style="padding:15px 30px;background:#ff0000;color:#fff;border:none;border-radius:10px">🔥 ACTION</button>
-<button id="rightBtn" style="padding:15px 30px;background:#333;color:#fff;border:none;border-radius:10px">▶️</button>
+<div id="menu">
+<h1 style="font-size:40px;margin:0">🏁 REAL RACING</h1>
+<p>Hollywood Style Car Racing</p>
+<button onclick="startGame()">PLAY NOW - EARNING START</button>
+<p style="font-size:12px;color:#aaa;margin-top:20px">প্রতি Race শেষে Ad আসবে - এটাই Earning</p>
+<div style="margin-top:15px"><ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-3940256099942544" data-ad-slot="6300978111"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
 </div>
-</div>
-
+<div id="ui"><span id="score">0 KM</span><span id="speed">0</span></div>
+<canvas id="c" width="400" height="700"></canvas>
+<div id="controls"><button class="btn" id="l">◀</button><button class="btn" id="r">▶</button></div>
 <script>
-const G=[
-{id:1,name:"Voyonkor Car Racing",icon:"🏎️",type:"racing"},
-{id:2,name:"Hollywood Police Chase",icon:"🚓",type:"racing"},
-{id:3,name:"Bollywood Bike Racing",icon:"🏍️",type:"racing"},
-{id:4,name:"Ghost Train Horror",icon:"🚂",type:"racing"},
-{id:5,name:"Zombie Shooter",icon:"🧟",type:"shooter"},
-{id:6,name:"Hollywood Action Sniper",icon:"🔫",type:"shooter"},
-{id:7,name:"Bollywood Car Drift",icon:"🚗",type:"racing"},
-{id:8,name:"Horror Highway",icon:"🛣️",type:"racing"},
-];
-for(let i=9;i<=100;i++){let t=i%2==0?"racing":"shooter"; G.push({id:i,name:(t=="racing"?"Car Racing Pro ":"Action Shooter ")+i,icon:t=="racing"?"🏎️":"🔫",type:t})}
+const cv=document.getElementById('c'), ctx=cv.getContext('2d');
+let carX=175, carY=550, speed=0, km=0, enemies=[], left=false,right=false, game=false, anim;
 
-document.getElementById('grid').innerHTML=G.map(g=>`<div class="card"><div class="thumb">${g.icon}</div><b>${g.name}</b><button onclick="openG(${g.id})">PLAY NOW</button></div>`).join('');
-
-let loop, score=0, carX=150, obs=[], isLeft=false,isRight=false;
-const cv=document.getElementById('cv'), ctx=cv.getContext('2d'), modal=document.getElementById('modal');
-
-function openG(id){
- const g=G.find(x=>x.id==id);
- document.getElementById('gName').innerText=g.name;
- modal.style.display='flex';
- if(g.type=='racing') startRacing();
- else startShooter();
-}
-function closeG(){modal.style.display='none';clearInterval(loop)}
-
-// --- REAL CAR RACING GAME - আপনার Screenshot এর মত ---
-function startRacing(){
- carX=150; score=0; obs=[{x:100,y:-100},{x:200,y:-300}];
- loop=setInterval(()=>{
-  ctx.fillStyle="#333"; ctx.fillRect(0,0,360,520);
-  // Road
-  ctx.fillStyle="#555"; ctx.fillRect(60,0,240,520);
-  ctx.fillStyle="#fff"; ctx.fillRect(180,0,4,520);
-  // Player Car
-  if(isLeft && carX>70) carX-=6;
-  if(isRight && carX<260) carX+=6;
-  ctx.font="35px Arial"; ctx.fillText("🏎️",carX,450);
-  // Enemy Cars
-  obs.forEach(o=>{
-   o.y+=7; ctx.fillText("🚗",o.x,o.y);
-   if(o.y>520){o.y=-100; o.x=70+Math.random()*180; score++}
-   if(Math.abs(o.x-carX)<30 && Math.abs(o.y-450)<30){score=0; o.y=-200}
-  });
-  ctx.fillStyle="#fff"; ctx.fillText("Speed: "+score*10+" KM",10,20);
- },20);
+function startGame(){
+ document.getElementById('menu').style.display='none';
+ game=true; km=0; speed=5; carX=175;
+ enemies=[{x:100,y:-200,w:40,h:80,c:"#ff0000"},{x:220,y:-500,w:40,h:80,c:"#00ff00"},{x:150,y:-800,w:40,h:80,c:"#0000ff"}];
+ loop();
 }
 
-// --- SHOOTER GAME ---
-function startShooter(){
- let bx=180, enemies=[{x:100,y:50}];
- loop=setInterval(()=>{
-  ctx.fillStyle="#000"; ctx.fillRect(0,0,360,520);
-  ctx.fillText("🔫",bx,480);
-  enemies.forEach(e=>{
-   e.y+=2; ctx.fillText("🧟",e.x,e.y);
-   if(e.y>520){e.y=0; e.x=Math.random()*300}
-  });
-  ctx.fillStyle="#fff"; ctx.fillText("Kill: "+score,10,20);
- },20);
- document.getElementById('actionBtn').onclick=()=>{score++;};
+function loop(){
+ if(!game) return;
+ anim=requestAnimationFrame(loop);
+ // Road
+ ctx.fillStyle="#1a1a1a"; ctx.fillRect(0,0,400,700);
+ ctx.fillStyle="#333"; ctx.fillRect(50,0,300,700);
+ // Road lines
+ ctx.fillStyle="#fff";
+ for(let i=0;i<700;i+=40){ctx.fillRect(198, (i+km*2)%700, 4, 20)}
+ // Player Car - Real Shape
+ ctx.fillStyle="#fff"; ctx.fillRect(carX,carY,50,90);
+ ctx.fillStyle="#ff0000"; ctx.fillRect(carX+5,carY+10,40,70);
+ ctx.fillStyle="#000"; ctx.fillRect(carX+8,carY+20,34,15);
+ // Move
+ if(left && carX>60) carX-=6;
+ if(right && carX<290) carX+=6;
+ // Enemies
+ enemies.forEach(e=>{
+  e.y+=speed;
+  ctx.fillStyle=e.c; ctx.fillRect(e.x,e.y,e.w,e.h);
+  ctx.fillStyle="#000"; ctx.fillRect(e.x+5,e.y+10,e.w-10,20);
+  if(e.y>700){e.y=-300-Math.random()*500; e.x=60+Math.random()*220; km+=1}
+  // Collision
+  if(e.x<carX+50 && e.x+e.w>carX && e.y<carY+90 && e.y+e.h>carY){
+   game=false;
+   alert("CRASH! Score: "+km+" KM - এখন Interstitial Ad আসবে (Earning)");
+   document.getElementById('menu').style.display='flex';
+   document.getElementById('menu').innerHTML=`<h1>GAME OVER</h1><h2>${km} KM</h2><button onclick="startGame()">AGAIN PLAY</button><p style="color:#aaa">Ad দেখার পর আবার খেলা শুরু হবে</p>`;
+  }
+ });
+ document.getElementById('score').innerText=km+" KM";
+ document.getElementById('speed').innerText=speed*20+" SPEED";
 }
 
-document.getElementById('leftBtn').ontouchstart=()=>isLeft=true;
-document.getElementById('leftBtn').ontouchend=()=>isLeft=false;
-document.getElementById('rightBtn').ontouchstart=()=>isRight=true;
-document.getElementById('rightBtn').ontouchend=()=>isRight=false;
-// PC জন্য
-document.getElementById('leftBtn').onmousedown=()=>isLeft=true;
-document.getElementById('rightBtn').onmousedown=()=>isRight=true;
-document.addEventListener('mouseup',()=>{isLeft=false;isRight=false});
+document.getElementById('l').ontouchstart=()=>left=true; document.getElementById('l').ontouchend=()=>left=false;
+document.getElementById('r').ontouchstart=()=>right=true; document.getElementById('r').ontouchend=()=>right=false;
+document.getElementById('l').onmousedown=()=>left=true; document.getElementById('l').onmouseup=()=>left=false;
+document.getElementById('r').onmousedown=()=>right=true; document.getElementById('r').onmouseup=()=>right=false;
 </script>
 </body>
 </html>
