@@ -2,48 +2,55 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4 Layer QBank - Earning App</title>
-
-<!-- STEP 1: AdMob Auto Ads - এটা বসালেই Google Auto Earning দেবে -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>100 Voyonkor Games</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3940256099942544" crossorigin="anonymous"></script>
-
 <style>
-body{font-family:sans-serif; background:#f5f5f5; padding:15px; padding-bottom:80px;}
-.layer-btn{width:100%; padding:18px; margin:8px 0; font-size:18px; font-weight:bold; border:none; border-radius:10px; background:#0d6efd; color:white;}
-.q-card{background:white; padding:15px; margin:10px 0; border-radius:10px;}
-.banner-ad{position:fixed; bottom:0; left:0; width:100%; background:white; text-align:center; border-top:1px solid #ddd; padding:5px 0;}
+body{margin:0;background:#0a0a0a;color:#fff;font-family:sans-serif;padding-bottom:70px}
+.header{background:linear-gradient(90deg,#ff0000,#8b0000);padding:16px;text-align:center;font-size:22px;font-weight:900}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+.game{background:#1a1a1a;border-radius:12px;padding:12px;text-align:center;border:1px solid #333}
+.game img{width:100%;border-radius:8px}
+.game button{width:100%;padding:10px;margin-top:8px;background:#ff0000;color:#fff;border:none;border-radius:8px;font-weight:700}
+.ad{position:fixed;bottom:0;left:0;width:100%;background:#000;text-align:center;padding:5px 0;border-top:1px solid #333}
 </style>
 </head>
 <body>
+<div class="header">💀 100 VOYONKOR GAMES - EARNING APP 💀</div>
+<div class="grid" id="grid"></div>
 
-<h2>📚 4 Layer QBank - 2245 Questions</h2>
-<div id="app"></div>
-
-<!-- নিচের Banner Ad - সবসময় থাকবে -->
-<div class="banner-ad">
-  <ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-3940256099942544" data-ad-slot="6300978111"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<div class="ad">
+<ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-3940256099942544" data-ad-slot="6300978111"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
-<script src="qbank.js"></script>
 <script>
-let qCount = 0;
+const games = [
+ {id:1, name:"Horror Maze", icon:"👹"},
+ {id:2, name:"Ghost Jump", icon:"👻"},
+ {id:3, name:"Killer Escape", icon:"🔪"},
+ {id:4, name:"Zombie Shooter", icon:"🧟"},
+ {id:5, name:"Haunted House", icon:"🏚️"},
+ // ... এভাবে 100 পর্যন্ত
+];
+for(let i=6;i<=100;i++){games.push({id:i, name:"Voyonkor Game "+i, icon:"💀"})}
 
-function showQuestions(layer, sub){
-  const questions = qbank[layer].subs[sub];
-  qCount++;
+document.getElementById('grid').innerHTML = games.map(g=>`
+ <div class="game">
+  <div style="font-size:40px">${g.icon}</div>
+  <b>${g.name}</b>
+  <button onclick="playGame(${g.id})">PLAY</button>
+ </div>
+`).join('');
 
-  // প্রতি 5 টা প্রশ্নের পর Interstitial Ad দেখাবে - এটাতে বেশি টাকা
-  if(qCount % 5 == 0){
-    alert("Ad Loading... (এখানে Interstitial Ad আসবে, এটাই বেশি Earning)");
-    // Interstitial Code
-    // (adsbygoogle = window.adsbygoogle || []).push({});
-  }
-
-  // প্রশ্ন দেখানোর Code...
+let playCount=0;
+function playGame(id){
+ playCount++;
+ if(playCount%2==0){
+  alert("Interstitial Ad - Earning 0.05$ (2 টা গেম পর পর Ad)");
+ }
+ alert("Game "+id+" Loading... এখানে আপনার গেম Code বসবে");
 }
 </script>
-
 </body>
 </html>
